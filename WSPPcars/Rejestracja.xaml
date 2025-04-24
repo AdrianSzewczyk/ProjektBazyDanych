@@ -1,0 +1,18 @@
+﻿<Window x:Class="WSPPcars.Rejestracja"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WSPPcars"
+        mc:Ignorable="d"
+        Title="Rejestracja" Height="308" Width="475">
+    <Grid Margin="0,0,0,26" HorizontalAlignment="Left" Width="490">
+        <Label x:Name="lblNazwa" Content="Nazwa Użytkownika:" HorizontalAlignment="Left" Height="35" Margin="88,71,0,0" VerticalAlignment="Top" Width="152" FontSize="14" FontStyle="Italic"/>
+        <Label x:Name="lblHaslo" Content="Hasło:" HorizontalAlignment="Left" Height="35" Margin="88,130,0,0" VerticalAlignment="Top" Width="152" FontSize="14" FontStyle="Italic"/>
+        <Label x:Name="lblPowtorzHaslo" Content="Powtórz Hasło:" HorizontalAlignment="Left" Height="35" Margin="88,186,0,0" VerticalAlignment="Top" Width="152" FontSize="14" FontStyle="Italic"/>
+        <TextBox x:Name="txtNazwa" HorizontalAlignment="Left" Margin="245,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="163" Height="35" Background="#FFE0D8D8"/>
+        <TextBox x:Name="txtHaslo" HorizontalAlignment="Left" Margin="245,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="163" Height="35" Background="#FFE4E0E0"/>
+        <TextBox x:Name="txtPowtorzHaslo" HorizontalAlignment="Left" Margin="245,186,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="163" Height="35" Background="#FFEAE8E8"/>
+
+    </Grid>
+</Window>
