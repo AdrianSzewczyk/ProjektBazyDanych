@@ -6,15 +6,15 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v8.0": {
-      "WSPPcars/1.0.0": {
+      "WSPPCars/1.0.0": {
         "runtime": {
-          "WSPPcars.dll": {}
+          "WSPPCars.dll": {}
         }
       }
     }
   },
   "libraries": {
-    "WSPPcars/1.0.0": {
+    "WSPPCars/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

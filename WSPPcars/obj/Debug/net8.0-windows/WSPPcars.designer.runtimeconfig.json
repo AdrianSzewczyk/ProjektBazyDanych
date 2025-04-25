@@ -12,8 +12,8 @@
       }
     ],
     "additionalProbingPaths": [
-      "C:\\Users\\Adikson\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\Adikson\\.nuget\\packages",
+      "C:\\Users\\i9\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\i9\\.nuget\\packages",
       "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
     ],
     "configProperties": {

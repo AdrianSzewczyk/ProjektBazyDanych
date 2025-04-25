@@ -8,29 +8,57 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 
-
-namespace WSPPcars;
-
-/// <summary>
-/// Interaction logic for MainWindow.xaml
-/// </summary>
-public partial class MainWindow : Window
+namespace WSPPCars
 {
-    public MainWindow()
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+
+    public class CarAd
     {
-        InitializeComponent();
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+        public string ImagePath { get; set; }
+        public int Doors { get; set; }
+        public double EngineCapacity { get; set; }
+        public int MaxPeople { get; set; }
+        public string TransmissionType { get; set; }
     }
 
-    private void btnZarejestruj_Click(object sender, RoutedEventArgs e)
+    public class MainWindowViewModel
     {
-        Rejestracja rejestracja = new Rejestracja();
-        rejestracja.ShowDialog();
-    }
+        public ObservableCollection<CarAd> CarAds { get; set; }
 
-    private void btnZaloguj_Click(object sender, RoutedEventArgs e)
+        public MainWindowViewModel()
+        {
+            CarAds = new ObservableCollection<CarAd>
+        {
+            new CarAd { Name = "Fiat Punto", Price = 35000, ImagePath = "C:/samochody/toyota.jpg", Doors = 4, EngineCapacity = 1.8, MaxPeople = 5, TransmissionType = "Manualna" },
+            new CarAd { Name = "BMW X6", Price = 400, ImagePath = "C:/samochody/bmw.jpg", Doors = 5, EngineCapacity = 3.0, MaxPeople = 7, TransmissionType = "Automatyczna" },
+            new CarAd { Name = "Lamborghini Aventador", Price = 10, ImagePath = "C:/samochody/bmw1.jpg", Doors = 0, EngineCapacity = 0.0, MaxPeople = 1, TransmissionType = "Manualna" },
+            new CarAd { Name = "Porshe Panamera", Price = 20, ImagePath = "C:/samochody/porshe.jpg", Doors = 0, EngineCapacity = 1.8, MaxPeople = 5, TransmissionType = "Automatyczna" }
+        };
+        }
+    }
+    public partial class MainWindow : Window
     {
-        Logowanie logowanie = new Logowanie();
-        logowanie.ShowDialog();
+        public MainWindow()
+        {
+            InitializeComponent();
+            MainWindowViewModel ogloszenia = new MainWindowViewModel();
+            DataContext = ogloszenia;
+        }
+
+
+        private void listboxOgloszenia_MouseDoubleClick_1(object sender, MouseButtonEventArgs e)
+        {
+            if (((FrameworkElement)e.OriginalSource).DataContext is CarAd selectedCarAd)
+            {
+                var detailsWindow = new OknoSzczegoly(selectedCarAd);
+                detailsWindow.ShowDialog();
+            }
+        }
     }
 }
