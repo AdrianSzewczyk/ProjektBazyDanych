@@ -60,5 +60,11 @@ namespace WSPPCars
                 detailsWindow.ShowDialog();
             }
         }
+
+
+        private void btnLogowanie_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

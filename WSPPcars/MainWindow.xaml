@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WSPPCars"
         mc:Ignorable="d"
-        Title="WSPP CAR$ - wypożyczalnia samochodów" Height="554" Width="946" MinWidth="700" MinHeight="450" Background="#303030">
+        Title="WSPP CAR$ - wypożyczalnia samochodów" Height="554" Width="1079" MinWidth="946" MinHeight="554" Background="#303030">
     <Window.Resources>
         <!-- Kompletny styl dla ScrollBar -->
         <Style TargetType="Thumb">
@@ -15,7 +15,7 @@
                         <Border Background="#FFFF5D00"
                             BorderBrush="Transparent"
                             BorderThickness="0"
-                            CornerRadius="10" />
+                            CornerRadius="3" />
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -26,19 +26,18 @@
                     <ControlTemplate TargetType="ScrollBar">
                         <Grid>
                             <!-- Tło ScrollBar -->
-                            <Rectangle Fill="#202020" />
-                            <Border BorderBrush="Black" BorderThickness="0">
-                            <Track Name="PART_Track" IsDirectionReversed="True">
-                                <Track.DecreaseRepeatButton>
-                                        <RepeatButton Command="ScrollBar.LineLeftCommand" Background="#101010" BorderThickness="0"/>
-                                </Track.DecreaseRepeatButton>
-                                <Track.Thumb>
-                                    <Thumb Background="#FFFF5D00" />
-                                </Track.Thumb>
-                                <Track.IncreaseRepeatButton>
+                            <Border BorderBrush="Black" BorderThickness="0" CornerRadius="10" Margin="12,0,0,12">
+                                <Track Name="PART_Track" IsDirectionReversed="True">
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton Command="ScrollBar.LineLeftCommand" Background="#101010" BorderThickness="0" />
+                                    </Track.DecreaseRepeatButton>
+                                    <Track.Thumb>
+                                        <Thumb Background="#FFFF5D00" />
+                                    </Track.Thumb>
+                                    <Track.IncreaseRepeatButton>
                                         <RepeatButton Command="ScrollBar.LineRightCommand" Background="#101010" BorderThickness="0"/>
-                                </Track.IncreaseRepeatButton>
-                            </Track>
+                                    </Track.IncreaseRepeatButton>
+                                </Track>
                             </Border>
                         </Grid>
                     </ControlTemplate>
@@ -47,27 +46,101 @@
         </Style>
     </Window.Resources>
     <Grid Margin="0,0,0,-6" Background="Black">
-        <ListView x:Name="listboxOgloszenia" ItemsSource="{Binding CarAds}" Margin="10,137,264,20" MouseDoubleClick="listboxOgloszenia_MouseDoubleClick_1" Background="#202020" BorderBrush="#FFFF5D00">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Margin="0">
-                        <Image Source="{Binding ImagePath}" Width="160" Height="110" Margin="0"/>
-                        <StackPanel Margin="5">
-                            <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="18" Foreground="#FFFF5D00" FontFamily="Bahnschrift"/>
-                            <TextBlock Text="{Binding Price, StringFormat=Cena: {0} PLN}" FontSize="14" Foreground="White"/>
-                            <TextBlock Text="{Binding Doors, StringFormat=Ilość drzwi: {0}}" FontSize="14" Foreground="White"/>
-                            <TextBlock Text="{Binding EngineCapacity, StringFormat=Pojemność silnika: {0}}" FontSize="14" Foreground="White"/>
-                            <TextBlock Text="{Binding MaxPeople, StringFormat=Ilość osób: {0}}" FontSize="14" Foreground="White"/>
-                            <TextBlock Text="{Binding TransmissionType, StringFormat=Skrzynia biegów: {0}}" FontSize="14" Foreground="White"/>
+        <Image Source="C:/samochody/LOGO.png" Height="137" VerticalAlignment="Top" Margin="10,0,148,0"/>
+        <Border BorderBrush="#FFFF5D00" BorderThickness="2" CornerRadius="10" Background="#202020" Margin="30,137,264,20">
+            <ListView x:Name="listboxOgloszenia" ItemsSource="{Binding CarAds}" Margin="8,8,8,8" MouseDoubleClick="listboxOgloszenia_MouseDoubleClick_1" Background="#202020" BorderThickness="0" BorderBrush="#202020">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="0">
+                            <Image Source="{Binding ImagePath}" Width="160" Height="110" Margin="0"/>
+                            <StackPanel Margin="5">
+                                <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="18" Foreground="#FFFF5D00" FontFamily="Bahnschrift"/>
+                                <TextBlock Text="{Binding Price, StringFormat=Cena: {0} PLN}" FontSize="14" Foreground="White"/>
+                                <TextBlock Text="{Binding Doors, StringFormat=Ilość drzwi: {0}}" FontSize="14" Foreground="White"/>
+                                <TextBlock Text="{Binding EngineCapacity, StringFormat=Pojemność silnika: {0}}" FontSize="14" Foreground="White"/>
+                                <TextBlock Text="{Binding MaxPeople, StringFormat=Ilość osób: {0}}" FontSize="14" Foreground="White"/>
+                                <TextBlock Text="{Binding TransmissionType, StringFormat=Skrzynia biegów: {0}}" FontSize="14" Foreground="White"/>
+                            </StackPanel>
                         </StackPanel>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <Image Source="C:/samochody/LOGO.png" HorizontalAlignment="Center" Height="115" VerticalAlignment="Top" Width="738" Margin="0,10,0,0"/>
-        <StackPanel Margin="0,137,10,20" Background="#202020" HorizontalAlignment="Right" Width="233"/>
-        <Border BorderBrush="#FFFF5D00" BorderThickness="1" Margin="0,137,10,20" HorizontalAlignment="Right" Width="233">
-            <TextBlock Text="Filtry" TextAlignment="Center" FontWeight="Bold" FontSize="18" Foreground="#FFFFFF" FontFamily="Bahnschrift" Margin="0,10,0,0"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
         </Border>
+        <Border BorderBrush="#FFFF5D00" Background="#202020" BorderThickness="1" Margin="0,137,27,20" HorizontalAlignment="Right" Width="216" CornerRadius="10">
+            <TextBlock Text="Filtry" TextAlignment="Center" FontWeight="Bold" FontSize="18" Foreground="#FFFFFF" FontFamily="Bahnschrift" Margin="0,9,-1,0"/>
+        </Border>
+        <Button x:Name="btnRejestracja" Content="Zarejestruj się" Margin="0,13,27,0" VerticalAlignment="Top" Height="26" HorizontalAlignment="Right" Width="216" FontFamily="Bahnschrift" FontWeight="Bold" Foreground="Black">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="#FFFF5D00" 
+                    BorderBrush="#EEEE4C00" 
+                    BorderThickness="2"
+                    CornerRadius="15"
+                    x:Name="border">
+                        <ContentPresenter HorizontalAlignment="Center" 
+                                  VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#DDDD4C00"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="#DDDD4C00"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#DDDD4C00"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="White"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button x:Name="btnLogowanie" Content="Zaloguj się" Margin="0,50,27,0" VerticalAlignment="Top" Height="26" HorizontalAlignment="Right" Width="216" Click="btnLogowanie_Click" FontFamily="Bahnschrift" FontWeight="Bold" Foreground="Black">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="#FFFF5D00" 
+        BorderBrush="#EEEE4C00" 
+        BorderThickness="2"
+        CornerRadius="15"
+        x:Name="border">
+                        <ContentPresenter HorizontalAlignment="Center" 
+                      VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#DDDD4C00"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="#DDDD4C00"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#DDDD4C00"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="White"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button x:Name="btnKonto" Content="Konto" Margin="0,85,27,0" VerticalAlignment="Top" Height="26" HorizontalAlignment="Right" Width="216" Click="btnLogowanie_Click" FontFamily="Bahnschrift" FontWeight="Bold" Foreground="Black">
+            <Button.Template>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="#FFFF5D00" 
+                        BorderBrush="#EEEE4C00" 
+                        BorderThickness="2"
+                        CornerRadius="15"
+                        x:Name="border">
+                        <ContentPresenter HorizontalAlignment="Center" 
+                            VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#DDDD4C00"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="#DDDD4C00"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#DDDD4C00"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="White"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
     </Grid>
 </Window>
