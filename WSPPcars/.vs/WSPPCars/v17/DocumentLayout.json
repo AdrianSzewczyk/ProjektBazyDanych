@@ -5,6 +5,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{C4F0F663-72D9-4CBD-8F1F-14423B19B1C5}|WSPPCars.csproj|c:\\users\\i9\\documents\\github\\projektbazydanych\\wsppcars\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{C4F0F663-72D9-4CBD-8F1F-14423B19B1C5}|WSPPCars.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C4F0F663-72D9-4CBD-8F1F-14423B19B1C5}|WSPPCars.csproj|c:\\users\\i9\\documents\\github\\projektbazydanych\\wsppcars\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C4F0F663-72D9-4CBD-8F1F-14423B19B1C5}|WSPPCars.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -13,9 +17,22 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 139,
-          "SelectedChildIndex": 0,
+          "DockedWidth": 243,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\i9\\Documents\\GitHub\\ProjektBazyDanych\\WSPPcars\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\i9\\Documents\\GitHub\\ProjektBazyDanych\\WSPPcars\\MainWindow.xaml.cs",
+              "RelativeToolTip": "MainWindow.xaml.cs",
+              "ViewState": "AgIAAC4AAAAAAAAAAIAywD4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-28T17:48:09.695Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -31,7 +48,7 @@
           ]
         },
         {
-          "DockedWidth": 139,
+          "DockedWidth": 35,
           "SelectedChildIndex": -1,
           "Children": [
             {
