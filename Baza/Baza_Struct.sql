@@ -104,3 +104,36 @@ CREATE TABLE [Pojazd_Sztuka] (
   [rocznik] date
 )
 GO
+
+ALTER TABLE [Rezerwacje] ADD CONSTRAINT [Rezerwacje_Uz] FOREIGN KEY ([id_uzytkownika]) REFERENCES [Uzytkownicy] ([id_Uzytkownika])
+GO
+
+ALTER TABLE [Rezerwacje] ADD CONSTRAINT [Rezerwacje_Ub] FOREIGN KEY ([id_ubezpieczenia]) REFERENCES [Ubezpieczenia] ([id_Ubezpieczenia])
+GO
+
+ALTER TABLE [Dodatki_Rezerwacje] ADD CONSTRAINT [Dodatki_Rezerwacje_Dod] FOREIGN KEY ([id_dodatku]) REFERENCES [Dodatki] ([id_Dodatku])
+GO
+
+ALTER TABLE [Dodatki_Rezerwacje] ADD CONSTRAINT [Dodatki_Rezerwacje_Rez] FOREIGN KEY ([id_rezerwacji]) REFERENCES [Rezerwacje] ([id_Rezerwacji])
+GO
+
+ALTER TABLE [Ogloszenia] ADD CONSTRAINT [Ogloszenia_Poj] FOREIGN KEY ([id_pojazdu]) REFERENCES [Pojazd] ([id_Pojazdu])
+GO
+
+ALTER TABLE [Rezerwacje] ADD CONSTRAINT [Rezerwacje_Og] FOREIGN KEY ([id_ogloszenia]) REFERENCES [Ogloszenia] ([id_Ogloszenia])
+GO
+
+ALTER TABLE [Uzytkownicy] ADD CONSTRAINT [Uzytkownicy_Rodz] FOREIGN KEY ([id_rodzaj_konta]) REFERENCES [Rodzaj_Konta] ([id_Rodzaju_Konta])
+GO
+
+ALTER TABLE [Rezerwacje] ADD CONSTRAINT [Rezerwacje_Stan] FOREIGN KEY ([id_stan_rezerwacji]) REFERENCES [Stan_Rezerwacji] ([id_Stanu_Rezerwacji])
+GO
+
+ALTER TABLE [Pojazd_Sztuka] ADD CONSTRAINT [Pojazd_Sztuka_Typ] FOREIGN KEY ([id_typ_pojazdu]) REFERENCES [Typ_Pojazdu] ([id_Typu_Pojazdu])
+GO
+
+ALTER TABLE [Ubezpieczenia] ADD CONSTRAINT [Ubezpieczenia_Rodz] FOREIGN KEY ([id_rodzaj_pakietu]) REFERENCES [Rodzaj_Pakietu] ([id_Rodzaj_Pakietu])
+GO
+
+ALTER TABLE [Pojazd_Sztuka] ADD CONSTRAINT [Pojazd_Sztuka_Poj] FOREIGN KEY ([id_Pojazd_Sztuka]) REFERENCES [Pojazd] ([id_sztuki])
+GO
