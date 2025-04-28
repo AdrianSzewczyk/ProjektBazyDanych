@@ -46,7 +46,7 @@
         </Style>
     </Window.Resources>
     <Grid Margin="0,0,0,-6" Background="Black">
-        <Image Source="C:/samochody/LOGO.png" Height="137" VerticalAlignment="Top" Margin="10,0,148,0"/>
+        <Image Source="./Images/Logo.png" Height="137" VerticalAlignment="Top" Margin="10,0,148,0"/>
         <Border BorderBrush="#FFFF5D00" BorderThickness="2" CornerRadius="10" Background="#202020" Margin="30,137,264,20">
             <ListView x:Name="listboxOgloszenia" ItemsSource="{Binding CarAds}" Margin="8,8,8,8" MouseDoubleClick="listboxOgloszenia_MouseDoubleClick_1" Background="#202020" BorderThickness="0" BorderBrush="#202020">
                 <ListView.ItemTemplate>

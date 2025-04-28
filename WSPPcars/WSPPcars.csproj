@@ -8,4 +8,22 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Images\bmw.jpg" />
+    <None Remove="Images\bmw1.jpg" />
+    <None Remove="Images\LOGO.png" />
+    <None Remove="Images\porshe.jpg" />
+    <None Remove="Images\toyota.jpg" />
+    <None Remove="Images\WSPPLogo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\bmw.jpg" />
+    <Resource Include="Images\bmw1.jpg" />
+    <Resource Include="Images\LOGO.png" />
+    <Resource Include="Images\porshe.jpg" />
+    <Resource Include="Images\toyota.jpg" />
+    <Resource Include="Images\WSPPLogo.png" />
+  </ItemGroup>
+
 </Project>

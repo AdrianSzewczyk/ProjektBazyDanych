@@ -35,10 +35,10 @@ namespace WSPPCars
         {
             CarAds = new ObservableCollection<CarAd>
         {
-            new CarAd { Name = "Fiat Punto", Price = 35000, ImagePath = "C:/samochody/toyota.jpg", Doors = 4, EngineCapacity = 1.8, MaxPeople = 5, TransmissionType = "Manualna" },
-            new CarAd { Name = "BMW X6", Price = 400, ImagePath = "C:/samochody/bmw.jpg", Doors = 5, EngineCapacity = 3.0, MaxPeople = 7, TransmissionType = "Automatyczna" },
-            new CarAd { Name = "Lamborghini Aventador", Price = 10, ImagePath = "C:/samochody/bmw1.jpg", Doors = 0, EngineCapacity = 0.0, MaxPeople = 1, TransmissionType = "Manualna" },
-            new CarAd { Name = "Porshe Panamera", Price = 20, ImagePath = "C:/samochody/porshe.jpg", Doors = 0, EngineCapacity = 1.8, MaxPeople = 5, TransmissionType = "Automatyczna" }
+            new CarAd { Name = "Fiat Punto", Price = 35000, ImagePath = "./Images/toyota.jpg", Doors = 4, EngineCapacity = 1.8, MaxPeople = 5, TransmissionType = "Manualna" },
+            new CarAd { Name = "BMW X6", Price = 400, ImagePath = "./Images/bmw.jpg", Doors = 5, EngineCapacity = 3.0, MaxPeople = 7, TransmissionType = "Automatyczna" },
+            new CarAd { Name = "Lamborghini Aventador", Price = 10, ImagePath = "./Images/bmw1.jpg", Doors = 0, EngineCapacity = 0.0, MaxPeople = 1, TransmissionType = "Manualna" },
+            new CarAd { Name = "Porshe Panamera", Price = 20, ImagePath = "./Images/porshe.jpg", Doors = 0, EngineCapacity = 1.8, MaxPeople = 5, TransmissionType = "Automatyczna" }
         };
         }
     }
