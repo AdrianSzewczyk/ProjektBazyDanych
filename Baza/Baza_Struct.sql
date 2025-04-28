@@ -95,7 +95,7 @@ GO
 CREATE TABLE [Pojazd_Sztuka] (
   [id_Pojazd_Sztuka] integer PRIMARY KEY NOT NULL IDENTITY,
   [marka] nvarchar(255),
-  [model] integer,
+  [model]  nvarchar(50),
   [id_typ_pojazdu] integer,
   [pojemnosc_silnika] smallmoney,
   [liczba_drzwi] integer,
