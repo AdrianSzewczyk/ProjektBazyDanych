@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WSPPCars"
         mc:Ignorable="d"
-        Title="WSPP CAR$ - wypożyczalnia samochodów" Height="554" Width="1079" MinWidth="946" MinHeight="554" Background="#303030">
+        Title="WSPP CAR$ - wypożyczalnia samochodów" Height="630" Width="1080" MinWidth="1080" MinHeight="550" Background="#303030">
     <Window.Resources>
         <!-- Kompletny styl dla ScrollBar -->
         <Style TargetType="Thumb">
@@ -44,14 +44,43 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
     </Window.Resources>
     <Grid Margin="0,0,0,-6" Background="Black">
         <Image Source="./Images/Logo.png" Height="137" VerticalAlignment="Top" Margin="10,0,148,0"/>
         <Border BorderBrush="#FFFF5D00" BorderThickness="2" CornerRadius="10" Background="#202020" Margin="30,137,264,20">
             <ListView x:Name="listboxOgloszenia" ItemsSource="{Binding CarAds}" Margin="8,8,8,8" MouseDoubleClick="listboxOgloszenia_MouseDoubleClick_1" Background="#202020" BorderThickness="0" BorderBrush="#202020">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListViewItem">
+                                    <Border x:Name="itemBorder" 
+                                Background="#202020" 
+                                BorderBrush="Transparent" 
+                                BorderThickness="0" 
+                                CornerRadius="4" 
+                                Margin="2">
+                                        <ContentPresenter/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="itemBorder" Property="Background" Value="#131313"/>
+                                            <Setter TargetName="itemBorder" Property="BorderBrush" Value="#FFFFA500"/>
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter TargetName="itemBorder" Property="Background" Value="#505050"/>
+                                            <Setter TargetName="itemBorder" Property="BorderBrush" Value="#FFFF5D00"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal" Margin="0">
+                        <StackPanel Orientation="Horizontal" Margin="10,5,5,5">
                             <Image Source="{Binding ImagePath}" Width="160" Height="110" Margin="0"/>
                             <StackPanel Margin="5">
                                 <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="18" Foreground="#FFFF5D00" FontFamily="Bahnschrift"/>
