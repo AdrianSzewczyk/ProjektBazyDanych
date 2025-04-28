@@ -9,7 +9,7 @@ public partial class PojazdSztuka
 
     public string? Marka { get; set; }
 
-    public int? Model { get; set; }
+    public string? Model { get; set; }
 
     public int? IdTypPojazdu { get; set; }
 
