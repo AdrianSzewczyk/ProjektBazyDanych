@@ -135,5 +135,5 @@ GO
 ALTER TABLE [Ubezpieczenia] ADD CONSTRAINT [Ubezpieczenia_Rodz] FOREIGN KEY ([id_rodzaj_pakietu]) REFERENCES [Rodzaj_Pakietu] ([id_Rodzaj_Pakietu])
 GO
 
-ALTER TABLE [Pojazd_Sztuka] ADD CONSTRAINT [Pojazd_Sztuka_Poj] FOREIGN KEY ([id_Pojazd_Sztuka]) REFERENCES [Pojazd] ([id_sztuki])
+ALTER TABLE [Pojazd] ADD CONSTRAINT [Pojazd_Sztuka_Poj] FOREIGN KEY ([id_sztuki]) REFERENCES [Pojazd_Sztuka] ([id_Pojazd_Sztuka])
 GO
