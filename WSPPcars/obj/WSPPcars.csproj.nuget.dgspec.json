@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\i9\\Documents\\GitHub\\ProjektBazyDanych\\WSPPcars\\WSPPCars.csproj": {}
+    "C:\\Users\\i9\\Desktop\\WSPPcars\\WSPPCars.csproj": {}
   },
   "projects": {
-    "C:\\Users\\i9\\Documents\\GitHub\\ProjektBazyDanych\\WSPPcars\\WSPPCars.csproj": {
+    "C:\\Users\\i9\\Desktop\\WSPPcars\\WSPPCars.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\i9\\Documents\\GitHub\\ProjektBazyDanych\\WSPPcars\\WSPPCars.csproj",
+        "projectUniqueName": "C:\\Users\\i9\\Desktop\\WSPPcars\\WSPPCars.csproj",
         "projectName": "WSPPCars",
-        "projectPath": "C:\\Users\\i9\\Documents\\GitHub\\ProjektBazyDanych\\WSPPcars\\WSPPCars.csproj",
+        "projectPath": "C:\\Users\\i9\\Desktop\\WSPPcars\\WSPPCars.csproj",
         "packagesPath": "C:\\Users\\i9\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\i9\\Documents\\GitHub\\ProjektBazyDanych\\WSPPcars\\obj\\",
+        "outputPath": "C:\\Users\\i9\\Desktop\\WSPPcars\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
