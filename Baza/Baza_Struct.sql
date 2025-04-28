@@ -1,28 +1,22 @@
-/*CREATE DATABASE Baza_Wypozyczalnia;
-GO
-use [Baza_Wypozyczalnia];
-GO
-*/
-
 CREATE TABLE [Rezerwacje] (
-  [ID] integer PRIMARY KEY,
-  [id_og�oszenia] integer,
+  [id_Rezerwacji] integer PRIMARY KEY NOT NULL IDENTITY,
+  [id_ogloszenia] integer,
   [id_ubezpieczenia] integer,
-  [id_u�ytkownika] integer,
+  [id_uzytkownika] integer,
   [id_stan_rezerwacji] integer,
-  [data_rozpocz�cia_rezerwacji] timestamp,
-  [data_zako�czenia_rezerwacji] timestamp,
+  [data_rozpoczecia_rezerwacji] datetime,
+  [data_zakonczenia_rezerwacji] datetime,
   [utworzona] timestamp,
-  [kwota_ubezpieczenia] float ,
-  [kwota_dodatku] float ,
-  [kwota_ogloszenia] float ,
-  [kwota_rezerwacji] float ,
+  [kwota_ubezpieczenia] smallmoney,
+  [kwota_dodatku] smallmoney,
+  [kwota_ogloszenia] smallmoney,
+  [kwota_rezerwacji] smallmoney,
   [dostepnosc_pojazdu] bit
 )
 GO
 
-CREATE TABLE [U�ytkownicy] (
-  [id] integer PRIMARY KEY,
+CREATE TABLE [Uzytkownicy] (
+  [id_Uzytkownika] integer PRIMARY KEY NOT NULL IDENTITY,
   [imie] nvarchar(255),
   [nazwisko] nvarchar(255),
   [login] nvarchar(255),
@@ -32,114 +26,81 @@ CREATE TABLE [U�ytkownicy] (
 )
 GO
 
-CREATE TABLE [Og�oszenie] (
-  [id] integer PRIMARY KEY,
+CREATE TABLE [Ogloszenia] (
+  [id_Ogloszenia] integer PRIMARY KEY NOT NULL IDENTITY,
   [id_pojazdu] integer,
-  [dost�pno��] bit,
+  [dostepnosc] bit,
   [data_dodania] timestamp,
-  [kwota] float 
+  [kwota] smallmoney
 )
 GO
 
 CREATE TABLE [Dodatki_Rezerwacje] (
-  [id] integer PRIMARY KEY,
+  [id_Dodatku_Rezerwacji] integer PRIMARY KEY NOT NULL IDENTITY,
   [id_rezerwacji] integer,
   [id_dodatku] integer
 )
 GO
 
 CREATE TABLE [Rodzaj_Konta] (
-  [id] integer PRIMARY KEY,
+  [id_Rodzaju_Konta] integer PRIMARY KEY NOT NULL IDENTITY,
   [rodzaj] nvarchar(255)
 )
 GO
 
 CREATE TABLE [Stan_Rezerwacji] (
-  [id] integer PRIMARY KEY,
+  [id_Stanu_Rezerwacji] integer PRIMARY KEY NOT NULL IDENTITY,
   [stan] nvarchar(255)
 )
 GO
 
 CREATE TABLE [Typ_Pojazdu] (
-  [id] integer PRIMARY KEY,
+  [id_Typu_Pojazdu] integer PRIMARY KEY NOT NULL IDENTITY,
   [typ] nvarchar(255)
 )
 GO
 
 CREATE TABLE [Rodzaj_Pakietu] (
-  [id] integer PRIMARY KEY,
+  [id_Rodzaj_Pakietu] integer PRIMARY KEY NOT NULL IDENTITY,
   [pakiet] nvarchar(255)
 )
 GO
 
 CREATE TABLE [Pojazd] (
-  [id] integer PRIMARY KEY,
+  [id_Pojazdu] integer PRIMARY KEY NOT NULL IDENTITY,
   [id_sztuki] integer,
   [liczba_sztuk] integer
 )
 GO
 
 CREATE TABLE [Dodatki] (
-  [id] integer PRIMARY KEY,
+  [id_Dodatku] integer PRIMARY KEY NOT NULL IDENTITY,
   [nazwa] nvarchar(255),
   [liczba_sztuk] nvarchar(255),
   [dostepnosc] bit,
-  [kwota] float 
+  [kwota] smallmoney
 )
 GO
 
 CREATE TABLE [Ubezpieczenia] (
-  [id] integer PRIMARY KEY,
+  [id_Ubezpieczenia] integer PRIMARY KEY NOT NULL IDENTITY,
   [nazwa] nvarchar(255),
   [nazwa_ubezpieczalni] nvarchar(255),
   [id_rodzaj_pakietu] integer,
-  [kwota] float ,
+  [kwota] smallmoney,
   [dostepnosc] bit
 )
 GO
 
 CREATE TABLE [Pojazd_Sztuka] (
-  [id] integer PRIMARY KEY,
+  [id_Pojazd_Sztuka] integer PRIMARY KEY NOT NULL IDENTITY,
   [marka] nvarchar(255),
   [model] integer,
   [id_typ_pojazdu] integer,
-  [pojemnosc_silnika] float,
+  [pojemnosc_silnika] smallmoney,
   [liczba_drzwi] integer,
-  [liczba_pasa�er�w] integer,
+  [liczba_pasazerow] integer,
   [automatyczna_skrzynia] bit,
   [rocznik] date
 )
-GO
-
-ALTER TABLE [Rezerwacje] ADD CONSTRAINT [user_posts] FOREIGN KEY ([id_u�ytkownika]) REFERENCES [U�ytkownicy] ([id])
-GO
-
-ALTER TABLE [Rezerwacje] ADD CONSTRAINT [user_posts] FOREIGN KEY ([id_ubezpieczenia]) REFERENCES [Ubezpieczenia] ([id])
-GO
-
-ALTER TABLE [Dodatki_Rezerwacje] ADD CONSTRAINT [user_posts] FOREIGN KEY ([id_dodatku]) REFERENCES [Dodatki] ([id])
-GO
-
-ALTER TABLE [Dodatki_Rezerwacje] ADD CONSTRAINT [user_posts] FOREIGN KEY ([id_rezerwacji]) REFERENCES [Rezerwacje] ([id])
-GO
-
-ALTER TABLE [Og�oszenie] ADD CONSTRAINT [user_posts] FOREIGN KEY ([id_pojazdu]) REFERENCES [Pojazd] ([id])
-GO
-
-ALTER TABLE [Rezerwacje] ADD CONSTRAINT [user_posts] FOREIGN KEY ([id_og�oszenia]) REFERENCES [Og�oszenie] ([id])
-GO
-
-ALTER TABLE [U�ytkownicy] ADD CONSTRAINT [user_posts] FOREIGN KEY ([id_rodzaj_konta]) REFERENCES [Rodzaj_Konta] ([id])
-GO
-
-ALTER TABLE [Rezerwacje] ADD CONSTRAINT [user_posts] FOREIGN KEY ([id_stan_rezerwacji]) REFERENCES [Stan_Rezerwacji] ([id])
-GO
-
-ALTER TABLE [Pojazd_Sztuka] ADD CONSTRAINT [user_posts] FOREIGN KEY ([id_typ_pojazdu]) REFERENCES [Typ_Pojazdu] ([id])
-GO
-
-ALTER TABLE [Ubezpieczenia] ADD CONSTRAINT [user_posts] FOREIGN KEY ([id_rodzaj_pakietu]) REFERENCES [Rodzaj_Pakietu] ([id])
-GO
-
-ALTER TABLE [Pojazd_Sztuka] ADD CONSTRAINT [user_posts] FOREIGN KEY ([id]) REFERENCES [Pojazd] ([id_sztuki])
 GO
