@@ -23,7 +23,7 @@ namespace WSPPCars
         {
             InitializeComponent();
         }
-        public OknoSzczegoly(CarAd carAd)
+        public OknoSzczegoly(CarAdViewModel carAd)
         {
             InitializeComponent();
             DataContext = carAd;
