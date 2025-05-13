@@ -99,19 +99,31 @@ namespace WSPPCars
             }
 
 
-            private void listboxOgloszenia_MouseDoubleClick_1(object sender, MouseButtonEventArgs e)
+        private void listboxOgloszenia_MouseDoubleClick_1(object sender, MouseButtonEventArgs e)
+        {
+            if (((FrameworkElement)e.OriginalSource).DataContext is CarAdViewModel selectedCarAd)
             {
-                if (((FrameworkElement)e.OriginalSource).DataContext is CarAdViewModel selectedCarAd)
-                {
                     var detailsWindow = new OknoSzczegoly(selectedCarAd);
                     detailsWindow.ShowDialog();
-                }
-            }
-
-
-            private void btnLogowanie_Click(object sender, RoutedEventArgs e)
-            {
-
             }
         }
+
+
+        private void btnLogowanie_Click(object sender, RoutedEventArgs e)
+        {
+            OknoLogowanie oknoLogowanie = new OknoLogowanie();
+            oknoLogowanie.ShowDialog();
+        }
+
+        private void btnRejestracja_Click(object sender, RoutedEventArgs e)
+        {
+            OknoRejestracja oknoRejestracja = new OknoRejestracja();
+            oknoRejestracja.ShowDialog();
+        }
+        private void btnKonto_Click(object sender, RoutedEventArgs e)
+        {
+            MojeKonto oknoKonta = new MojeKonto();
+            oknoKonta.ShowDialog();
+        }
     }
+}

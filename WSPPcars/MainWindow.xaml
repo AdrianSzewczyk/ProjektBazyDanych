@@ -44,7 +44,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
     </Window.Resources>
     <Grid Margin="0,0,0,-6" Background="Black">
         <Image Source="./Images/Logo.png" Height="137" VerticalAlignment="Top" Margin="10,0,148,0"/>
@@ -100,7 +100,7 @@
         <Border BorderBrush="#FFFF5D00" Background="#202020" BorderThickness="1" Margin="0,137,27,20" HorizontalAlignment="Right" Width="216" CornerRadius="10">
             <TextBlock Text="Filtry" TextAlignment="Center" FontWeight="Bold" FontSize="18" Foreground="#FFFFFF" FontFamily="Bahnschrift" Margin="0,9,-1,0"/>
         </Border>
-        <Button x:Name="btnRejestracja" Content="Zarejestruj się" Margin="0,13,27,0" VerticalAlignment="Top" Height="26" HorizontalAlignment="Right" Width="216" FontFamily="Bahnschrift" FontWeight="Bold" Foreground="Black">
+        <Button x:Name="btnRejestracja" Content="Zarejestruj się" Margin="0,13,27,0" VerticalAlignment="Top" Height="26" HorizontalAlignment="Right" Width="216" FontFamily="Bahnschrift" FontWeight="Bold" Foreground="Black" Click="btnRejestracja_Click">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <Border Background="#FFFF5D00" 
@@ -148,7 +148,7 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Button x:Name="btnKonto" Content="Konto" Margin="0,85,27,0" VerticalAlignment="Top" Height="26" HorizontalAlignment="Right" Width="216" Click="btnLogowanie_Click" FontFamily="Bahnschrift" FontWeight="Bold" Foreground="Black">
+        <Button x:Name="btnKonto" Content="Konto" Margin="837,85,27,0" VerticalAlignment="Top" Height="26" Click="btnLogowanie_Click" FontFamily="Bahnschrift" FontWeight="Bold" Foreground="Black">
             <Button.Template>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border Background="#FFFF5D00" 
