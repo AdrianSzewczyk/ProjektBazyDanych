@@ -35,8 +35,13 @@ namespace WSPPCars
 
         private void BtnWyloguj_Click(object sender, RoutedEventArgs e)
         {
-            new OknoLogowanie().Show();
-            this.Close();
+            
+        }
+
+        private void BtnZamowienia_Click(object sender, RoutedEventArgs e)
+        {
+            MojeZamowienia oknoZamowienia = new MojeZamowienia();
+            oknoZamowienia.ShowDialog();
         }
     }
 }
