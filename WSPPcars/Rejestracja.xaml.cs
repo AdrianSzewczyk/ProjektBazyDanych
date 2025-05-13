@@ -12,16 +12,26 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace WSPPcars
+namespace WSPPCars
 {
     /// <summary>
-    /// Logika interakcji dla klasy Rejestracja.xaml
+    /// Logika interakcji dla klasy OknoRejestracja.xaml
     /// </summary>
-    public partial class Rejestracja : Window
+    public partial class OknoRejestracja : Window
     {
-        public Rejestracja()
+        public OknoRejestracja()
         {
             InitializeComponent();
+        }
+
+        private void BtnZarejestruj_Click(object sender, RoutedEventArgs e)
+        {
+            if (txtHaslo.Password != txtPotwierdzHaslo.Password)
+            {
+                txtKomunikat.Text = "Hasła się nie zgadzają!";
+                return;
+            }
+            txtKomunikat.Text = "Rejestracja zakończona pomyślnie!";
         }
     }
 }

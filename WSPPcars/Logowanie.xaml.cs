@@ -12,16 +12,38 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace WSPPcars
+namespace WSPPCars
 {
     /// <summary>
-    /// Logika interakcji dla klasy Logowanie.xaml
+    /// Logika interakcji dla klasy OknoLogowanie.xaml
     /// </summary>
-    public partial class Logowanie : Window
+    public partial class OknoLogowanie : Window
     {
-        public Logowanie()
+        public OknoLogowanie()
         {
             InitializeComponent();
+        }
+
+        private void BtnZaloguj_Click(object sender, RoutedEventArgs e)
+        {
+            string login = txtNazwa.Text.Trim();
+            string haslo = txtHaslo.Password;
+
+            if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(haslo))
+            {
+                txtKomunikat.Text = "Uzupełnij wszystkie pola.";
+                return;
+            }
+
+            if (login == "admin" && haslo == "1234")
+            {
+                txtKomunikat.Text = "Zalogowano pomyślnie.";
+
+            }
+            else
+            {
+                txtKomunikat.Text = "Nieprawidłowa nazwa użytkownika lub hasło.";
+            }
         }
     }
 }
