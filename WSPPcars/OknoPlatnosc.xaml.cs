@@ -14,7 +14,6 @@ using System.Windows.Shapes;
 
 namespace WSPPCars
 {
-
     public partial class OknoPlatnosc : Window
     {
         public OknoPlatnosc()

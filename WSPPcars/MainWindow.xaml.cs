@@ -16,9 +16,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WSPPCars
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+
 
     /*public class CarAd
     {

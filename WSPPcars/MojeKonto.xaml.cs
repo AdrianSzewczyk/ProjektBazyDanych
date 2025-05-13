@@ -14,9 +14,6 @@ using System.Windows.Shapes;
 
 namespace WSPPCars
 {
-    /// <summary>
-    /// Logika interakcji dla klasy MojeKonto.xaml
-    /// </summary>
     public partial class MojeKonto : Window
     {
         public MojeKonto()

@@ -14,9 +14,6 @@ using System.Windows.Shapes;
 
 namespace WSPPCars
 {
-    /// <summary>
-    /// Logika interakcji dla klasy OknoRejestracja.xaml
-    /// </summary>
     public partial class OknoRejestracja : Window
     {
         public OknoRejestracja()
