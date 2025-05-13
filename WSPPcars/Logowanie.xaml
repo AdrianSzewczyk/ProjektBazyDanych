@@ -22,7 +22,7 @@
                 BorderBrush="#FFFF5D00"
                 BorderThickness="2"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center">
+                VerticalAlignment="Center" Height="221">
             <StackPanel>
                 <TextBlock Text="Nazwa użytkownika:" Foreground="White" Margin="0,0,0,5"/>
                 <TextBox x:Name="txtNazwa" Height="32" Background="White" Foreground="Black" Margin="0,0,0,10"/>
