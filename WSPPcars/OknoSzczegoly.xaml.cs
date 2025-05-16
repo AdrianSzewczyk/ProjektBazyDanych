@@ -28,5 +28,11 @@ namespace WSPPCars
             InitializeComponent();
             DataContext = carAd;
         }
+
+        private void btnWynajmij_Click(object sender, RoutedEventArgs e)
+        {
+            wynajemSamochodu wynajem = new wynajemSamochodu();
+            wynajem.ShowDialog();
+        }
     }
 }
