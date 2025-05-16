@@ -11,18 +11,18 @@
                        Foreground="White"
                        HorizontalAlignment="Center"
                        Margin="0,0,0,20"/>
-            <Border Width="542"
+            <Border Width="565"
                     Padding="20"
                     Background="#202020"
                     CornerRadius="10"
                     BorderBrush="#FFFF5D00"
                     BorderThickness="2"
-                    Height="Auto">
+                    Height="213">
                 <StackPanel>
                     <TextBlock Text="Imię i nazwisko:" Foreground="White"/>
                     <TextBlock x:Name="lblImieNazwisko" Text="..." FontWeight="Bold" Foreground="#FFFF5D00" Margin="0,0,0,10"/>
 
-                    <TextBlock Foreground="White"><Run Language="pl-pl" Text="Login:"/><LineBreak/><Run Language="pl-pl"/></TextBlock>
+                    <TextBlock Foreground="White" Height="15"><Run Language="pl-pl" Text="Login:"/><LineBreak/><Run Language="pl-pl"/></TextBlock>
                     <TextBlock x:Name="lblLogin" Text="..." FontWeight="Bold" Foreground="#FFFF5D00" Margin="0,0,0,10"/>
 
                     <TextBlock Text="Data rejestracji:" Foreground="White"/>

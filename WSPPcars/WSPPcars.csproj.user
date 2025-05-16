@@ -2,6 +2,9 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
+    <Compile Update="edycjaUzytkownika.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="MojeKonto.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -13,6 +16,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="edycjaUzytkownika.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="MojeKonto.xaml">
       <SubType>Designer</SubType>
     </Page>

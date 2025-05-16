@@ -33,8 +33,10 @@ namespace WSPPCars
 
         private void BtnEdytuj_Click(object sender, RoutedEventArgs e)
         {
-
+            edycjaUzytkownika edycja = new edycjaUzytkownika();
+            edycja.ShowDialog();
         }
+
 
         private void BtnWyloguj_Click(object sender, RoutedEventArgs e)
         {
