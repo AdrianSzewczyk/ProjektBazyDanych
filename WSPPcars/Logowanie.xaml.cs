@@ -11,12 +11,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WSPPCars.Models;
 
 namespace WSPPCars
 {
-    /// <summary>
-    /// Logika interakcji dla klasy OknoLogowanie.xaml
-    /// </summary>
+
     public partial class OknoLogowanie : Window
     {
         public OknoLogowanie()
@@ -26,6 +25,7 @@ namespace WSPPCars
 
         private void BtnZaloguj_Click(object sender, RoutedEventArgs e)
         {
+            /*
             string login = txtNazwa.Text.Trim();
             string haslo = txtHaslo.Password;
 
@@ -43,6 +43,45 @@ namespace WSPPCars
             else
             {
                 txtKomunikat.Text = "Nieprawidłowa nazwa użytkownika lub hasło.";
+            }
+            */
+            using (var context = new DbWsppcarsContext())
+            {
+                string login;
+                string haslo;
+                if ((txtNazwa.Text == null || txtHaslo.Password == null))
+                {                  
+                    return;
+                }
+                else
+                {
+                    login = txtNazwa.Text;
+                    haslo = txtHaslo.Password;
+                }
+                Uzytkownicy uzytkownik = null;
+                foreach (var item in context.Uzytkownicies)
+                {
+                    if(item.Login.Equals(login))
+                    {
+                        uzytkownik = item;
+                    }
+                }
+                if(uzytkownik == null)
+                {
+                    txtKomunikat.Text = "Nie ma takiego użytkownika. Zarejestruj się";
+                }
+                else
+                {
+                    if(haslo.Equals(uzytkownik.Haslo))
+                    {
+                        MainWindow mw = (MainWindow)Application.Current.MainWindow;
+                        mw.AktualnyUzytkownik = uzytkownik;
+                        txtKomunikat.Text = "Udało sie zalogować!!!";
+                    }
+                    else {
+                        txtKomunikat.Text = "Niepoprawne hasło!!!";
+                    }
+                }
             }
         }
     }

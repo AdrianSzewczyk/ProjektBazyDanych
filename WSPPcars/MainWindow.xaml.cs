@@ -17,7 +17,6 @@ using Microsoft.EntityFrameworkCore;
 namespace WSPPCars
 {
 
-
     /*public class CarAd
     {
         public string Name { get; set; }
@@ -89,13 +88,23 @@ namespace WSPPCars
     }
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
                 MainWindowViewModel ogloszenia = new MainWindowViewModel();
                 DataContext = ogloszenia;
-            }
+            AktualnyUzytkownik = new Uzytkownicy();
+            AktualnyUzytkownik.Login = "Gosc";
+            AktualnyUzytkownik.Imie = "Gosc";
+            AktualnyUzytkownik.Nazwisko = "Gosc";
+            AktualnyUzytkownik.Utworzony = DateTime.Now;
+            AktualnyUzytkownik.Haslo = "";
+        }
 
+        private Uzytkownicy aktualnyUzytkownik;
+
+        public Uzytkownicy AktualnyUzytkownik { get { return aktualnyUzytkownik; } set { aktualnyUzytkownik = value; } } 
 
         private void listboxOgloszenia_MouseDoubleClick_1(object sender, MouseButtonEventArgs e)
         {
@@ -120,7 +129,8 @@ namespace WSPPCars
         }
         private void btnKonto_Click(object sender, RoutedEventArgs e)
         {
-            MojeKonto oknoKonta = new MojeKonto();
+            MojeKonto oknoKonta = new MojeKonto(aktualnyUzytkownik);
+
             oknoKonta.ShowDialog();
         }
     }

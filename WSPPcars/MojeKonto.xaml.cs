@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WSPPCars.Models;
 
 namespace WSPPCars
 {
@@ -19,10 +20,15 @@ namespace WSPPCars
         public MojeKonto()
         {
             InitializeComponent();
+        }
 
-            lblImieNazwisko.Text = "Łukasz Maliński";
-            lblEmail.Text = "malina.lukas@onet.com";
-            lblDataRejestracji.Text = DateTime.Now.AddMonths(-2).ToShortDateString();
+        public MojeKonto(Uzytkownicy u)
+        {
+            InitializeComponent();
+            lblImieNazwisko.Text = u.Imie + " " + u.Nazwisko;
+            lblLogin.Text = u.Login;    
+            lblDataRejestracji.Text = u.Utworzony.ToString("dd-MM-yyyy HH:mm"); 
+
         }
 
         private void BtnEdytuj_Click(object sender, RoutedEventArgs e)
@@ -32,7 +38,17 @@ namespace WSPPCars
 
         private void BtnWyloguj_Click(object sender, RoutedEventArgs e)
         {
-            
+            Uzytkownicy AktualnyUzytkownik = new Uzytkownicy();
+            AktualnyUzytkownik.Login = "Gosc";
+            AktualnyUzytkownik.Imie = "Gosc";
+            AktualnyUzytkownik.Nazwisko = "Gosc";
+            AktualnyUzytkownik.Utworzony = DateTime.Now;
+            AktualnyUzytkownik.Haslo = "";
+            MainWindow mw = (MainWindow)Application.Current.MainWindow;
+            mw.AktualnyUzytkownik = AktualnyUzytkownik;
+            lblImieNazwisko.Text = AktualnyUzytkownik.Imie + " " + AktualnyUzytkownik.Nazwisko;
+            lblLogin.Text = AktualnyUzytkownik.Login;
+            lblDataRejestracji.Text = AktualnyUzytkownik.Utworzony.ToString("dd-MM-yyyy HH:mm");
         }
 
         private void BtnZamowienia_Click(object sender, RoutedEventArgs e)

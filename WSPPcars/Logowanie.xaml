@@ -15,16 +15,16 @@
                    HorizontalAlignment="Center"
                    Margin="0,0,0,20"/>
 
-        <Border Width="420"
+        <Border Width="478"
                 Padding="20"
                 Background="#202020"
                 CornerRadius="10"
                 BorderBrush="#FFFF5D00"
                 BorderThickness="2"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center" Height="221">
+                VerticalAlignment="Center" Height="285">
             <StackPanel>
-                <TextBlock Text="Nazwa użytkownika:" Foreground="White" Margin="0,0,0,5"/>
+                <TextBlock Foreground="White" Margin="0,0,0,5"><Run Text="Login Uzytkownika"/><Run Language="pl-pl" Text=":"/><LineBreak/><Run/></TextBlock>
                 <TextBox x:Name="txtNazwa" Height="32" Background="White" Foreground="Black" Margin="0,0,0,10"/>
 
                 <TextBlock Text="Hasło:" Foreground="White" Margin="0,0,0,5"/>

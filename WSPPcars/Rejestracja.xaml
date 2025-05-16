@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WSPPCars"
         mc:Ignorable="d"
-        Title="Rejestracja" Height="528" Width="699"
+        Title="Rejestracja" Height="688" Width="775"
         Background="#303030" FontFamily="Bahnschrift">
     <Grid Margin="20">
 
@@ -35,27 +35,29 @@
                 VerticalAlignment="Top"
                 Margin="0,120,0,0">
             <StackPanel>
-                <TextBlock Text="Imię i nazwisko:" Foreground="White" Margin="0,0,0,5"/>
-                <TextBox x:Name="txtImieNazwisko" Height="32" Background="White" Foreground="Black" Margin="0,0,0,10"/>
+                <TextBlock Text="Imię:" Foreground="White" Margin="0,0,0,5"/>
+                <TextBox x:Name="txtImie" Height="32" Background="White" Foreground="Black" Margin="0,0,0,10"/>
 
-                <TextBlock Text="Adres e-mail:" Foreground="White" Margin="0,0,0,5"/>
-                <TextBox x:Name="txtEmail" Height="32" Background="White" Foreground="Black" Margin="0,0,0,10"/>
+                <TextBlock Text="Nazwisko:" Foreground="White" Margin="0,0,0,5"/>
+                <TextBox x:Name="txtNazwisko" Height="32" Background="White" Foreground="Black" Margin="0,0,0,10"/>
+
+                <TextBlock Text="Login:" Foreground="White" Margin="0,0,0,5"/>
+                <TextBox x:Name="txtLogin" Height="32" Background="White" Foreground="Black" Margin="0,0,0,10"/>
+
 
                 <TextBlock Text="Hasło:" Foreground="White" Margin="0,0,0,5"/>
                 <PasswordBox x:Name="txtHaslo" Height="32" Background="White" Foreground="Black" Margin="0,0,0,10"/>
 
                 <TextBlock Text="Potwierdź hasło:" Foreground="White" Margin="0,0,0,5"/>
                 <PasswordBox x:Name="txtPotwierdzHaslo" Height="32" Background="White" Foreground="Black" Margin="0,0,0,20"/>
-
                 <Button Content="Zarejestruj się"
                         Height="40"
                         Width="160"
-                        HorizontalAlignment="Center"
                         FontWeight="Bold"
                         Foreground="Black"
                         Click="BtnZarejestruj_Click">
                     <Button.Template>
-                        <ControlTemplate TargetType="Button">
+                        <ControlTemplate TargetType="{x:Type Button}">
                             <Border Background="#FFFF5D00"
                                     BorderBrush="#EEEE4C00"
                                     BorderThickness="2"

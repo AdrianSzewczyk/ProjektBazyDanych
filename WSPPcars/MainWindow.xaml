@@ -148,7 +148,7 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Button x:Name="btnKonto" Content="Konto" Margin="837,85,27,0" VerticalAlignment="Top" Height="26" Click="btnLogowanie_Click" FontFamily="Bahnschrift" FontWeight="Bold" Foreground="Black">
+        <Button x:Name="btnKonto" Content="Konto" Margin="837,85,27,0" VerticalAlignment="Top" Height="26" Click="btnKonto_Click" FontFamily="Bahnschrift" FontWeight="Bold" Foreground="Black">
             <Button.Template>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border Background="#FFFF5D00" 

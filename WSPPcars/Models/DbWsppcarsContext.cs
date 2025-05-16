@@ -286,8 +286,6 @@ public partial class DbWsppcarsContext : DbContext
                 .HasMaxLength(255)
                 .HasColumnName("nazwisko");
             entity.Property(e => e.Utworzony)
-                .IsRowVersion()
-                .IsConcurrencyToken()
                 .HasColumnName("utworzony");
 
             entity.HasOne(d => d.IdRodzajKontaNavigation).WithMany(p => p.Uzytkownicies)

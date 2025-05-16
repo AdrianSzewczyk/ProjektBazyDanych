@@ -15,7 +15,7 @@ public partial class Uzytkownicy
 
     public string? Haslo { get; set; }
 
-    public byte[] Utworzony { get; set; } = null!;
+    public DateTime Utworzony { get; set; }
 
     public int? IdRodzajKonta { get; set; }
 
