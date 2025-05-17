@@ -13,6 +13,7 @@ using WSPPCars.Models;
 using System.Linq.Expressions;
 using System.Windows.Automation;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 
 namespace WSPPCars
 {
@@ -88,23 +89,28 @@ namespace WSPPCars
     }
     public partial class MainWindow : Window
     {
-
+        
         public MainWindow()
         {
             InitializeComponent();
                 MainWindowViewModel ogloszenia = new MainWindowViewModel();
                 DataContext = ogloszenia;
-            AktualnyUzytkownik = new Uzytkownicy();
-            AktualnyUzytkownik.Login = "Gosc";
-            AktualnyUzytkownik.Imie = "Gosc";
-            AktualnyUzytkownik.Nazwisko = "Gosc";
-            AktualnyUzytkownik.Utworzony = DateTime.Now;
-            AktualnyUzytkownik.Haslo = "";
+            AktualnyUzytkownik = new Uzytkownicy
+            {
+                Login = "Gosc",
+                Imie = "Gosc",
+                Nazwisko = "Gosc",
+                Utworzony = DateTime.Now,
+                Haslo = ""
+            };
+            btnLogowanie.Visibility = Visibility.Visible;
         }
 
         private Uzytkownicy aktualnyUzytkownik;
 
         public Uzytkownicy AktualnyUzytkownik { get { return aktualnyUzytkownik; } set { aktualnyUzytkownik = value; } } 
+
+        
 
         private void listboxOgloszenia_MouseDoubleClick_1(object sender, MouseButtonEventArgs e)
         {
@@ -147,5 +153,6 @@ namespace WSPPCars
                 ogolny.ShowDialog();
             }          
         }
+        
     }
 }

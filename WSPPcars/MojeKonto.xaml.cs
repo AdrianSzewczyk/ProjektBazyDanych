@@ -40,14 +40,18 @@ namespace WSPPCars
 
         private void BtnWyloguj_Click(object sender, RoutedEventArgs e)
         {
+            MainWindow mw = (MainWindow)Application.Current.MainWindow;
             Uzytkownicy AktualnyUzytkownik = new Uzytkownicy();
+
             AktualnyUzytkownik.Login = "Gosc";
             AktualnyUzytkownik.Imie = "Gosc";
             AktualnyUzytkownik.Nazwisko = "Gosc";
             AktualnyUzytkownik.Utworzony = DateTime.Now;
             AktualnyUzytkownik.Haslo = "";
-            MainWindow mw = (MainWindow)Application.Current.MainWindow;
             mw.AktualnyUzytkownik = AktualnyUzytkownik;
+            //mw.btnLogowanie.IsEnabled = true;
+            //mw.btnLogowanie.IsVisible = true;
+            mw.btnLogowanie.Visibility = Visibility.Visible;
             lblImieNazwisko.Text = AktualnyUzytkownik.Imie + " " + AktualnyUzytkownik.Nazwisko;
             lblLogin.Text = AktualnyUzytkownik.Login;
             lblDataRejestracji.Text = AktualnyUzytkownik.Utworzony.ToString("dd-MM-yyyy HH:mm");

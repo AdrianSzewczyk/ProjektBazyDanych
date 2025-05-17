@@ -83,6 +83,12 @@ namespace WSPPCars
                     }
                 }
             }
+            if(txtKomunikat.Text == "Udało sie zalogować!!!")
+            {
+                MainWindow mw = (MainWindow)Application.Current.MainWindow;
+                mw.btnLogowanie.Visibility = Visibility.Collapsed;
+                this.Close();
+            }
         }
     }
 }
