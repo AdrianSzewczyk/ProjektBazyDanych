@@ -37,7 +37,11 @@ namespace WSPPCars
                 MessageBox.Show("Data zwrotu musi być późniejsza niż data wypożyczenia.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-
+            else
+            {
+                wynajemSzczegoly szczegoly = new wynajemSzczegoly();
+                szczegoly.ShowDialog();
+            }          
         }
     }
 }

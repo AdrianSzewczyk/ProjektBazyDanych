@@ -17,6 +17,9 @@
     <Compile Update="wynajemSamochodu.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="wynajemSzczegoly.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="edycjaUzytkownika.xaml">
@@ -29,6 +32,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="wynajemSamochodu.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="wynajemSzczegoly.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
