@@ -97,8 +97,8 @@
 
             </ListView>
         </Border>
-        <Border BorderBrush="#FFFF5D00" Background="#202020" BorderThickness="1" Margin="0,137,27,20" HorizontalAlignment="Right" Width="216" CornerRadius="10">
-            <TextBlock Text="Filtry" TextAlignment="Center" FontWeight="Bold" FontSize="18" Foreground="#FFFFFF" FontFamily="Bahnschrift" Margin="0,9,-1,0"/>
+        <Border BorderBrush="#FFFF5D00" Background="#202020" BorderThickness="1" Margin="0,173,27,20" HorizontalAlignment="Right" Width="216" CornerRadius="10">
+            <TextBlock Text="Filtry" TextAlignment="Center" FontWeight="Bold" FontSize="18" Foreground="#FFFFFF" FontFamily="Bahnschrift" Margin="9,-1,9,-1"/>
         </Border>
         <Button x:Name="btnRejestracja" Content="Zarejestruj się" Margin="0,13,27,0" VerticalAlignment="Top" Height="26" HorizontalAlignment="Right" Width="216" FontFamily="Bahnschrift" FontWeight="Bold" Foreground="Black" Click="btnRejestracja_Click">
             <Button.Template>
@@ -180,6 +180,37 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
-
+        <Button x:Name="btnWynajmij" Content="Wynajmij"
+        Margin="0,120,27,0"
+        VerticalAlignment="Top"
+        Height="26"
+        Width="216"
+        HorizontalAlignment="Right"
+        Click="btnWynajmij_Click"
+        FontFamily="Bahnschrift"
+        FontWeight="Bold"
+        Foreground="Black">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="#FFFF5D00" 
+                    BorderBrush="#EEEE4C00" 
+                    BorderThickness="2"
+                    CornerRadius="15"
+                    x:Name="border">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#DDDD4C00"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="#DDDD4C00"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#DDDD4C00"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="White"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
     </Grid>
 </Window>

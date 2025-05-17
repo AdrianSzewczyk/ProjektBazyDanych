@@ -133,5 +133,19 @@ namespace WSPPCars
 
             oknoKonta.ShowDialog();
         }
+
+        private void btnWynajmij_Click(object sender, RoutedEventArgs e)
+        {
+            if(AktualnyUzytkownik.Login == "Gosc")
+            {
+                OknoLogowanie oknoLogowanie = new OknoLogowanie();
+                oknoLogowanie.ShowDialog();
+            }
+            else
+            {
+                wynajemOgolny ogolny = new wynajemOgolny();
+                ogolny.ShowDialog();
+            }          
+        }
     }
 }

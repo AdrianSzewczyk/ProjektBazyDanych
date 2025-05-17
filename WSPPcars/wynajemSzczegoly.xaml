@@ -18,14 +18,21 @@
             <TextBlock Text="Imię i nazwisko klienta:" Foreground="White" FontWeight="Bold"/>
             <TextBox x:Name="txtKlient" Margin="0,0,0,15" />
 
-            <TextBlock Text="Samochód (marka/model):" Foreground="White" FontWeight="Bold"/>
-            <TextBox x:Name="txtSamochod" Margin="0,0,0,15" />
+            <TextBlock Text="Wybierz dodatki:" Foreground="White" FontWeight="Bold"/>
+            <ListBox x:Name="listDodatki" SelectionMode="Multiple" Margin="0,0,0,15" Height="100">
+                <ListBoxItem Content="GPS" />
+                <ListBoxItem Content="Fotelik dla dziecka" />
+                <ListBoxItem Content="Dodatkowy kierowca" />
+                <ListBoxItem Content="Łańcuchy na koła" />
+                <ListBoxItem Content="Wi-Fi w samochodzie" />
+            </ListBox>
 
-            <TextBlock Text="Data wypożyczenia:" Foreground="White" FontWeight="Bold"/>
-            <TextBlock x:Name="lblDataWypozyczenia" Foreground="White" Margin="0,0,0,15"/>
-
-            <TextBlock Text="Data zwrotu:" Foreground="White" FontWeight="Bold"/>
-            <TextBlock x:Name="lblDataZwrotu" Foreground="White" Margin="0,0,0,25"/>
+            <TextBlock Text="Wybierz ubezpieczenie:" Foreground="White" FontWeight="Bold"/>
+            <ComboBox x:Name="comboUbezpieczenie" Margin="0,0,0,25" SelectedIndex="0">
+                <ComboBoxItem Content="Podstawowe" />
+                <ComboBoxItem Content="Rozszerzone" />
+                <ComboBoxItem Content="Premium" />
+            </ComboBox>
 
             <Button x:Name="btnSzukaj" Content="Szukaj" 
                     Height="40" 
