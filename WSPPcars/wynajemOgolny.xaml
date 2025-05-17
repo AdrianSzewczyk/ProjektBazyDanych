@@ -3,10 +3,97 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WSPPCars"
         mc:Ignorable="d"
-        Title="wynajemOgolny" Height="450" Width="800">
-    <Grid>
-        
+        Title="Wynajem ogólny" Height="634" Width="908" Background="#FF202020">
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Nagłówek -->
+        <TextBlock Text="Wynajem samochodu" 
+                   FontSize="26" 
+                   FontWeight="Bold" 
+                   Foreground="#FFFF5D00" 
+                   HorizontalAlignment="Center" 
+                   Margin="0,0,0,20"/>
+
+        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" Width="700" >
+            <!-- Daty -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,15">
+                <StackPanel Margin="10">
+                    <TextBlock Text="Data wypożyczenia:" Foreground="White"/>
+                    <DatePicker x:Name="dpDataWypozyczenia" Width="150"/>
+                </StackPanel>
+                <StackPanel Margin="10">
+                    <TextBlock Text="Data zwrotu:" Foreground="White"/>
+                    <DatePicker x:Name="dpDataZwrotu" Width="150"/>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Lista aut -->
+            <TextBlock Text="Dostępne samochody:" Foreground="White" FontWeight="Bold" Margin="0,10,0,5"/>
+            <ListBox x:Name="lstAuta" Height="120" Margin="0,0,0,15">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <Image Source="{Binding ImagePath}" Width="80" Height="50" Margin="5"/>
+                            <TextBlock Text="{Binding Marka}" Foreground="White" Margin="10,0,0,0"/>
+                            <TextBlock Text="{Binding Model}" Foreground="White" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <!-- Dodatki -->
+            <TextBlock Text="Dodatki:" Foreground="White" FontWeight="Bold" Margin="0,5,0,5"/>
+            <ListBox x:Name="lstDodatki" SelectionMode="Multiple" Height="100" Margin="0,0,0,10">
+                <ListBoxItem Content="GPS" Foreground="White"/>
+                <ListBoxItem Content="Fotelik dziecięcy" Foreground="White"/>
+                <ListBoxItem Content="Dodatkowy kierowca" Foreground="White"/>
+                <ListBoxItem Content="Łańcuchy na koła" Foreground="White"/>
+            </ListBox>
+
+            <!-- Ubezpieczenie -->
+            <TextBlock Text="Ubezpieczenie:" Foreground="White" FontWeight="Bold"/>
+            <ComboBox x:Name="cmbUbezpieczenie" Width="200">
+                <ComboBoxItem Content="Brak" />
+                <ComboBoxItem Content="Podstawowe" />
+                <ComboBoxItem Content="Pełne" />
+            </ComboBox>
+        </StackPanel>
+
+        <!-- Przycisk -->
+        <Button Content="Wyszukaj dostępne auta"
+                Grid.Row="2"
+                Height="45"
+                Width="250"
+                HorizontalAlignment="Center"
+                FontWeight="Bold"
+                Foreground="Black">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="#FFFF5D00"
+                            BorderBrush="#EEEE4C00"
+                            BorderThickness="2"
+                            CornerRadius="15"
+                            x:Name="border">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#DDDD4C00"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="#DDDD4C00"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#DDDD4C00"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="White"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
     </Grid>
 </Window>

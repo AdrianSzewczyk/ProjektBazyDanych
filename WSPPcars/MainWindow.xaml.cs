@@ -142,7 +142,7 @@ namespace WSPPCars
 
         private void btnWynajmij_Click(object sender, RoutedEventArgs e)
         {
-            if(AktualnyUzytkownik.Login == "Gosc")
+            if (AktualnyUzytkownik.Login == "Gosc")
             {
                 OknoLogowanie oknoLogowanie = new OknoLogowanie();
                 oknoLogowanie.ShowDialog();
@@ -151,7 +151,7 @@ namespace WSPPCars
             {
                 wynajemOgolny ogolny = new wynajemOgolny();
                 ogolny.ShowDialog();
-            }          
+            }
         }
         
     }
