@@ -14,6 +14,9 @@
     <Compile Update="OknoSzczegoly.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="panelAdmina.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="wynajemOgolny.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -32,6 +35,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MojeZamowienia.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="panelAdmina.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="wynajemOgolny.xaml">

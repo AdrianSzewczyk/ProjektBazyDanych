@@ -104,6 +104,7 @@ namespace WSPPCars
                 Haslo = ""
             };
             btnLogowanie.Visibility = Visibility.Visible;
+            btnAdminPanel.Visibility = Visibility.Collapsed;
         }
 
         private Uzytkownicy aktualnyUzytkownik;
@@ -153,6 +154,11 @@ namespace WSPPCars
                 ogolny.ShowDialog();
             }
         }
-        
+
+        private void btnAdminPanel_Click(object sender, RoutedEventArgs e)
+        {
+            panelAdmina adm = new panelAdmina();
+            adm.ShowDialog();
+        }
     }
 }

@@ -87,7 +87,11 @@ namespace WSPPCars
             {
                 MainWindow mw = (MainWindow)Application.Current.MainWindow;
                 mw.btnLogowanie.Visibility = Visibility.Collapsed;
-                this.Close();
+                if (mw.AktualnyUzytkownik.IdRodzajKonta == 2)
+                {
+                    mw.btnAdminPanel.Visibility = Visibility.Visible;
+                }
+                    this.Close();             
             }
         }
     }
