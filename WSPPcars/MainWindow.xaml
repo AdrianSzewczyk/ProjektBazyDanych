@@ -83,13 +83,13 @@
                         <StackPanel Orientation="Horizontal" Margin="10,5,5,5">
                             <Image Source="{Binding ImagePath}" Width="160" Height="110" Margin="0"/>
                             <StackPanel Margin="5">
-                                <TextBlock Text="{Binding Marka}"/>
-                                <TextBlock Text="{Binding Model}"/>
-                                <TextBlock Text="{Binding Kwota, StringFormat=Cena: {0} PLN}"/>
-                                <TextBlock Text="{Binding LiczbaDrzwi, StringFormat=Ilość drzwi: {0}}"/>
-                                <TextBlock Text="{Binding PojemnoscSilnika, StringFormat=Pojemność silnika: {0}}"/>
-                                <TextBlock Text="{Binding LiczbaPasazerow, StringFormat=Ilość osób: {0}}"/>
-                                <TextBlock Text="{Binding SkrzyniaBiegow}"/>
+                                <TextBlock Text="{Binding Marka}" FontWeight="Bold" FontSize="18" Foreground="#FFFF5D00" FontFamily="Bahnschrift"/>
+                                <TextBlock Text="{Binding Model}" FontWeight="Bold" FontSize="14" Foreground="White"/>
+                                <TextBlock Text="{Binding Kwota, StringFormat=Cena: {0} PLN}"  FontSize="14" Foreground="White"/>
+                                <TextBlock Text="{Binding LiczbaDrzwi, StringFormat=Ilość drzwi: {0}}"  FontSize="14" Foreground="White"/>
+                                <TextBlock Text="{Binding PojemnoscSilnika, StringFormat=Pojemność silnika: {0}}"  FontSize="14" Foreground="White"/>
+                                <TextBlock Text="{Binding LiczbaPasazerow, StringFormat=Ilość osób: {0}}"  FontSize="14" Foreground="White"/>
+                                <TextBlock Text="{Binding SkrzyniaBiegow}"  FontSize="14" Foreground="White"/>
                             </StackPanel>
                         </StackPanel>
                     </DataTemplate>

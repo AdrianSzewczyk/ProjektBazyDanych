@@ -136,9 +136,16 @@ namespace WSPPCars
         }
         private void btnKonto_Click(object sender, RoutedEventArgs e)
         {
-            MojeKonto oknoKonta = new MojeKonto(aktualnyUzytkownik);
-
-            oknoKonta.ShowDialog();
+            if(AktualnyUzytkownik.Login != "Gosc")
+            {
+                MojeKonto oknoKonta = new MojeKonto(aktualnyUzytkownik);
+                oknoKonta.ShowDialog();
+            }
+            else
+            {
+                OknoLogowanie okno = new OknoLogowanie();
+                okno.ShowDialog(); 
+            }   
         }
 
         /*private void btnWynajmij_Click(object sender, RoutedEventArgs e)
