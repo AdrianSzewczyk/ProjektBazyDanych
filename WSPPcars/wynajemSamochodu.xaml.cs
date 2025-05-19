@@ -28,28 +28,37 @@ namespace WSPPCars
 
             if (dataWypozyczenia == null || dataZwrotu == null)
             {
-                MessageBox.Show("Proszę wybrać daty wypożyczenia i zwrotu.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Warning);
+                lblKomunikat.Content = "Proszę wybrać daty wypożyczenia i zwrotu.";
+                lblKomunikat.Foreground = Brushes.OrangeRed;
+                lblKomunikat.Visibility = Visibility.Visible;
                 return;
             }
 
             if (dataZwrotu <= dataWypozyczenia)
             {
-                MessageBox.Show("Data zwrotu musi być późniejsza niż data wypożyczenia.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Warning);
+                lblKomunikat.Content = "Data zwrotu musi być późniejsza niż data wypożyczenia.";
+                lblKomunikat.Foreground = Brushes.OrangeRed;
+                lblKomunikat.Visibility = Visibility.Visible;
                 return;
             }
-            else
+
+            lblKomunikat.Content = "Dane są poprawne. Przechodzenie dalej...";
+            lblKomunikat.Foreground = Brushes.LightGreen;
+            lblKomunikat.Visibility = Visibility.Visible;
+
+            wynajemSzczegoly szczegoly = new wynajemSzczegoly
             {
-                wynajemSzczegoly szczegoly = new wynajemSzczegoly();
-                szczegoly.Owner = this;
-                szczegoly.WindowStartupLocation = WindowStartupLocation.Manual;
-                szczegoly.Width = this.Width;
-                szczegoly.Height = this.Height;
-                szczegoly.Left = this.Left;
-                szczegoly.Top = this.Top;
-                this.Hide();
-                szczegoly.ShowDialog();
-                this.Show();
-            }          
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.Manual,
+                Width = this.Width,
+                Height = this.Height,
+                Left = this.Left,
+                Top = this.Top
+            };
+
+            this.Hide();
+            szczegoly.ShowDialog();
+            this.Show();
         }
     }
 }
