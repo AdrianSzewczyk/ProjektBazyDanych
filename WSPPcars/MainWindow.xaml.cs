@@ -117,7 +117,7 @@ namespace WSPPCars
         {
             if (((FrameworkElement)e.OriginalSource).DataContext is CarAdViewModel selectedCarAd)
             {
-                    var detailsWindow = new OknoSzczegoly(selectedCarAd);
+                var detailsWindow = new OknoSzczegoly(selectedCarAd);
                 detailsWindow.Owner = this;
                 detailsWindow.WindowStartupLocation = WindowStartupLocation.Manual;
                 detailsWindow.Width = this.Width;
