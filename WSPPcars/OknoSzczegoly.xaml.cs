@@ -35,12 +35,28 @@ namespace WSPPCars
             if (mw.AktualnyUzytkownik.Login != "Gosc")
             {
                 wynajemSamochodu wynajem = new wynajemSamochodu();
+                wynajem.Owner = this;
+                wynajem.WindowStartupLocation = WindowStartupLocation.Manual;
+                wynajem.Width = this.Width;
+                wynajem.Height = this.Height;
+                wynajem.Left = this.Left;
+                wynajem.Top = this.Top;
+                this.Hide();
                 wynajem.ShowDialog();
+                this.Show();
             }
             else
             {
                 OknoLogowanie okno = new OknoLogowanie();
+                okno.Owner = this;
+                okno.WindowStartupLocation = WindowStartupLocation.Manual;
+                okno.Width = this.Width;
+                okno.Height = this.Height;
+                okno.Left = this.Left;
+                okno.Top = this.Top;
+                this.Hide();
                 okno.ShowDialog();
+                this.Show();
             }
         }
     }

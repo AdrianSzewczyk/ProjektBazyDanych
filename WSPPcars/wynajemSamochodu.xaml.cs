@@ -40,7 +40,15 @@ namespace WSPPCars
             else
             {
                 wynajemSzczegoly szczegoly = new wynajemSzczegoly();
+                szczegoly.Owner = this;
+                szczegoly.WindowStartupLocation = WindowStartupLocation.Manual;
+                szczegoly.Width = this.Width;
+                szczegoly.Height = this.Height;
+                szczegoly.Left = this.Left;
+                szczegoly.Top = this.Top;
+                this.Hide();
                 szczegoly.ShowDialog();
+                this.Show();
             }          
         }
     }

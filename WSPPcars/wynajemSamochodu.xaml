@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WSPPCars"
         mc:Ignorable="d"
-        Title="Wynajem Samochodu" Height="450" Width="800" Background="#FF202020">
+        Title="Wynajem Samochodu" Height="630" Width="1080" MinWidth="1080" MinHeight="550" WindowStartupLocation="CenterOwner" Background="#FF202020">
     <Grid>
         <StackPanel Margin="30" VerticalAlignment="Center" HorizontalAlignment="Center" Width="400">
             <TextBlock Text="Wynajem samochodu" 

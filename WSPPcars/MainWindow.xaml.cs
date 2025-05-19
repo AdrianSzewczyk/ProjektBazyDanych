@@ -126,25 +126,57 @@ namespace WSPPCars
         private void btnLogowanie_Click(object sender, RoutedEventArgs e)
         {
             OknoLogowanie oknoLogowanie = new OknoLogowanie();
+            oknoLogowanie.Owner = this;
+            oknoLogowanie.WindowStartupLocation = WindowStartupLocation.Manual;
+            oknoLogowanie.Width = this.Width;
+            oknoLogowanie.Height = this.Height;
+            oknoLogowanie.Left = this.Left;
+            oknoLogowanie.Top = this.Top;
+            this.Hide();
             oknoLogowanie.ShowDialog();
+            this.Show();
         }
 
         private void btnRejestracja_Click(object sender, RoutedEventArgs e)
         {
             OknoRejestracja oknoRejestracja = new OknoRejestracja();
+            oknoRejestracja.Owner = this;
+            oknoRejestracja.WindowStartupLocation = WindowStartupLocation.Manual;
+            oknoRejestracja.Width = this.Width;
+            oknoRejestracja.Height = this.Height;
+            oknoRejestracja.Left = this.Left;
+            oknoRejestracja.Top = this.Top;
+            this.Hide();
             oknoRejestracja.ShowDialog();
+            this.Show();
         }
         private void btnKonto_Click(object sender, RoutedEventArgs e)
         {
             if(AktualnyUzytkownik.Login != "Gosc")
             {
                 MojeKonto oknoKonta = new MojeKonto(aktualnyUzytkownik);
+                oknoKonta.Owner = this;
+                oknoKonta.WindowStartupLocation = WindowStartupLocation.Manual;
+                oknoKonta.Width = this.Width;
+                oknoKonta.Height = this.Height;
+                oknoKonta.Left = this.Left;
+                oknoKonta.Top = this.Top;
+                this.Hide();
                 oknoKonta.ShowDialog();
+                this.Show();
             }
             else
             {
-                OknoLogowanie okno = new OknoLogowanie();
-                okno.ShowDialog(); 
+                OknoLogowanie oknoLogowanie = new OknoLogowanie();
+                oknoLogowanie.Owner = this;
+                oknoLogowanie.WindowStartupLocation = WindowStartupLocation.Manual;
+                oknoLogowanie.Width = this.Width;
+                oknoLogowanie.Height = this.Height;
+                oknoLogowanie.Left = this.Left;
+                oknoLogowanie.Top = this.Top;
+                this.Hide();
+                oknoLogowanie.ShowDialog();
+                this.Show();
             }   
         }
 
@@ -165,7 +197,15 @@ namespace WSPPCars
         private void btnAdminPanel_Click(object sender, RoutedEventArgs e)
         {
             panelAdmina adm = new panelAdmina();
+            adm.Owner = this;
+            adm.WindowStartupLocation = WindowStartupLocation.Manual;
+            adm.Width = this.Width;
+            adm.Height = this.Height;
+            adm.Left = this.Left;
+            adm.Top = this.Top;
+            this.Hide();
             adm.ShowDialog();
+            this.Show();
         }
 
         private void btnWyszukaj_Click(object sender, RoutedEventArgs e)

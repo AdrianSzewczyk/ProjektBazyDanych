@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WSPPCars"
         mc:Ignorable="d"
-        Title="OknoSzczegoly" Height="540" Width="873" Background="#FF202020">
+        Title="OknoSzczegoly" Height="630" Width="1080" MinWidth="1080" WindowStartupLocation="CenterOwner" MinHeight="550" Background="#FF202020">
     <Grid>
         <StackPanel Margin="0,0,10,0">
             <!-- Nagłówek -->

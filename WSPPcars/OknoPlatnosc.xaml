@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WSPPCars"
         mc:Ignorable="d"
-        Title="Płatność" Height="500" Width="800"
+        Title="Płatność" Height="630" Width="1080" MinWidth="1080" MinHeight="550" WindowStartupLocation="CenterOwner"
         Background="#303030" FontFamily="Bahnschrift">
     <Grid Margin="20">
         <TextBlock Text="Płatność za wynajem"

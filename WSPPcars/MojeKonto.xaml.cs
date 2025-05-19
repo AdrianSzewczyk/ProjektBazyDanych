@@ -34,7 +34,15 @@ namespace WSPPCars
         private void BtnEdytuj_Click(object sender, RoutedEventArgs e)
         {
             edycjaUzytkownika edycja = new edycjaUzytkownika();
+            edycja.Owner = this;
+            edycja.WindowStartupLocation = WindowStartupLocation.Manual;
+            edycja.Width = this.Width;
+            edycja.Height = this.Height;
+            edycja.Left = this.Left;
+            edycja.Top = this.Top;
+            this.Hide();
             edycja.ShowDialog();
+            this.Show();
         }
 
 
@@ -61,7 +69,15 @@ namespace WSPPCars
         private void BtnZamowienia_Click(object sender, RoutedEventArgs e)
         {
             MojeZamowienia oknoZamowienia = new MojeZamowienia();
+            oknoZamowienia.Owner = this;
+            oknoZamowienia.WindowStartupLocation = WindowStartupLocation.Manual;
+            oknoZamowienia.Width = this.Width;
+            oknoZamowienia.Height = this.Height;
+            oknoZamowienia.Left = this.Left;
+            oknoZamowienia.Top = this.Top;
+            this.Hide();
             oknoZamowienia.ShowDialog();
+            this.Show();
         }
     }
 }
