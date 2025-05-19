@@ -47,8 +47,8 @@
 
     </Window.Resources>
     <Grid Margin="0,0,0,-6" Background="Black">
-        <Image Source="./Images/Logo.png" Height="137" VerticalAlignment="Top" Margin="10,0,148,0"/>
-        <Border BorderBrush="#FFFF5D00" BorderThickness="2" CornerRadius="10" Background="#202020" Margin="30,137,264,20">
+        <Image Source="./Images/Logo.png" Height="161" VerticalAlignment="Top" Margin="0,13,158,0"/>
+        <Border BorderBrush="#FFFF5D00" BorderThickness="2" CornerRadius="10" Background="#202020" Margin="30,166,264,20">
             <ListView x:Name="listboxOgloszenia" ItemsSource="{Binding CarAds}" Margin="8,8,8,8" MouseDoubleClick="listboxOgloszenia_MouseDoubleClick_1" Background="#202020" BorderThickness="0" BorderBrush="#202020">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
@@ -97,33 +97,99 @@
 
             </ListView>
         </Border>
-        <Border BorderBrush="#FFFF5D00" Background="#202020" BorderThickness="1" Margin="0,253,27,20" HorizontalAlignment="Right" Width="216" CornerRadius="10">
-            <TextBlock Text="Filtry" TextAlignment="Center" FontWeight="Bold" FontSize="18" Foreground="#FFFFFF" FontFamily="Bahnschrift" Margin="9,9,9,-1"/>
-        </Border>
-        <Button x:Name="btnRejestracja" Content="Zarejestruj się" Margin="0,48,27,0" VerticalAlignment="Top" Height="26" HorizontalAlignment="Right" Width="216" FontFamily="Bahnschrift" FontWeight="Bold" Foreground="Black" Click="btnRejestracja_Click">
-            <Button.Template>
-                <ControlTemplate TargetType="Button">
-                    <Border Background="#FFFF5D00" 
-                    BorderBrush="#EEEE4C00" 
+        <Border x:Name="borderFiltry" BorderBrush="#FFFF5D00" Background="#202020" BorderThickness="1" Margin="0,166,27,20" HorizontalAlignment="Right" Width="216" CornerRadius="10">
+            <StackPanel Margin="10">
+                <TextBlock Text="Filtry" TextAlignment="Center" FontWeight="Bold" FontSize="18" Foreground="#FFFFFF" FontFamily="Bahnschrift" Margin="0,0,0,10"/>
+
+                <!-- Wybór dat -->
+                <TextBlock Text="Od:" Foreground="White" FontFamily="Bahnschrift" Margin="0,5,0,2"/>
+                <DatePicker x:Name="datePoczatek" Height="26" Width="Auto" Margin="0,0,0,5"/>
+
+                <TextBlock Text="Do:" Foreground="White" FontFamily="Bahnschrift" Margin="0,5,0,2"/>
+                <DatePicker x:Name="dateKoniec" Height="26" Width="Auto" Margin="0,0,0,10"/>
+
+                <!-- Dodatki jako lista wielokrotnego wyboru -->
+                <TextBlock Text="Dodatki:" Foreground="White" FontFamily="Bahnschrift" Margin="0,10,0,2"/>
+                <ListBox x:Name="listBoxDodatki" SelectionMode="Multiple" Background="#202020" Foreground="White" FontFamily="Bahnschrift" BorderBrush="#404040" BorderThickness="1" Height="80">
+                    <ListBoxItem Content="GPS"/>
+                    <ListBoxItem Content="Fotelik dziecięcy"/>
+                    <ListBoxItem Content="Dodatkowy kierowca"/>
+                    <ListBoxItem Content="Łańcuchy na koła"/>
+                    <ListBoxItem Content="Bagażnik dachowy"/>
+                </ListBox>
+
+                <!-- Ubezpieczenie -->
+                <TextBlock Text="Ubezpieczenie:" Foreground="White" FontFamily="Bahnschrift" Margin="0,10,0,2"/>
+                <ComboBox x:Name="comboUbezpieczenie" FontFamily="Bahnschrift" Margin="0,0,0,10">
+                    <ComboBoxItem Content="Brak" />
+                    <ComboBoxItem Content="Podstawowe" />
+                    <ComboBoxItem Content="Rozszerzone" />
+                </ComboBox>
+                <Button x:Name="btnWyszukaj"
+        Content="Wyszukaj"
+        Height="30"
+        FontFamily="Bahnschrift"
+        FontWeight="Bold"
+        Foreground="Black"
+        Margin="0,10,0,0"
+        Click="btnWyszukaj_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="#FFFF5D00"
+                    BorderBrush="#EEEE4C00"
                     BorderThickness="2"
                     CornerRadius="15"
                     x:Name="border">
-                        <ContentPresenter HorizontalAlignment="Center" 
-                                  VerticalAlignment="Center"/>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="#DDDD4C00"/>
-                            <Setter TargetName="border" Property="BorderBrush" Value="#DDDD4C00"/>
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="#DDDD4C00"/>
-                            <Setter TargetName="border" Property="BorderBrush" Value="White"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#DDDD4C00"/>
+                                    <Setter TargetName="border" Property="BorderBrush" Value="#DDDD4C00"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#DDDD4C00"/>
+                                    <Setter TargetName="border" Property="BorderBrush" Value="White"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Button x:Name="btnResetuj"
+        Content="Resetuj"
+        Height="30"
+        Margin="0,8,0,0"
+        FontFamily="Bahnschrift"
+        FontWeight="Bold"
+        Foreground="Black"
+        Click="btnResetuj_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="#FFFF5D00"
+                    BorderBrush="#EEEE4C00"
+                    BorderThickness="2"
+                    CornerRadius="15"
+                    x:Name="border">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#DDDD4C00"/>
+                                    <Setter TargetName="border" Property="BorderBrush" Value="#DDDD4C00"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#DDDD4C00"/>
+                                    <Setter TargetName="border" Property="BorderBrush" Value="White"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+            </StackPanel>
+        </Border>
+
+
         <Button x:Name="btnLogowanie" Content="Zaloguj się" Margin="0,13,27,0" VerticalAlignment="Top" Height="25" HorizontalAlignment="Right" Width="216" Click="btnLogowanie_Click" FontFamily="Bahnschrift" FontWeight="Bold" Foreground="Black">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
@@ -180,41 +246,10 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Button x:Name="btnWynajmij" Content="Wynajmij"
-        Margin="0,120,27,0"
-        VerticalAlignment="Top"
-        Height="26"
-        Width="216"
-        HorizontalAlignment="Right"
-        Click="btnWynajmij_Click"
-        FontFamily="Bahnschrift"
-        FontWeight="Bold"
-        Foreground="Black">
-            <Button.Template>
-                <ControlTemplate TargetType="Button">
-                    <Border Background="#FFFF5D00" 
-                    BorderBrush="#EEEE4C00" 
-                    BorderThickness="2"
-                    CornerRadius="15"
-                    x:Name="border">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="#DDDD4C00"/>
-                            <Setter TargetName="border" Property="BorderBrush" Value="#DDDD4C00"/>
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="#DDDD4C00"/>
-                            <Setter TargetName="border" Property="BorderBrush" Value="White"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
+
         <Button x:Name="btnAdminPanel" 
         Content="Panel administratora" 
-        Margin="0,156,27,0" 
+        Margin="0,120,27,0" 
         VerticalAlignment="Top" 
         Height="26" 
         Width="216" 
@@ -245,6 +280,41 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
+        <Button x:Name="btnRejestracja"
+        Content="Zarejestruj się"
+        Margin="0,48,27,0"
+        VerticalAlignment="Top"
+        Height="26"
+        HorizontalAlignment="Right"
+        Width="216"
+        FontFamily="Bahnschrift"
+        FontWeight="Bold"
+        Foreground="Black"
+        Click="btnRejestracja_Click">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="#FFFF5D00"
+                    BorderBrush="#EEEE4C00"
+                    BorderThickness="2"
+                    CornerRadius="15"
+                    x:Name="border">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#DDDD4C00"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="#DDDD4C00"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#DDDD4C00"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="White"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
 
     </Grid>
 </Window>

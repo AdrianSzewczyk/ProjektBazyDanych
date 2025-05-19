@@ -31,8 +31,17 @@ namespace WSPPCars
 
         private void btnWynajmij_Click(object sender, RoutedEventArgs e)
         {
-            wynajemSamochodu wynajem = new wynajemSamochodu();
-            wynajem.ShowDialog();
+            MainWindow mw = (MainWindow)Application.Current.MainWindow;
+            if (mw.AktualnyUzytkownik.Login != "Gosc")
+            {
+                wynajemSamochodu wynajem = new wynajemSamochodu();
+                wynajem.ShowDialog();
+            }
+            else
+            {
+                OknoLogowanie okno = new OknoLogowanie();
+                okno.ShowDialog();
+            }
         }
     }
 }

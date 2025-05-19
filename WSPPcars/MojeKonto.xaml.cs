@@ -49,9 +49,9 @@ namespace WSPPCars
             AktualnyUzytkownik.Utworzony = DateTime.Now;
             AktualnyUzytkownik.Haslo = "";
             mw.AktualnyUzytkownik = AktualnyUzytkownik;
-            //mw.btnLogowanie.IsEnabled = true;
-            //mw.btnLogowanie.IsVisible = true;
-            mw.btnLogowanie.Visibility = Visibility.Visible;
+            mw.btnLogowanie.IsEnabled = true;
+            mw.btnLogowanie.Content = "Zaloguj się";
+            mw.btnAdminPanel.Visibility = Visibility.Collapsed;
             lblImieNazwisko.Text = AktualnyUzytkownik.Imie + " " + AktualnyUzytkownik.Nazwisko;
             lblLogin.Text = AktualnyUzytkownik.Login;
             lblDataRejestracji.Text = AktualnyUzytkownik.Utworzony.ToString("dd-MM-yyyy HH:mm");

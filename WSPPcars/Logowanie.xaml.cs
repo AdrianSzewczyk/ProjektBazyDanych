@@ -86,7 +86,8 @@ namespace WSPPCars
             if(txtKomunikat.Text == "Udało sie zalogować!!!")
             {
                 MainWindow mw = (MainWindow)Application.Current.MainWindow;
-                mw.btnLogowanie.Visibility = Visibility.Collapsed;
+                mw.btnLogowanie.IsEnabled = false;
+                mw.btnLogowanie.Content = "Jesteś zalogowany!";
                 if (mw.AktualnyUzytkownik.IdRodzajKonta == 2)
                 {
                     mw.btnAdminPanel.Visibility = Visibility.Visible;

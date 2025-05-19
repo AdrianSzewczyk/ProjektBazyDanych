@@ -103,7 +103,7 @@ namespace WSPPCars
                 Utworzony = DateTime.Now,
                 Haslo = ""
             };
-            btnLogowanie.Visibility = Visibility.Visible;
+            //btnLogowanie.Visibility = Visibility.Visible;
             btnAdminPanel.Visibility = Visibility.Collapsed;
         }
 
@@ -141,7 +141,7 @@ namespace WSPPCars
             oknoKonta.ShowDialog();
         }
 
-        private void btnWynajmij_Click(object sender, RoutedEventArgs e)
+        /*private void btnWynajmij_Click(object sender, RoutedEventArgs e)
         {
             if (AktualnyUzytkownik.Login == "Gosc")
             {
@@ -153,12 +153,22 @@ namespace WSPPCars
                 wynajemOgolny ogolny = new wynajemOgolny();
                 ogolny.ShowDialog();
             }
-        }
+        }*/
 
         private void btnAdminPanel_Click(object sender, RoutedEventArgs e)
         {
             panelAdmina adm = new panelAdmina();
             adm.ShowDialog();
+        }
+
+        private void btnWyszukaj_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void btnResetuj_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
