@@ -102,7 +102,42 @@
                     <ListBox x:Name="listaDodatkow" Grid.Column="1" Margin="10" DisplayMemberPath="Nazwa" SelectionChanged="ListaDodatkow_SelectionChanged"/>
                 </Grid>
             </TabItem>
+            <TabItem Header="Użytkownicy">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
 
+                    <StackPanel Grid.Column="0" Margin="10">
+                        <TextBlock Text="Zarządzaj użytkownikami" FontWeight="Bold" FontSize="18" Margin="0,0,0,10"/>
+
+                        <TextBlock Text="Imię i nazwisko" Foreground="White"/>
+                        <TextBox x:Name="txtImieNazwisko" Margin="0,0,0,5"/>
+
+                        <TextBlock Text="Login" Foreground="White"/>
+                        <TextBox x:Name="txtLogin" Margin="0,0,0,5"/>
+
+                        <TextBlock Text="Hasło" Foreground="White"/>
+                        <TextBox x:Name="txtHaslo" Margin="0,0,0,5"/>
+
+                        <TextBlock Text="Uprawnienia" Foreground="White"/>
+                        <ComboBox x:Name="comboUprawnienia" Margin="0,0,0,10">
+                            <ComboBoxItem Content="Admin"/>
+                            <ComboBoxItem Content="Zwykly"/>
+                        </ComboBox>
+
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="Dodaj" Width="80" Background="#FFFF5D00" Click="BtnDodajUzytkownika_Click"/>
+                            <Button Content="Usuń" Width="80" Margin="10,0,0,0" Background="#FFB00000" Click="BtnUsunUzytkownika_Click"/>
+                            <Button Content="Zmień" Width="80" Margin="10,0,0,0" Background="#FF0096FF" Click="BtnEdytujUzytkownika_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+
+
+                    <ListBox x:Name="listaUzytkownikow" Grid.Column="1" Margin="10" DisplayMemberPath="Login" SelectionChanged="ListaUzytkownikow_SelectionChanged"/>
+                </Grid>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>

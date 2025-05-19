@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WSPPCars.Models;
 
 namespace WSPPCars
 {
@@ -20,6 +21,8 @@ namespace WSPPCars
         public ObservableCollection<Auto> Auta { get; set; } = new();
         public ObservableCollection<Ubezpieczenie> Ubezpieczenia { get; set; } = new();
         public ObservableCollection<Dodatek> Dodatki { get; set; } = new();
+        public ObservableCollection<Uzytkownik> Uzytkownicy { get; set; } = new();
+
 
         public panelAdmina()
         {
@@ -27,6 +30,7 @@ namespace WSPPCars
             listaAut.ItemsSource = Auta;
             listaUbezpieczen.ItemsSource = Ubezpieczenia;
             listaDodatkow.ItemsSource = Dodatki;
+            listaUzytkownikow.ItemsSource = Uzytkownicy;
         }
 
         // ------------------- Auta -------------------
@@ -145,7 +149,60 @@ namespace WSPPCars
                 listaDodatkow.Items.Refresh();
             }
         }
+        private void BtnDodajUzytkownika_Click(object sender, RoutedEventArgs e)
+        {
+            if (comboUprawnienia.SelectedItem is ComboBoxItem selected)
+            {
+                Uzytkownicy.Add(new Uzytkownik
+                {
+                    ImieNazwisko = txtImieNazwisko.Text,
+                    Login = txtLogin.Text,
+                    Haslo = txtHaslo.Text,
+                    Uprawnienia = selected.Content.ToString()
+                });
+            }
+        }
+
+        private void ListaUzytkownikow_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (listaUzytkownikow.SelectedItem is Uzytkownik u)
+            {
+                txtImieNazwisko.Text = u.ImieNazwisko;
+                txtLogin.Text = u.Login;
+                txtHaslo.Text = u.Haslo;
+
+                foreach (ComboBoxItem item in comboUprawnienia.Items)
+                {
+                    if (item.Content.ToString() == u.Uprawnienia)
+                    {
+                        comboUprawnienia.SelectedItem = item;
+                        break;
+                    }
+                }
+            }
+        }
+
+
+        private void BtnUsunUzytkownika_Click(object sender, RoutedEventArgs e)
+        {
+            if (listaUzytkownikow.SelectedItem is Uzytkownik u)
+                Uzytkownicy.Remove(u);
+        }
+
+        private void BtnEdytujUzytkownika_Click(object sender, RoutedEventArgs e)
+        {
+            if (listaUzytkownikow.SelectedItem is Uzytkownik u && comboUprawnienia.SelectedItem is ComboBoxItem selected)
+            {
+                u.ImieNazwisko = txtImieNazwisko.Text;
+                u.Login = txtLogin.Text;
+                u.Haslo = txtHaslo.Text;
+                u.Uprawnienia = selected.Content.ToString();
+                listaUzytkownikow.Items.Refresh();
+            }
+        }
+
     }
+
 
     // ---------- Proste klasy ----------
     public class Auto
@@ -169,4 +226,15 @@ namespace WSPPCars
         public string Nazwa { get; set; }
         public string Cena { get; set; }
     }
+    public class Uzytkownik
+    {
+        public string ImieNazwisko { get; set; }
+        public string Login { get; set; }
+        public string Haslo { get; set; }
+        public string Uprawnienia { get; set; }
+
+        public override string ToString() => $"{Login} ({Uprawnienia})";
+    }
+
+
 }
