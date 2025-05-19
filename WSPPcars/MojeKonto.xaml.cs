@@ -55,6 +55,7 @@ namespace WSPPCars
             lblImieNazwisko.Text = AktualnyUzytkownik.Imie + " " + AktualnyUzytkownik.Nazwisko;
             lblLogin.Text = AktualnyUzytkownik.Login;
             lblDataRejestracji.Text = AktualnyUzytkownik.Utworzony.ToString("dd-MM-yyyy HH:mm");
+            this.Close();
         }
 
         private void BtnZamowienia_Click(object sender, RoutedEventArgs e)
