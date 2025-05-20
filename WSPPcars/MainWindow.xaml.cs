@@ -223,7 +223,10 @@ namespace WSPPCars
 
         private void btnResetuj_Click(object sender, RoutedEventArgs e)
         {
-
+            datePoczatek.SelectedDate = null;
+            dateKoniec.SelectedDate = null;
+            listBoxDodatki.UnselectAll();
+            comboUbezpieczenie.SelectedIndex = -1;
         }
     }
 }
