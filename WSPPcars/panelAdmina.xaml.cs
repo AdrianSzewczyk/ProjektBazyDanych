@@ -14,6 +14,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WSPPCars.Models;
 
@@ -35,17 +36,21 @@ namespace WSPPCars
             listaDodatkow.ItemsSource = Dodatki;
             listaUzytkownikow.ItemsSource = Uzytkownicy;*/
             WyswietlOgloszenia();
+            WyswietlAuta();
             WyswietlUbezpieczenia();
             WyswietlDodatki();
             WyswietlUżytkownicy();
-        }
+            WyswietlAutaSkrocone();
 
-        // ------------------- Auta -------------------
-       
-        List<CarAdViewModel> CarAds { get; set; } 
+
+        }
+        // ------------------- Ogłoszenia -------------------
+
+
+        
         private void WyswietlOgloszenia()
         {
-            listaAut.Items.Clear();
+            listaOgloszen.Items.Clear();
 
             var db = new DbWsppcarsContext();
             var ogloszeniaZBazy = db.Ogloszenia
@@ -57,83 +62,89 @@ namespace WSPPCars
 
             foreach (var o in ogloszeniaZBazy)
             {
-                string marka = o.IdPojazduNavigation.IdSztukiNavigation.Marka;
-                string model = o.IdPojazduNavigation.IdSztukiNavigation.Model;
-                decimal? kwota = o.Kwota;
-                int? liczbaDrzwi = o.IdPojazduNavigation.IdSztukiNavigation.LiczbaDrzwi ;
-                decimal? pojemnoscSilnika = o.IdPojazduNavigation.IdSztukiNavigation.PojemnoscSilnika;
-                int? liczbaPasazerow = o.IdPojazduNavigation.IdSztukiNavigation.LiczbaPasazerow;
-                string skrzyniaBiegow = o.IdPojazduNavigation.IdSztukiNavigation.AutomatycznaSkrzynia == true ? "Automatyczna" : "Manualna";
-                listaAut.Items.Add(o);
+                listaOgloszen.Items.Add(o);
             }
 
+        }
+        private void WyswietlAutaSkrocone()
+        {
+            listaAutSkrocona.Items.Clear();
+
+            var db = new DbWsppcarsContext();
+            var autaZBazy = db.Pojazds
+            .Include(ps => ps.IdSztukiNavigation)
+            .ToList();
 
 
-        
+            foreach (var a in autaZBazy)
+            {
+                listaAutSkrocona.Items.Add(a);
+            }
 
         }
 
-        private void BtnDodajAuto_Click(object sender, RoutedEventArgs e)
+        private void BtnDodajOgloszenie_Click(object sender, RoutedEventArgs e)
         {
-
 
             using (var context = new DbWsppcarsContext())
             {
-                var pojazd = new PojazdSztuka
+                var wybraneAuto = listaAutSkrocona.SelectedItem as Pojazd;
+                if (wybraneAuto != null)
                 {
-                    Marka = txtMarka.Text,
-                    Model = txtModel.Text,
-                    IdTypPojazdu = 1,
-                    PojemnoscSilnika = Convert.ToDecimal(txtSilnik.Text),
-                    LiczbaDrzwi = Convert.ToInt16(txtDrzwi.Text),
-                    LiczbaPasazerow = Convert.ToInt16(txtPasazerowie.Text),
-                    AutomatycznaSkrzynia = true,
-                    Rocznik = new DateOnly(2022, 1, 1)
-                };
+                    var ogloszenie = new Ogloszenium
+                    {
+                        IdPojazdu = wybraneAuto.IdPojazdu,
+                        Dostepnosc = dostepnoscOgloszenie(),
+                        DataDodania = DateTime.Now,
+                        Kwota = Convert.ToDecimal(txtCena.Text)
+                    };
 
-                context.PojazdSztukas.Add(pojazd);
-                context.SaveChanges(); 
-
-                var poj = new Pojazd
-                {
-                    LiczbaSztuk = 1,
-                    IdSztuki = pojazd.IdPojazdSztuka 
-                };
-
-                context.Pojazds.Add(poj);
-                context.SaveChanges(); 
-
-                var ogloszenie = new Ogloszenium
-                {
-                    IdPojazdu = poj.IdPojazdu, 
-                    Dostepnosc = true,
-                    DataDodania = DateTime.Now,
-                    Kwota = Convert.ToDecimal(txtCena.Text)
-                };
-
-                context.Ogloszenia.Add(ogloszenie);
-                context.SaveChanges();
+                    context.Ogloszenia.Add(ogloszenie);
+                    context.SaveChanges();
+                }
+                
             }
                 WyswietlOgloszenia();
+                WyswietlAutaSkrocone();
         }
         
 
-        private void ListaAut_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ListaOgloszen_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (listaAut.SelectedItem is Auto a)
+            var wybraneOgloszenie = listaOgloszen.SelectedItem as Ogloszenium;
+
+            if (wybraneOgloszenie != null)
             {
-                txtMarka.Text = a.Marka;
-                txtModel.Text = a.Model;
-                txtCena.Text = a.Cena;
-                txtDrzwi.Text = a.Drzwi;
-                txtSilnik.Text = a.Silnik;
-                txtPasazerowie.Text = a.Pasazerowie;
+                using (var context = new DbWsppcarsContext())
+                {
+                    var ogloszenie = context.Ogloszenia
+                .Include(o => o.IdPojazduNavigation)
+                .FirstOrDefault(o => o.IdOgloszenia == wybraneOgloszenie.IdOgloszenia);
+
+                    if (ogloszenie != null)
+                    {
+                        foreach (var item in listaAutSkrocona.Items)
+                        {
+                            if (item is Pojazd pojazd && pojazd.IdPojazdu == ogloszenie.IdPojazdu)
+                            {
+                                listaAutSkrocona.SelectedItem = item;
+                                listaAutSkrocona.ScrollIntoView(item);
+                                break;
+                            }
+                        }
+
+                        comboDostepnoscOgloszenia.Text = ogloszenie.Dostepnosc == true ? "Dostępne" : "Niedostępne";
+                        txtCena.Text = ogloszenie.Kwota.ToString();
+                    }
+
+                }
+
             }
         }
 
-        private void BtnUsunAuto_Click(object sender, RoutedEventArgs e)
+        private void BtnUsunOgloszenie_Click(object sender, RoutedEventArgs e)
         {
-            var wybraneOgloszenie = listaAut.SelectedItem as Ogloszenium;
+            var wybraneOgloszenie = listaOgloszen.SelectedItem as Ogloszenium;
 
             if (wybraneOgloszenie == null)
             {
@@ -153,7 +164,9 @@ namespace WSPPCars
 
             using (var context = new DbWsppcarsContext())
             {
-                var ogloszenie = context.Ogloszenia.FirstOrDefault(o => o.IdOgloszenia == wybraneOgloszenie.IdOgloszenia);
+                var ogloszenie = context.Ogloszenia
+                .Include(o => o.IdPojazduNavigation)
+                .FirstOrDefault(o => o.IdOgloszenia == wybraneOgloszenie.IdOgloszenia);
 
                 if (ogloszenie == null)
                 {
@@ -161,60 +174,260 @@ namespace WSPPCars
                     return;
                 }
 
-                var pojazd = context.Pojazds.FirstOrDefault(p => p.IdPojazdu == ogloszenie.IdPojazdu);
-                PojazdSztuka sztuka = null;
+                context.Ogloszenia.Remove(ogloszenie);
+                context.SaveChanges();
+            }
 
-                if (pojazd != null)
+            WyswietlOgloszenia(); // Odświeżenie listy
+            WyswietlAutaSkrocone();
+        }
+
+        private void BtnEdytujOgloszenie_Click(object sender, RoutedEventArgs e)
+        {
+            var wybraneOgloszenie = listaOgloszen.SelectedItem as Ogloszenium;
+
+            if (wybraneOgloszenie == null)
+            {
+                MessageBox.Show("Proszę wybrać ogłoszenie do edycji.");
+                return;
+            }
+            using (var context = new DbWsppcarsContext())
+            {
+                var ogloszenie = context.Ogloszenia
+                .Include(o => o.IdPojazduNavigation)
+                .FirstOrDefault(o => o.IdOgloszenia == wybraneOgloszenie.IdOgloszenia);
+
+                if (ogloszenie == null)
                 {
-                    sztuka = context.PojazdSztukas.FirstOrDefault(s => s.IdPojazdSztuka == pojazd.IdSztuki);
+                    MessageBox.Show("Nie znaleziono ogłoszenia w bazie.");
+                    return;
+                }
+                var wybraneAuto = listaAutSkrocona.SelectedItem as Pojazd;
+                if (wybraneAuto != null)
+                {
+                    ogloszenie.Kwota = Convert.ToDecimal(txtCena.Text);
+                    ogloszenie.Dostepnosc = dostepnoscOgloszenie();
+                    ogloszenie.IdPojazdu = wybraneAuto.IdPojazdu;
+                    context.SaveChanges();
+
                 }
 
-                context.Ogloszenia.Remove(ogloszenie);
-                if (pojazd != null) context.Pojazds.Remove(pojazd);
+                
+
+            }
+            WyswietlOgloszenia();
+            WyswietlAutaSkrocone();
+        }
+        private bool dostepnoscOgloszenie()
+        {
+            bool dostepnosc = comboDostepnoscOgloszenia.Text switch
+            {
+                "Dostępne" => true,
+                "Niedostępne" => false,
+                _ => throw new Exception("Nieznana wartość dostępności.")
+            };
+            return dostepnosc;
+        }
+        private void ListaAutSkrocona_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+           
+
+            
+        }
+
+        // ------------------- Auta -------------------
+        private int typPojazdu()
+        {
+            int typ = comboRodzajPojazdu.Text switch
+            {
+                "Spalinowy" => 1,
+                "Hybrydowy" => 2,
+                "Elektryczny" => 3,
+                _ => throw new ArgumentException("Brak Typu Pojazdu")
+            };
+            return typ;
+        }
+        private bool skrzyniaBiegow()
+        {
+            bool skrzynia = comboSkrzyniaBiegow.Text switch
+            {
+                "Manualna" => false,
+                "Automatyczna" => true,
+                _ => throw new ArgumentException("Błędna Skrzynia Biegów")
+            }; return skrzynia;
+        }
+        private void WyswietlAuta()
+        {
+            listaAut.Items.Clear();
+
+            var db = new DbWsppcarsContext();
+            var autaZBazy = db.Pojazds
+            .Include(ps => ps.IdSztukiNavigation)
+            .ToList(); 
+
+
+            foreach (var a in autaZBazy)
+            {
+                listaAut.Items.Add(a);
+            }
+
+        }
+        private void BtnDodajAuto_Click(object sender, RoutedEventArgs e)
+        {
+
+
+            using (var context = new DbWsppcarsContext())
+            {
+                var pojazd = new PojazdSztuka
+                {
+                    Marka = txtMarka.Text,
+                    Model = txtModel.Text,
+                    IdTypPojazdu = typPojazdu(),
+                    PojemnoscSilnika = Convert.ToDecimal(txtSilnik.Text),
+                    LiczbaDrzwi = Convert.ToInt16(txtDrzwi.Text),
+                    LiczbaPasazerow = Convert.ToInt16(txtPasazerowie.Text),
+                    AutomatycznaSkrzynia = skrzyniaBiegow(),
+                    Zdjecie = txtZdjecie.Text,
+                    Rocznik = DateOnly.FromDateTime(dpRocznik.SelectedDate.Value)
+                };
+
+                context.PojazdSztukas.Add(pojazd);
+                context.SaveChanges();
+
+                var poj = new Pojazd
+                {
+                    LiczbaSztuk = Convert.ToInt16(txtSztuki.Text),
+                    IdSztuki = pojazd.IdPojazdSztuka
+                };
+
+                context.Pojazds.Add(poj);
+                context.SaveChanges();
+
+                
+            }
+            WyswietlAuta();
+        }
+        private void ListaAut_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var wybraneAuto = listaAut.SelectedItem as Pojazd;
+
+            if (wybraneAuto != null)
+            {
+                using (var context = new DbWsppcarsContext())
+                {
+                var auto = context.Pojazds
+                .Include(o => o.IdSztukiNavigation)
+                .ThenInclude(o=>o.IdTypPojazduNavigation)
+                .FirstOrDefault(o => o.IdPojazdu == wybraneAuto.IdPojazdu);
+
+                    if (auto != null)
+                    {
+
+                        txtMarka.Text = auto.IdSztukiNavigation.Marka;
+                        txtModel.Text = auto.IdSztukiNavigation.Model;
+                        txtDrzwi.Text = auto.IdSztukiNavigation.LiczbaDrzwi.ToString();
+                        txtPasazerowie.Text = auto.IdSztukiNavigation.LiczbaPasazerow.ToString();
+                        txtZdjecie.Text = auto.IdSztukiNavigation.Zdjecie;
+                        dpRocznik.Text = auto.IdSztukiNavigation.Rocznik.ToString();
+                        comboRodzajPojazdu.Text = auto.IdSztukiNavigation.IdTypPojazduNavigation.Typ;
+                        comboSkrzyniaBiegow.Text = skrzyniaBiegow()==true?"Automatyczna":"Manualna";
+                        txtSztuki.Text = auto.LiczbaSztuk.ToString();
+                    }
+
+                }
+
+            }
+        }
+        private void BtnUsunAuto_Click(object sender, RoutedEventArgs e)
+        {
+            var wybraneAuto = listaAut.SelectedItem as Pojazd;
+
+            if (wybraneAuto == null)
+            {
+                MessageBox.Show("Proszę wybrać pojazd do usunięcia.");
+                return;
+            }
+
+            var confirmResult = MessageBox.Show(
+                "Czy na pewno chcesz usunąć ten pojazd?",
+                "Potwierdzenie usunięcia",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question
+            );
+
+            if (confirmResult != MessageBoxResult.Yes)
+                return;
+
+            using (var context = new DbWsppcarsContext())
+            {
+                var auto = context.Pojazds
+                .Include(p => p.IdSztukiNavigation)
+                .ThenInclude(s => s.IdTypPojazduNavigation)
+                .FirstOrDefault(o => o.IdPojazdu == wybraneAuto.IdPojazdu);
+
+                if (auto == null)
+                {
+                    MessageBox.Show("Nie znaleziono pojazdu w bazie.");
+                    return;
+                }
+
+                PojazdSztuka sztuka = null;
+
+                if (auto != null)
+                {
+                    sztuka = context.PojazdSztukas.FirstOrDefault(s => s.IdPojazdSztuka == auto.IdSztuki);
+                }
+
+                
+                if (auto != null) context.Pojazds.Remove(auto);
                 if (sztuka != null) context.PojazdSztukas.Remove(sztuka);
 
                 context.SaveChanges();
             }
 
-            WyswietlOgloszenia(); // Odświeżenie listy
+            WyswietlAuta(); // Odświeżenie listy
+            WyswietlAutaSkrocone();
         }
-
         private void BtnEdytujAuto_Click(object sender, RoutedEventArgs e)
         {
-            var wybraneOgloszenie = listaAut.SelectedItem as Ogloszenium;
+            var wybraneAuto = listaAut.SelectedItem as Pojazd;
 
-            if (wybraneOgloszenie == null)
+            if (wybraneAuto == null)
             {
-                MessageBox.Show("Proszę wybrać ogłoszenie do usunięcia.");
+                MessageBox.Show("Proszę wybrać pojazd do edycji.");
                 return;
             }
             using (var context = new DbWsppcarsContext())
             {
-                var ogloszenie = context.Ogloszenia.FirstOrDefault(d => d.IdOgloszenia == wybraneOgloszenie.IdOgloszenia);
+                var auto = context.Pojazds
+                .Include(p => p.IdSztukiNavigation)
+                .ThenInclude(s => s.IdTypPojazduNavigation)
+                .FirstOrDefault(o => o.IdPojazdu == wybraneAuto.IdPojazdu);
 
-                if (ogloszenie == null)
+                if (auto == null)
                 {
-                    MessageBox.Show("Nie znaleziono użytkownika w bazie.");
+                    MessageBox.Show("Nie znaleziono pojazdu w bazie.");
                     return;
                 }
 
-                
-                ogloszenie.Kwota = Convert.ToDecimal(txtCena.Text);
-                ogloszenie.Dostepnosc = true;
-                ogloszenie.IdPojazduNavigation.IdSztukiNavigation.Marka = txtMarka.Text;
-                ogloszenie.IdPojazduNavigation.IdSztukiNavigation.Model = txtModel.Text;
-                ogloszenie.IdPojazduNavigation.IdSztukiNavigation.IdTypPojazdu = 1;
-                ogloszenie.IdPojazduNavigation.IdSztukiNavigation.PojemnoscSilnika = Convert.ToDecimal(txtSilnik.Text);
-                ogloszenie.IdPojazduNavigation.IdSztukiNavigation.LiczbaDrzwi = Convert.ToInt16(txtDrzwi.Text);
-                ogloszenie.IdPojazduNavigation.IdSztukiNavigation.LiczbaPasazerow = Convert.ToInt16(txtPasazerowie.Text);
-                ogloszenie.IdPojazduNavigation.IdSztukiNavigation.AutomatycznaSkrzynia = true;
-                ogloszenie.IdPojazduNavigation.IdSztukiNavigation.Rocznik = new DateOnly(2022, 1, 1);
+
+
+                auto.LiczbaSztuk = Convert.ToInt16(txtSztuki.Text);
+                auto.IdSztukiNavigation.Zdjecie = txtZdjecie.Text;
+                auto.IdSztukiNavigation.Marka = txtMarka.Text;
+                auto.IdSztukiNavigation.Model = txtModel.Text;
+                auto.IdSztukiNavigation.IdTypPojazdu = typPojazdu();
+                auto.IdSztukiNavigation.PojemnoscSilnika = Convert.ToDecimal(txtSilnik.Text);
+                auto.IdSztukiNavigation.LiczbaDrzwi = Convert.ToInt16(txtDrzwi.Text);
+                auto.IdSztukiNavigation.LiczbaPasazerow = Convert.ToInt16(txtPasazerowie.Text);
+                auto.IdSztukiNavigation.AutomatycznaSkrzynia = skrzyniaBiegow();
+                auto.IdSztukiNavigation.Rocznik = DateOnly.FromDateTime(dpRocznik.SelectedDate.Value);
                 context.SaveChanges();
 
             }
-            WyswietlOgloszenia();
+            WyswietlAuta();
+            WyswietlAutaSkrocone();
         }
-
         // ------------------- Ubezpieczenia -------------------
         private void WyswietlUbezpieczenia()
         {
@@ -226,21 +439,26 @@ namespace WSPPCars
             .Include(o => o.IdRodzajPakietuNavigation)
             .ToList(); // <-- teraz dane są już w pamięci
 
-            
+
             foreach (var o in ogloszeniaZBazy)
             {
-                string nazwa = o.Nazwa;
-                string nazwaUbezpieczalni = o.NazwaUbezpieczalni;
-                decimal? kwota = o.Kwota;
-                bool? dostepnosc = o.Dostepnosc;
-                string nazwaPakietu = o.IdRodzajPakietuNavigation.Pakiet;
+            
 
                 listaUbezpieczen.Items.Add(o);
 
             }
 
-
-
+        }
+        private int rodzajPakietuUbezpieczenia()
+        {
+            int rodzaj = comboRodzajUbezpieczenia.Text switch
+            {
+                "Ekonomiczne" => 1,
+                "Średnie" => 2,
+                "Luksusowe" => 3,
+                _ => throw new Exception("Nieznany rodzaj.")
+            };
+            return rodzaj;
         }
         private void BtnDodajUbezpieczenie_Click(object sender, RoutedEventArgs e)
         {
@@ -249,10 +467,10 @@ namespace WSPPCars
                 var ubezpieczenie = new Ubezpieczenium
                 {
                     Nazwa = txtNazwaUbezp.Text,
-                    NazwaUbezpieczalni = "Szewczyk Corporation",
-                    Dostepnosc = true,
+                    NazwaUbezpieczalni = txtNazwaUbezpieczalni.Text,
+                    Dostepnosc = dostepnoscUbezpieczenie(),
                     Kwota = Convert.ToDecimal(txtCenaUbezp.Text),
-                    IdRodzajPakietu = 3
+                    IdRodzajPakietu = rodzajPakietuUbezpieczenia()
 
 
                 };
@@ -263,15 +481,32 @@ namespace WSPPCars
 
             }
             WyswietlUbezpieczenia();
+            WyswietlAutaSkrocone();
         }
         
 
         private void ListaUbezpieczen_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (listaUbezpieczen.SelectedItem is Ubezpieczenie u)
+            var wybraneUbezpieczenie = listaUbezpieczen.SelectedItem as Ubezpieczenium;
+
+            if (wybraneUbezpieczenie != null)
             {
-                txtNazwaUbezp.Text = u.Nazwa;
-                txtCenaUbezp.Text = u.Cena;
+                using (var context = new DbWsppcarsContext())
+                {
+                    var ubezpieczenie = context.Ubezpieczenia
+                        .Include(o => o.IdRodzajPakietuNavigation).FirstOrDefault(o => o.IdUbezpieczenia == wybraneUbezpieczenie.IdUbezpieczenia);
+
+                    if (ubezpieczenie != null)
+                    {
+                        txtNazwaUbezp.Text = ubezpieczenie.Nazwa;
+                        txtNazwaUbezpieczalni.Text = ubezpieczenie.NazwaUbezpieczalni;
+                        txtCenaUbezp.Text = ubezpieczenie.Kwota.ToString();
+                        comboDostepnoscUbezpieczenia.Text = ubezpieczenie.Dostepnosc == true ? "Dostępne" : "Niedostępne";
+                        comboRodzajUbezpieczenia.Text = ubezpieczenie.IdRodzajPakietuNavigation.Pakiet.ToString();
+                    }
+
+                }
+
             }
         }
 
@@ -281,12 +516,12 @@ namespace WSPPCars
 
             if (wybraneUbezpieczenie == null)
             {
-                MessageBox.Show("Proszę wybrać ogłoszenie do usunięcia.");
+                MessageBox.Show("Proszę wybrać ubezpieczenie do usunięcia.");
                 return;
             }
 
             var confirmResult = MessageBox.Show(
-                "Czy na pewno chcesz usunąć to ogłoszenie?",
+                "Czy na pewno chcesz usunąć to ubezpieczenie?",
                 "Potwierdzenie usunięcia",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Question
@@ -297,11 +532,12 @@ namespace WSPPCars
 
             using (var context = new DbWsppcarsContext())
             {
-                var ubezpieczenie = context.Ubezpieczenia.FirstOrDefault(o => o.IdUbezpieczenia == wybraneUbezpieczenie.IdUbezpieczenia);
+                var ubezpieczenie = context.Ubezpieczenia
+                        .Include(o => o.IdRodzajPakietuNavigation).FirstOrDefault(o => o.IdUbezpieczenia == wybraneUbezpieczenie.IdUbezpieczenia);
 
                 if (ubezpieczenie == null)
                 {
-                    MessageBox.Show("Nie znaleziono dodatku w bazie.");
+                    MessageBox.Show("Nie znaleziono ubezpieczenia w bazie.");
                     return;
                 }
 
@@ -320,29 +556,40 @@ namespace WSPPCars
 
             if (wybraneUbezpieczenie == null)
             {
-                MessageBox.Show("Proszę wybrać ogłoszenie do usunięcia.");
+                MessageBox.Show("Proszę wybrać ubezpieczenie do edycji.");
                 return;
             }
             using (var context = new DbWsppcarsContext())
             {
-                var ubezpieczenie = context.Ubezpieczenia.FirstOrDefault(d => d.IdUbezpieczenia == wybraneUbezpieczenie.IdUbezpieczenia);
+                var ubezpieczenie = context.Ubezpieczenia
+                        .Include(o => o.IdRodzajPakietuNavigation).FirstOrDefault(o => o.IdUbezpieczenia == wybraneUbezpieczenie.IdUbezpieczenia);
 
                 if (ubezpieczenie == null)
                 {
-                    MessageBox.Show("Nie znaleziono użytkownika w bazie.");
+                    MessageBox.Show("Nie znaleziono ubezpieczenia w bazie.");
                     return;
                 }
 
                 ubezpieczenie.Nazwa = txtNazwaUbezp.Text;
                 ubezpieczenie.Kwota = Convert.ToDecimal(txtCenaUbezp.Text);
-                ubezpieczenie.IdRodzajPakietu = 2;
-                ubezpieczenie.Dostepnosc = true;
-                ubezpieczenie.NazwaUbezpieczalni ="Szewczyk Corporation" ;
+                ubezpieczenie.IdRodzajPakietu = rodzajPakietuUbezpieczenia();
+                ubezpieczenie.Dostepnosc = dostepnoscUbezpieczenie();
+                ubezpieczenie.NazwaUbezpieczalni =txtNazwaUbezpieczalni.Text ;
 
                 context.SaveChanges();
 
             }
             WyswietlUbezpieczenia();
+        }
+        private bool dostepnoscUbezpieczenie()
+        {
+            bool dostepnosc = comboDostepnoscUbezpieczenia.Text switch
+            {
+                "Dostępne" => true,
+                "Niedostępne" => false,
+                _ => throw new Exception("Nieznana wartość dostępności.")
+            };
+            return dostepnosc;
         }
 
         // ------------------- Dodatki -------------------
@@ -358,45 +605,63 @@ namespace WSPPCars
 
             foreach (var o in ogloszeniaZBazy)
             {
-                string nazwa = o.Nazwa;
-                string? liczbaSztuk = o.LiczbaSztuk;
-                decimal? kwota = o.Kwota;
-                bool? dostepnosc = o.Dostepnosc;
-                
 
                 listaDodatkow.Items.Add(o);
 
             }
 
         }
+        private bool dostepnoscDodatek()
+        {
+            bool dostepnosc = comboDostepnoscDodatku.Text switch
+            {
+                "Dostępne" => true,
+                "Niedostępne" => false,
+                _ => throw new Exception("Nieznana wartość dostępności.")
+            };
+            return dostepnosc;
+        }
         private void BtnDodajDodatek_Click(object sender, RoutedEventArgs e)
         {
             using (var context = new DbWsppcarsContext())
             {
+                
+
                 var dodatek = new Dodatki
                 {
                     Nazwa = txtNazwaDodatku.Text,
-                    LiczbaSztuk = "1",
-                    Dostepnosc = true,
-                    Kwota = Convert.ToDecimal(txtCenaDodatku.Text)
-
-
+                    LiczbaSztuk = txtLiczbaSztukDodatku.Text,
+                    Dostepnosc = dostepnoscDodatek(),
+                    Kwota = Convert.ToDecimal(txtCenaDodatku.Text) 
                 };
 
                 context.Dodatkis.Add(dodatek);
                 context.SaveChanges();
-
-
             }
+
             WyswietlDodatki();
         }
 
         private void ListaDodatkow_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (listaDodatkow.SelectedItem is Dodatek d)
+            var wybranyDodatek = listaDodatkow.SelectedItem as Dodatki;
+
+            if (wybranyDodatek != null)
             {
-                txtNazwaDodatku.Text = d.Nazwa;
-                txtCenaDodatku.Text = d.Cena;
+                using (var context = new DbWsppcarsContext())
+                {
+                    var dodatek = context.Dodatkis.FirstOrDefault(o => o.IdDodatku == wybranyDodatek.IdDodatku);
+
+                    if (dodatek != null)
+                    {
+                        txtNazwaDodatku.Text = dodatek.Nazwa;
+                        txtLiczbaSztukDodatku.Text = dodatek.LiczbaSztuk;
+                        txtCenaDodatku.Text = dodatek.Kwota.ToString();
+                        comboDostepnoscDodatku.Text = dodatek.Dostepnosc == true ? "Dostępne" : "Niedostępne";
+                    }
+
+                }
+
             }
         }
 
@@ -406,12 +671,12 @@ namespace WSPPCars
 
             if (wybranyDodatek == null)
             {
-                MessageBox.Show("Proszę wybrać ogłoszenie do usunięcia.");
+                MessageBox.Show("Proszę wybrać dodatek do usunięcia.");
                 return;
             }
 
             var confirmResult = MessageBox.Show(
-                "Czy na pewno chcesz usunąć to ogłoszenie?",
+                "Czy na pewno chcesz usunąć ten dodatek?",
                 "Potwierdzenie usunięcia",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Question
@@ -445,7 +710,7 @@ namespace WSPPCars
 
             if (wybranyDodatek == null)
             {
-                MessageBox.Show("Proszę wybrać ogłoszenie do usunięcia.");
+                MessageBox.Show("Proszę wybrać dodatek do edycji.");
                 return;
             }
             using (var context = new DbWsppcarsContext())
@@ -454,14 +719,14 @@ namespace WSPPCars
 
                 if (dodatek == null)
                 {
-                    MessageBox.Show("Nie znaleziono użytkownika w bazie.");
+                    MessageBox.Show("Nie znaleziono dodatku w bazie.");
                     return;
                 }
 
                 dodatek.Nazwa = txtNazwaDodatku.Text;
                 dodatek.Kwota = Convert.ToDecimal(txtCenaDodatku.Text);
-                dodatek.LiczbaSztuk = "1";
-                dodatek.Dostepnosc = true;
+                dodatek.LiczbaSztuk = txtCenaDodatku.Text;
+                dodatek.Dostepnosc = dostepnoscDodatek();
                 
 
                 context.SaveChanges();
@@ -483,30 +748,35 @@ namespace WSPPCars
 
             foreach (var o in ogloszeniaZBazy)
             {
-                string imie = o.Imie;
-                string nazwisko = o.Nazwisko;
-                string login = o.Login;
-                string haslo = o.Haslo;
-                DateTime? data = o.Utworzony;
-                string rodzaj = o.IdRodzajKontaNavigation.Rodzaj;
-
-
+               
                 listaUzytkownikow.Items.Add(o);
 
             }
 
         }
+        private int rodzajKonta()
+        {
+            int rodzaj = comboUprawnienia.Text switch
+            {
+                "Admin" => 2,
+                "Gość" => 1,
+                _ => throw new Exception("Nieznana wartość Uprawnień.")
+            };
+            return rodzaj;
+        }
+       
         private void BtnDodajUzytkownika_Click(object sender, RoutedEventArgs e)
         {
             using (var context = new DbWsppcarsContext())
             {
+
                 var uzytkownik = new Uzytkownicy
                 {
-                    Imie = txtImieNazwisko.Text,
-                    Nazwisko = txtImieNazwisko.Text,
+                    Imie = txtImie.Text,
+                    Nazwisko = txtNazwisko.Text,
                     Login = txtLogin.Text,
                     Haslo = txtHaslo.Text, 
-                    IdRodzajKonta = 1,
+                    IdRodzajKonta = rodzajKonta(),
                     Utworzony = DateTime.Now
 
 
@@ -520,24 +790,33 @@ namespace WSPPCars
             WyswietlUżytkownicy();
         }
 
+
         private void ListaUzytkownikow_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (listaUzytkownikow.SelectedItem is Uzytkownik u)
-            {
-                txtImieNazwisko.Text = u.ImieNazwisko;
-                txtLogin.Text = u.Login;
-                txtHaslo.Text = u.Haslo;
+            var wybranyUzytkownik = listaUzytkownikow.SelectedItem as Uzytkownicy;
 
-                foreach (ComboBoxItem item in comboUprawnienia.Items)
+            if (wybranyUzytkownik != null)
+            {
+                using (var context = new DbWsppcarsContext())
                 {
-                    if (item.Content.ToString() == u.Uprawnienia)
+                    var uzytkownik = context.Uzytkownicies.Include(o => o.IdRodzajKontaNavigation).FirstOrDefault(o => o.IdUzytkownika == wybranyUzytkownik.IdUzytkownika);
+
+                    if (uzytkownik != null)
                     {
-                        comboUprawnienia.SelectedItem = item;
-                        break;
+                        txtImie.Text = uzytkownik.Imie;
+                        txtNazwisko.Text = uzytkownik.Nazwisko;
+                        txtLogin.Text = uzytkownik.Login;
+                        txtHaslo.Text = uzytkownik.Haslo;
+                        comboUprawnienia.Text = uzytkownik.IdRodzajKonta == 1 ? "Gość" : "Admin";
                     }
+
                 }
+
             }
+
+
         }
+        
 
 
         private void BtnUsunUzytkownika_Click(object sender, RoutedEventArgs e)
@@ -546,12 +825,12 @@ namespace WSPPCars
 
             if (wybranyUzytkownik == null)
             {
-                MessageBox.Show("Proszę wybrać ogłoszenie do usunięcia.");
+                MessageBox.Show("Proszę wybrać użytkownika do usunięcia.");
                 return;
             }
 
             var confirmResult = MessageBox.Show(
-                "Czy na pewno chcesz usunąć to ogłoszenie?",
+                "Czy na pewno chcesz usunąć tego użytkownika?",
                 "Potwierdzenie usunięcia",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Question
@@ -562,11 +841,11 @@ namespace WSPPCars
 
             using (var context = new DbWsppcarsContext())
             {
-                var uzytkownik = context.Uzytkownicies.FirstOrDefault(o => o.IdUzytkownika == wybranyUzytkownik.IdUzytkownika);
+                var uzytkownik = context.Uzytkownicies.Include(o => o.IdRodzajKontaNavigation).FirstOrDefault(o => o.IdUzytkownika == wybranyUzytkownik.IdUzytkownika);
 
                 if (uzytkownik == null)
                 {
-                    MessageBox.Show("Nie znaleziono dodatku w bazie.");
+                    MessageBox.Show("Nie znaleziono użytkownika w bazie.");
                     return;
                 }
 
@@ -585,12 +864,12 @@ namespace WSPPCars
 
             if (wybranyUzytkownik == null)
             {
-                MessageBox.Show("Proszę wybrać ogłoszenie do usunięcia.");
+                MessageBox.Show("Proszę wybrać użytkownika do edycji.");
                 return;
             }
             using (var context = new DbWsppcarsContext())
             {
-                var uzytkownik = context.Uzytkownicies.FirstOrDefault(u => u.IdUzytkownika == wybranyUzytkownik.IdUzytkownika);
+                var uzytkownik = context.Uzytkownicies.Include(o => o.IdRodzajKontaNavigation).FirstOrDefault(u => u.IdUzytkownika == wybranyUzytkownik.IdUzytkownika);
 
                 if (uzytkownik == null)
                 {
@@ -598,11 +877,11 @@ namespace WSPPCars
                     return;
                 }
 
-                uzytkownik.Imie = txtImieNazwisko.Text;
-                uzytkownik.Nazwisko = txtImieNazwisko.Text;
+                uzytkownik.Imie = txtImie.Text;
+                uzytkownik.Nazwisko = txtNazwisko.Text;
                 uzytkownik.Login = txtLogin.Text;
                 uzytkownik.Haslo = txtHaslo.Text;
-                uzytkownik.IdRodzajKonta = 1;
+                uzytkownik.IdRodzajKonta = rodzajKonta();
 
                 context.SaveChanges();
 

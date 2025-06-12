@@ -26,123 +26,7 @@ using System.ComponentModel;
 namespace WSPPCars
 {
 
-    /*public class CarAd
-    {
-        public string Name { get; set; }
-        public decimal Price { get; set; }
-        public string ImagePath { get; set; }
-        public int Doors { get; set; }
-        public double EngineCapacity { get; set; }
-        public int MaxPeople { get; set; }
-        public string TransmissionType { get; set; }
-    }*/
-    public class CarAdViewModel
-    {
-        public string Marka { get; set; }
-        public string Model { get; set; }
-        public decimal? Kwota { get; set; }
-        public int LiczbaDrzwi { get; set; }
-        public decimal? PojemnoscSilnika { get; set; }
-        public int LiczbaPasazerow { get; set; }
-        public string SkrzyniaBiegow { get; set; }
-        public string ImagePath { get; set; }
-        public string ImagePathFull
-        {
-            get
-            {
-                // Łączy katalog aplikacji z relatywną ścieżką z bazy
-                return System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ImagePath);
-            }
-        }
-        public override string ToString()
-        {
-            return $"{Marka} {Model} {Kwota} PLN, {LiczbaDrzwi} drzwi, {LiczbaPasazerow} os., {SkrzyniaBiegow}";
-        }
-
-    }
-
-    public class MainWindowViewModel
-    {
-        //public ObservableCollection<CarAd> CarAds { get; set; }
-        public ObservableCollection<PojazdSztuka> Pojazdy { get; set; }
-        public ObservableCollection<Ogloszenium> Ogloszenia { get; set; }
-
-        
-            public ObservableCollection<CarAdViewModel> CarAds { get; set; }
-
-            public MainWindowViewModel()
-            {
-                using var db = new DbWsppcarsContext();
-
-                var ogloszeniaZBazy = db.Ogloszenia
-                .Include(o => o.IdPojazduNavigation)
-                .ThenInclude(ps => ps.IdSztukiNavigation)
-                .Where(o => o.Dostepnosc == true)
-                .ToList(); // <-- teraz dane są już w pamięci
-
-                CarAds = new ObservableCollection<CarAdViewModel>(
-                ogloszeniaZBazy.Select(o => new CarAdViewModel
-                {
-                    Marka = o.IdPojazduNavigation.IdSztukiNavigation.Marka,
-                    Model = o.IdPojazduNavigation.IdSztukiNavigation.Model,
-                    Kwota = o.Kwota,
-                    LiczbaDrzwi = o.IdPojazduNavigation.IdSztukiNavigation.LiczbaDrzwi ?? 0,
-                    PojemnoscSilnika = o.IdPojazduNavigation.IdSztukiNavigation.PojemnoscSilnika ?? 0,
-                    LiczbaPasazerow = o.IdPojazduNavigation.IdSztukiNavigation.LiczbaPasazerow ?? 0,
-                    SkrzyniaBiegow = o.IdPojazduNavigation.IdSztukiNavigation.AutomatycznaSkrzynia == true ? "Automatyczna" : "Manualna",
-                    ImagePath = o.IdPojazduNavigation.IdSztukiNavigation.Zdjecie
-                }).ToList());
-
-
-        }
-        
-        public void WyswietlenieListyOgloszen()
-        {
-            using var db = new DbWsppcarsContext();
-
-            var ogloszeniaZBazy = db.Ogloszenia
-                .Include(o => o.IdPojazduNavigation)
-                .ThenInclude(ps => ps.IdSztukiNavigation)
-                .Where(o => o.Dostepnosc == true)
-                .ToList();
-
-            CarAds.Clear();
-
-            foreach (var o in ogloszeniaZBazy)
-            {
-                CarAds.Add(new CarAdViewModel
-                {
-                    
-                    Marka = o.IdPojazduNavigation.IdSztukiNavigation.Marka,
-                    Model = o.IdPojazduNavigation.IdSztukiNavigation.Model,
-                    Kwota = o.Kwota,
-                    LiczbaDrzwi = o.IdPojazduNavigation.IdSztukiNavigation.LiczbaDrzwi ?? 0,
-                    PojemnoscSilnika = o.IdPojazduNavigation.IdSztukiNavigation.PojemnoscSilnika ?? 0,
-                    LiczbaPasazerow = o.IdPojazduNavigation.IdSztukiNavigation.LiczbaPasazerow ?? 0,
-                    SkrzyniaBiegow = o.IdPojazduNavigation.IdSztukiNavigation.AutomatycznaSkrzynia == true ? "Automatyczna" : "Manualna",
-                    ImagePath = o.IdPojazduNavigation.IdSztukiNavigation.Zdjecie
-                });
-            }
-        }
-    
-
-
-
-    //Pojazdy = new ObservableCollection<PojazdSztuka>
-
-    /*new CarAd { Name = "Fiat Punto", Price = 35000, ImagePath = "./Images/toyota.jpg", Doors = 4, EngineCapacity = 1.8, MaxPeople = 5, TransmissionType = "Manualna" },
-    new CarAd { Name = "BMW X6", Price = 400, ImagePath = "./Images/bmw.jpg", Doors = 5, EngineCapacity = 3.0, MaxPeople = 7, TransmissionType = "Automatyczna" },
-    new CarAd { Name = "Lamborghini Aventador", Price = 10, ImagePath = "./Images/bmw1.jpg", Doors = 0, EngineCapacity = 0.0, MaxPeople = 1, TransmissionType = "Manualna" },
-    new CarAd { Name = "Porshe Panamera", Price = 20, ImagePath = "./Images/porshe.jpg", Doors = 0, EngineCapacity = 1.8, MaxPeople = 5, TransmissionType = "Automatyczna" }
-};*/
-
-    /*foreach (var ogloszenie in db.Ogloszenia)
-    {
-        //Ogloszenium  = new CarAd() { Name = pojazd.Marka, Price = 0, ImagePath = "./Images/bmw1.jpg", Doors = (int)pojazd.LiczbaDrzwi, EngineCapacity = (double)pojazd.PojemnoscSilnika, MaxPeople = (int)pojazd.LiczbaPasazerow, TransmissionType = (bool)pojazd.AutomatycznaSkrzynia? "Automatyczna" : "Manulana" };
-        Ogloszenia.Add(ogloszenie);
-    }*/
-    // }
-}
+   
     public partial class MainWindow : Window
     {
         public void WyswietlenieDodatkow()
@@ -155,12 +39,29 @@ namespace WSPPCars
                 listBoxDodatki.Items.Add(d);
             }
         }
+        public void WyswietlenieListyOgloszen()
+        {
+            listboxOgloszenia.Items.Clear();
+            using var db = new DbWsppcarsContext();
 
+            var ogloszeniaZBazy = db.Ogloszenia
+                .Include(o => o.IdPojazduNavigation)
+                .ThenInclude(ps => ps.IdSztukiNavigation)
+                .Where(o => o.Dostepnosc == true)
+                .ToList();
+
+
+
+            foreach (var o in ogloszeniaZBazy)
+            {
+                listboxOgloszenia.Items.Add(o);
+            }
+        }
         public MainWindow()
         {
             InitializeComponent();
-                MainWindowViewModel ogloszenia = new MainWindowViewModel();
-                DataContext = ogloszenia;
+                //MainWindowViewModel ogloszenia = new MainWindowViewModel();
+                //DataContext = ogloszenia;
             AktualnyUzytkownik = new Uzytkownicy
             {
                 Login = "Gosc",
@@ -170,8 +71,10 @@ namespace WSPPCars
                 Haslo = ""
             };
             //btnLogowanie.Visibility = Visibility.Visible;
+            WyswietlenieListyOgloszen();
             btnAdminPanel.Visibility = Visibility.Collapsed;
             WyswietlenieDodatkow();
+            wyswietlenieMarek();
         }
 
         private Uzytkownicy aktualnyUzytkownik;
@@ -182,18 +85,31 @@ namespace WSPPCars
 
         private void listboxOgloszenia_MouseDoubleClick_1(object sender, MouseButtonEventArgs e)
         {
-            if (((FrameworkElement)e.OriginalSource).DataContext is CarAdViewModel selectedCarAd)
+            var wybraneOgloszenie = listboxOgloszenia.SelectedItem as Ogloszenium;
+            if (wybraneOgloszenie!=null)
             {
-                var detailsWindow = new OknoSzczegoly(selectedCarAd);
-                detailsWindow.Owner = this;
-                detailsWindow.WindowStartupLocation = WindowStartupLocation.Manual;
-                detailsWindow.Width = this.Width;
-                detailsWindow.Height = this.Height;
-                detailsWindow.Left = this.Left;
-                detailsWindow.Top = this.Top;
-                this.Hide();
-                detailsWindow.ShowDialog();
-                this.Show();
+                using (var context = new DbWsppcarsContext())
+                {
+                    var ogloszenie = context.Ogloszenia
+                    .Include(o => o.IdPojazduNavigation)
+                    .ThenInclude(o=>o.IdSztukiNavigation)
+                    .FirstOrDefault(o => o.IdOgloszenia == wybraneOgloszenie.IdOgloszenia);
+                    if (ogloszenie != null)
+                    {
+                        var oknoSzczegoly = new OknoSzczegoly(ogloszenie);
+                        oknoSzczegoly.Owner = this;
+                        oknoSzczegoly.WindowStartupLocation = WindowStartupLocation.Manual;
+                        oknoSzczegoly.Width = this.Width;
+                        oknoSzczegoly.Height = this.Height;
+                        oknoSzczegoly.Left = this.Left;
+                        oknoSzczegoly.Top = this.Top;
+                        this.Hide();
+                        oknoSzczegoly.ShowDialog();
+                        this.Show();
+
+                    }
+                }
+                    
             }
         }
 
@@ -281,7 +197,7 @@ namespace WSPPCars
             this.Hide();
             adm.ShowDialog();
             this.Show();
-            ((MainWindowViewModel)this.DataContext).WyswietlenieListyOgloszen();
+            WyswietlenieListyOgloszen();
             WyswietlenieDodatkow();
 
         }
@@ -298,5 +214,28 @@ namespace WSPPCars
             listBoxDodatki.UnselectAll();
             comboUbezpieczenie.SelectedIndex = -1;
         }
+
+        private void comboUbezpieczenie_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+        private void wyswietlenieMarek()
+        {
+            using (var context = new DbWsppcarsContext())
+            {
+                var ogloszenia = context.Ogloszenia.Include(o => o.IdPojazduNavigation)
+                    .ThenInclude(o => o.IdSztukiNavigation)
+                    .Where(o => o.Dostepnosc == true)
+                    .Select(o => o.IdPojazduNavigation.IdSztukiNavigation.Marka).Distinct().ToList();
+                comboMarka.ItemsSource = ogloszenia;
+            }
+        }
+
+        private void comboMarka_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+        }
+
+        
     }
 }

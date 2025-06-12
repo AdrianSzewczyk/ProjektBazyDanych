@@ -5,75 +5,144 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WSPPCars"
         mc:Ignorable="d"
-        Title="Płatność" Height="630" Width="1080" MinWidth="1080" MinHeight="550" WindowStartupLocation="CenterOwner"
-        Background="#303030" FontFamily="Bahnschrift">
-    <Grid Margin="20">
-        <TextBlock Text="Płatność za wynajem"
-                   FontSize="24"
-                   FontWeight="Bold"
-                   Foreground="White"
-                   HorizontalAlignment="Center"
-                   Margin="0,0,0,20"/>
+        Title="Płatność" Height="630" Width="500" MinWidth="450" MinHeight="550"
+        WindowStartupLocation="CenterOwner"
+        Background="#121212" FontFamily="Segoe UI, Bahnschrift">
 
-        <Border Width="420"
-                Padding="20"
-                Background="#202020"
-                CornerRadius="10"
-                BorderBrush="#FFFF5D00"
-                BorderThickness="2"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center">
-            <StackPanel>
-                <TextBlock Text="Imię i nazwisko:" Foreground="White" Margin="0,0,0,5"/>
-                <TextBox x:Name="txtImieNazwisko" Height="32" Background="White" Foreground="Black" Margin="0,0,0,10"/>
+    <Grid Margin="30">
+        <StackPanel HorizontalAlignment="Center" Width="400">
+            <TextBlock Text="Płatność za wynajem"
+                       FontSize="28"
+                       FontWeight="Bold"
+                       Foreground="#FFFF5D00"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,30"/>
 
-                <TextBlock Text="Numer karty:" Foreground="White" Margin="0,0,0,5"/>
-                <TextBox x:Name="txtNumerKarty" Height="32" Background="White" Foreground="Black" Margin="0,0,0,10"/>
+            <Border Background="#1E1E1E"
+                    CornerRadius="15"
+                    Padding="30"
+                    >
+                <StackPanel>
 
-                <TextBlock Text="Data ważności (MM/RR):" Foreground="White" Margin="0,0,0,5"/>
-                <TextBox x:Name="txtDataWaznosci" Height="32" Background="White" Foreground="Black" Margin="0,0,0,10"/>
+                    <TextBlock Text="Imię i nazwisko:" Foreground="White" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                    <TextBox x:Name="txtImieNazwisko" Height="36" Background="#2C2C2C" Foreground="White" BorderBrush="#444" BorderThickness="1" Padding="8" Margin="0,0,0,15" 
+                             FontSize="14" 
+                             CaretBrush="#FFFF5D00">
+                        <TextBox.Style>
+                            <Style TargetType="TextBox">
+                                <Setter Property="BorderBrush" Value="#444"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsKeyboardFocused" Value="True">
+                                        <Setter Property="BorderBrush" Value="#FFFF5D00"/>
+                                        <Setter Property="Background" Value="#3A3A3A"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
 
-                <TextBlock Text="Kod CVV:" Foreground="White" Margin="0,0,0,5"/>
-                <PasswordBox x:Name="txtCVV" Height="32" Background="White" Foreground="Black" Margin="0,0,0,20"/>
+                    <TextBlock Text="Numer karty:" Foreground="White" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                    <TextBox x:Name="txtNumerKarty" Height="36" Background="#2C2C2C" Foreground="White" BorderBrush="#444" BorderThickness="1" Padding="8" Margin="0,0,0,15" 
+                             FontSize="14" CaretBrush="#FFFF5D00">
+                        <TextBox.Style>
+                            <Style TargetType="TextBox">
+                                <Setter Property="BorderBrush" Value="#444"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsKeyboardFocused" Value="True">
+                                        <Setter Property="BorderBrush" Value="#FFFF5D00"/>
+                                        <Setter Property="Background" Value="#3A3A3A"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
 
-                <Button Content="Zapłać"
-                        Height="40"
-                        Width="160"
-                        HorizontalAlignment="Center"
-                        FontWeight="Bold"
-                        Foreground="Black"
-                        Click="BtnZaplac_Click">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border Background="#FFFF5D00"
-                                    BorderBrush="#EEEE4C00"
-                                    BorderThickness="2"
-                                    CornerRadius="15"
-                                    x:Name="border">
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="border" Property="Background" Value="#DDDD4C00"/>
-                                    <Setter TargetName="border" Property="BorderBrush" Value="#DDDD4C00"/>
-                                </Trigger>
-                                <Trigger Property="IsPressed" Value="True">
-                                    <Setter TargetName="border" Property="Background" Value="#DDDD4C00"/>
-                                    <Setter TargetName="border" Property="BorderBrush" Value="White"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,15" HorizontalAlignment="Stretch" >
+                        <StackPanel Width="190">
+                            <TextBlock Text="Data ważności (MM/RR):" Foreground="White" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                            <TextBox x:Name="txtDataWaznosci" Height="36" Background="#2C2C2C" Foreground="White" BorderBrush="#444" BorderThickness="1" Padding="8" 
+                                     FontSize="14" CaretBrush="#FFFF5D00">
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox">
+                                        <Setter Property="BorderBrush" Value="#444"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter Property="BorderBrush" Value="#FFFF5D00"/>
+                                                <Setter Property="Background" Value="#3A3A3A"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                        </StackPanel>
 
-                <TextBlock x:Name="txtKomunikat" 
-                           Text="" 
-                           Foreground="#FFFF5D00" 
-                           FontWeight="Bold" 
-                           FontSize="14" 
-                           TextAlignment="Center" 
-                           Margin="0,20,0,0"/>
-            </StackPanel>
-        </Border>
+                        <StackPanel Width="190" Margin="20,0,0,0">
+                            <TextBlock Text="Kod CVV:" Foreground="White" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                            <PasswordBox x:Name="txtCVV" Height="36" Background="#2C2C2C" Foreground="White" BorderBrush="#444" BorderThickness="1" Padding="8"
+                                         FontSize="14" CaretBrush="#FFFF5D00">
+                                <PasswordBox.Style>
+                                    <Style TargetType="PasswordBox">
+                                        <Setter Property="BorderBrush" Value="#444"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter Property="BorderBrush" Value="#FFFF5D00"/>
+                                                <Setter Property="Background" Value="#3A3A3A"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </PasswordBox.Style>
+                            </PasswordBox>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <Button Content="Zapłać"
+                            Height="42"
+                            FontWeight="Bold"
+                            Foreground="Black"
+                            Background="#FFFF5D00"
+                            BorderThickness="0"
+                            Cursor="Hand"
+                            Margin="0,10,0,0"
+                            Click="BtnZaplac_Click">
+                        <Button.Effect>
+                            <DropShadowEffect Color="#FFFF5D00" BlurRadius="10" ShadowDepth="0"/>
+                        </Button.Effect>
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#FFFF5D00"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}" 
+                                                    CornerRadius="22" 
+                                                    Padding="10,4">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#FF7A1A00"/>
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter Property="Background" Value="#FF551200"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
+                    <TextBlock x:Name="txtKomunikat" 
+                               Text="" 
+                               Foreground="#FFFF5D00" 
+                               FontWeight="SemiBold" 
+                               FontSize="14" 
+                               TextAlignment="Center" 
+                               Margin="0,20,0,0"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
     </Grid>
 </Window>

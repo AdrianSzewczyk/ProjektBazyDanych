@@ -49,7 +49,7 @@
     <Grid Margin="0,0,0,-6" Background="Black">
         <Image Source="./Images/Logo.png" Height="161" VerticalAlignment="Top" Margin="0,13,158,0"/>
         <Border BorderBrush="#FFFF5D00" BorderThickness="2" CornerRadius="10" Background="#202020" Margin="30,166,264,20">
-            <ListView x:Name="listboxOgloszenia" ItemsSource="{Binding CarAds}" Margin="8,8,8,8" MouseDoubleClick="listboxOgloszenia_MouseDoubleClick_1" Background="#202020" BorderThickness="0" BorderBrush="#202020">
+            <ListView x:Name="listboxOgloszenia"  Margin="8,8,8,8" MouseDoubleClick="listboxOgloszenia_MouseDoubleClick_1" Background="#202020" BorderThickness="0" BorderBrush="#202020">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="Template">
@@ -81,15 +81,15 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" Margin="10,5,5,5">
-                            <Image Source="{Binding ImagePath}" Width="160" Height="110" Margin="0"/>
+                            <Image Source="{Binding IdPojazduNavigation.IdSztukiNavigation.Zdjecie}" Width="160" Height="110" Margin="0"/>
                             <StackPanel Margin="5">
-                                <TextBlock Text="{Binding Marka}" FontWeight="Bold" FontSize="18" Foreground="#FFFF5D00" FontFamily="Bahnschrift"/>
-                                <TextBlock Text="{Binding Model}" FontWeight="Bold" FontSize="14" Foreground="White"/>
+                                <TextBlock Text="{Binding IdPojazduNavigation.IdSztukiNavigation.Marka}" FontWeight="Bold" FontSize="18" Foreground="#FFFF5D00" FontFamily="Bahnschrift"/>
+                                <TextBlock Text="{Binding IdPojazduNavigation.IdSztukiNavigation.Marka}" FontWeight="Bold" FontSize="14" Foreground="White"/>
                                 <TextBlock Text="{Binding Kwota, StringFormat=Cena: {0} PLN}"  FontSize="14" Foreground="White"/>
-                                <TextBlock Text="{Binding LiczbaDrzwi, StringFormat=Ilość drzwi: {0}}"  FontSize="14" Foreground="White"/>
-                                <TextBlock Text="{Binding PojemnoscSilnika, StringFormat=Pojemność silnika: {0}}"  FontSize="14" Foreground="White"/>
-                                <TextBlock Text="{Binding LiczbaPasazerow, StringFormat=Ilość osób: {0}}"  FontSize="14" Foreground="White"/>
-                                <TextBlock Text="{Binding SkrzyniaBiegow}"  FontSize="14" Foreground="White"/>
+                                <TextBlock Text="{Binding IdPojazduNavigation.IdSztukiNavigation.LiczbaDrzwi, StringFormat=Ilość drzwi: {0}}"  FontSize="14" Foreground="White"/>
+                                <TextBlock Text="{Binding IdPojazduNavigation.IdSztukiNavigation.PojemnoscSilnika, StringFormat=Pojemność silnika: {0}}"  FontSize="14" Foreground="White"/>
+                                <TextBlock Text="{Binding IdPojazduNavigation.IdSztukiNavigation.LiczbaPasazerow, StringFormat=Ilość osób: {0}}"  FontSize="14" Foreground="White"/>
+                                <TextBlock Text="{Binding IdPojazduNavigation.IdSztukiNavigation.AutomatycznaSkrzynia}"  FontSize="14" Foreground="White"/>
                             </StackPanel>
                         </StackPanel>
                     </DataTemplate>
@@ -110,7 +110,7 @@
 
                 <!-- Dodatki jako lista wielokrotnego wyboru -->
                 <TextBlock Text="Dodatki:" Foreground="White" FontFamily="Bahnschrift" Margin="0,10,0,2"/>
-                <ListBox x:Name="listBoxDodatki" SelectionMode="Multiple" Background="#202020" Foreground="White" FontFamily="Bahnschrift" BorderBrush="#404040" BorderThickness="1" Height="80">
+                <ListBox x:Name="listBoxDodatki" SelectionMode="Multiple" Background="#202020" Foreground="White" FontFamily="Bahnschrift" BorderBrush="#404040" BorderThickness="1" Height="23">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="5">
@@ -121,13 +121,23 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
+                <TextBlock Text="Marka:" Foreground="White" FontFamily="Bahnschrift" Margin="0,10,0,2"/>
+                <ComboBox x:Name="comboMarka"
+                Background="#202020"
+                Foreground="Black"
+                FontFamily="Bahnschrift"
+                BorderBrush="#404040"
+                BorderThickness="1"
+                Height="23"
+                SelectionChanged="comboMarka_SelectionChanged"
+                />
 
                 <!-- Ubezpieczenie -->
                 <TextBlock Text="Ubezpieczenie:" Foreground="White" FontFamily="Bahnschrift" Margin="0,10,0,2"/>
-                <ComboBox x:Name="comboUbezpieczenie" FontFamily="Bahnschrift" Margin="0,0,0,10">
-                    <ComboBoxItem Content="Brak" />
-                    <ComboBoxItem Content="Podstawowe" />
-                    <ComboBoxItem Content="Rozszerzone" />
+                <ComboBox x:Name="comboUbezpieczenie" FontFamily="Bahnschrift" Margin="0,0,0,10" SelectionChanged="comboUbezpieczenie_SelectionChanged">
+                    <ComboBoxItem Content="Ekonomiczne" />
+                    <ComboBoxItem Content="Średnie" />
+                    <ComboBoxItem Content="Luksusowe" />
                 </ComboBox>
                 <Button x:Name="btnWyszukaj"
         Content="Wyszukaj"

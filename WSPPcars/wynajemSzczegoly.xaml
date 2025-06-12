@@ -5,62 +5,90 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WSPPCars"
         mc:Ignorable="d"
-        Title="Szczegóły Wynajmu" Height="630" Width="1080" MinWidth="1080" MinHeight="550" WindowStartupLocation="CenterOwner" Background="#FF202020">
-    <Grid>
-        <StackPanel Margin="30" VerticalAlignment="Center" HorizontalAlignment="Center" Width="500">
-            <TextBlock Text="Szczegóły wynajmu" 
-                       FontSize="24" 
-                       FontWeight="Bold" 
-                       Foreground="#FFFF5D00" 
-                       HorizontalAlignment="Center" 
-                       Margin="0,0,0,20"/>
+        Title="Szczegóły Wynajmu"
+        MinWidth="600" MinHeight="500"
+        WindowStartupLocation="CenterOwner"
+        Background="#FF202020"
+        SizeToContent="Manual">
 
-            <TextBlock Text="Imię i nazwisko klienta:" Foreground="White" FontWeight="Bold"/>
-            <TextBox x:Name="txtKlient" Margin="0,0,0,15" />
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-            <TextBlock Text="Wybierz dodatki:" Foreground="White" FontWeight="Bold"/>
-            <ListBox x:Name="listDodatki" SelectionMode="Multiple" Margin="0,0,0,15" Height="100">
-                <ListBoxItem Content="GPS" />
-                <ListBoxItem Content="Fotelik dla dziecka" />
-                <ListBoxItem Content="Dodatkowy kierowca" />
-                <ListBoxItem Content="Łańcuchy na koła" />
-                <ListBoxItem Content="Wi-Fi w samochodzie" />
-            </ListBox>
+            <TextBlock Text="Szczegóły wynajmu"
+                       FontSize="22"
+                       FontWeight="Bold"
+                       Foreground="#FFFF5D00"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,15"/>
 
-            <TextBlock Text="Wybierz ubezpieczenie:" Foreground="White" FontWeight="Bold"/>
-            <ComboBox x:Name="comboUbezpieczenie" Margin="0,0,0,25" SelectedIndex="0">
-                <ComboBoxItem Content="Podstawowe" />
-                <ComboBoxItem Content="Rozszerzone" />
-                <ComboBoxItem Content="Premium" />
-            </ComboBox>
+            <StackPanel Grid.Row="1"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Stretch"
+                        MaxWidth="600"
+                        Margin="0"
+                        Width="Auto">
 
-            <Button x:Name="btnSzukaj" Content="Szukaj" 
-                    Height="40" 
-                    FontWeight="Bold" 
-                    Foreground="Black"
-                    Click="brnSzukaj_Click">
-                <Button.Template>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="#FFFF5D00"
-                                BorderBrush="#EEEE4C00"
-                                BorderThickness="2"
-                                CornerRadius="15"
-                                x:Name="border">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#DDDD4C00"/>
-                                <Setter TargetName="border" Property="BorderBrush" Value="#DDDD4C00"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#DDDD4C00"/>
-                                <Setter TargetName="border" Property="BorderBrush" Value="White"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
-        </StackPanel>
-    </Grid>
+                <!-- Wybór dodatków -->
+                <TextBlock Text="Wybierz dodatki:" Foreground="White" FontWeight="Bold" Margin="0,0,0,5"/>
+                <ListBox x:Name="listDodatki"
+                         SelectionMode="Multiple"
+                         Margin="0,0,0,10"
+                         Height="Auto">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="5">
+                                <TextBlock Text="{Binding Nazwa}" Width="130" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <!-- Ubezpieczenie -->
+                <TextBlock Text="Wybierz ubezpieczenie:" Foreground="White" FontWeight="Bold" Margin="0,5,0,0"/>
+                <ComboBox x:Name="comboUbezpieczenie"
+                          Margin="0,0,0,15"
+                          SelectedIndex="0">
+                    <ComboBoxItem Content="Ekonomiczne" />
+                    <ComboBoxItem Content="Średnie" />
+                    <ComboBoxItem Content="Luksusowe" />
+                </ComboBox>
+
+                <!-- Zgoda na kontakt -->
+                <CheckBox x:Name="chkZgodaKontakt"
+                          Content="Zgadzam się na kontakt telefoniczny"
+                          Foreground="White"
+                          Margin="0,0,0,10"/>
+
+                <!-- Koszt -->
+                <TextBlock Text="Przewidywany koszt: 0 zł"
+                           x:Name="txtKoszt"
+                           Foreground="LightGray"
+                           FontWeight="Bold"
+                           Margin="0,0,0,10"/>
+
+                <!-- Przycisk szukaj -->
+                <Button x:Name="btnSzukaj"
+                        Content="Szukaj"
+                        Height="35"
+                        FontWeight="Bold"
+                        Foreground="Black"
+                        Click="btnSzukaj_Click"
+                        Margin="0,0,0,15"
+                        HorizontalAlignment="Stretch"/>
+
+                <!-- Lista modeli aut -->
+                <TextBlock Text="Dostępne modele aut:"
+                           Foreground="White"
+                           FontWeight="Bold"
+                           Margin="0,0,0,5"/>
+                <ListBox x:Name="listModeleAut"
+                         Height="150"
+                         MouseDoubleClick="listModeleAut_MouseDoubleClick"/>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
 </Window>
