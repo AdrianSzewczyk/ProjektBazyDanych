@@ -111,11 +111,15 @@
                 <!-- Dodatki jako lista wielokrotnego wyboru -->
                 <TextBlock Text="Dodatki:" Foreground="White" FontFamily="Bahnschrift" Margin="0,10,0,2"/>
                 <ListBox x:Name="listBoxDodatki" SelectionMode="Multiple" Background="#202020" Foreground="White" FontFamily="Bahnschrift" BorderBrush="#404040" BorderThickness="1" Height="80">
-                    <ListBoxItem Content="GPS"/>
-                    <ListBoxItem Content="Fotelik dziecięcy"/>
-                    <ListBoxItem Content="Dodatkowy kierowca"/>
-                    <ListBoxItem Content="Łańcuchy na koła"/>
-                    <ListBoxItem Content="Bagażnik dachowy"/>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="5">
+                                
+                                <TextBlock Text="{Binding Nazwa}" Width="130" />
+                                
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
                 </ListBox>
 
                 <!-- Ubezpieczenie -->

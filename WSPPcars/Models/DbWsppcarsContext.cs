@@ -89,8 +89,6 @@ public partial class DbWsppcarsContext : DbContext
 
             entity.Property(e => e.IdOgloszenia).HasColumnName("id_Ogloszenia");
             entity.Property(e => e.DataDodania)
-                .IsRowVersion()
-                .IsConcurrencyToken()
                 .HasColumnName("data_dodania");
             entity.Property(e => e.Dostepnosc).HasColumnName("dostepnosc");
             entity.Property(e => e.IdPojazdu).HasColumnName("id_pojazdu");

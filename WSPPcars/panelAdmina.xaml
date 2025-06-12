@@ -34,8 +34,15 @@
 
                         <TextBlock Text="Liczba pasażerów" Foreground="White"/>
                         <TextBox x:Name="txtPasazerowie" Margin="0,0,0,10"/>
-
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,5,0,0">
+                        <TextBlock Text="Rodzaj Pojazdu" Foreground="White"/>
+                        <ComboBox x:Name="comboRodzajPojazdu" FontFamily="Bahnschrift" Margin="0,0,0,10">
+                            <ComboBoxItem Content="Spalinowy" />
+                            <ComboBoxItem Content="Hybrydowy" />
+                            <ComboBoxItem Content="Elektryczny" />
+                        </ComboBox>
+                        <TextBlock Text="Rocznik" Foreground="White"/>
+                        <TextBox x:Name="txtRocznik" Margin="0,0,0,10"/>
+                        <StackPanel Orientation="Horizontal">
                             <Button Content="Dodaj" Width="80" Background="#FFFF5D00" Click="BtnDodajAuto_Click"/>
                             <Button Content="Usuń" Width="80" Margin="10,0,0,0" Background="#FFB00000" Click="BtnUsunAuto_Click"/>
                             <Button Content="Zmień" Width="80" Margin="10,0,0,0" Background="#FF0096FF" Click="BtnEdytujAuto_Click"/>
@@ -43,7 +50,21 @@
                     </StackPanel>
 
                     <!-- Lista -->
-                    <ListBox x:Name="listaAut" Grid.Column="1" Margin="10" DisplayMemberPath="Model" SelectionChanged="ListaAut_SelectionChanged"/>
+                    <ListBox x:Name="listaAut" Grid.Column="1" Margin="10"  SelectionChanged="ListaAut_SelectionChanged"   Background="White" Foreground="Black">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="5">
+                                    <TextBlock Text="{Binding IdOgloszenia}" Width="50" />
+                                    <TextBlock Text="{Binding IdPojazduNavigation.IdSztukiNavigation.Marka}" Width="100" />
+                                    <TextBlock Text="{Binding IdPojazduNavigation.IdSztukiNavigation.Model}" Width="100" />
+                                    <TextBlock Text="{Binding Dostepnosc}" Width="70"/>
+                                    <TextBlock Text="{Binding Kwota, StringFormat=C}" Width="80" />
+                                    <TextBlock Text="{Binding DataDodania}" Width="150"/>
+                                    <!-- Dodaj inne pola według potrzeb -->
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </Grid>
             </TabItem>
 
@@ -60,10 +81,22 @@
 
                         <TextBlock Text="Nazwa ubezpieczenia" Foreground="White" Margin="0,0,0,2"/>
                         <TextBox x:Name="txtNazwaUbezp" Margin="0,0,0,5"/>
-
+                        <TextBlock Text="Nazwa ubezpieczalni" Foreground="White" Margin="0,0,0,2"/>
+                        <TextBox x:Name="txtNazwaUbezpieczalni" Margin="0,0,0,5"/>
                         <TextBlock Text="Cena ubezpieczenia (PLN)" Foreground="White" Margin="0,0,0,2"/>
-                        <TextBox x:Name="txtCenaUbezp" Margin="0,0,0,10"/>
 
+                        <TextBox x:Name="txtCenaUbezp" Margin="0,0,0,10"/>
+                        <TextBlock Text="Rodzaj Ubezpieczenia" Foreground="White" Margin="0,0,0,2"/>
+                        <ComboBox x:Name="comboRodzajUbezpieczenia" FontFamily="Bahnschrift" Margin="0,0,0,10">
+                            <ComboBoxItem Content="Ekonomiczne" />
+                            <ComboBoxItem Content="Średnie" />
+                            <ComboBoxItem Content="Luksusowe" />
+                        </ComboBox>
+                        <TextBlock Text="Dostępność" Foreground="White" Margin="0,0,0,2"/>
+                        <ComboBox x:Name="comboDostepnoscUbezpieczenia" FontFamily="Bahnschrift" Margin="0,0,0,10">
+                            <ComboBoxItem Content="Dostępne" />
+                            <ComboBoxItem Content="Niedostępne" />
+                        </ComboBox>
                         <StackPanel Orientation="Horizontal">
                             <Button Content="Dodaj" Width="80" Background="#FFFF5D00" Click="BtnDodajUbezpieczenie_Click"/>
                             <Button Content="Usuń" Width="80" Margin="10,0,0,0" Background="#FFB00000" Click="BtnUsunUbezpieczenie_Click"/>
@@ -71,7 +104,21 @@
                         </StackPanel>
                     </StackPanel>
 
-                    <ListBox x:Name="listaUbezpieczen" Grid.Column="1" Margin="10" DisplayMemberPath="Nazwa" SelectionChanged="ListaUbezpieczen_SelectionChanged"/>
+                    <ListBox x:Name="listaUbezpieczen" Grid.Column="1" Margin="10"  SelectionChanged="ListaUbezpieczen_SelectionChanged" Background="White" Foreground="Black">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="5">
+                                    <TextBlock Text="{Binding IdUbezpieczenia}" Width="50" />
+                                    <TextBlock Text="{Binding Nazwa}" Width="100" />
+                                    <TextBlock Text="{Binding NazwaUbezpieczalni}" Width="130" />
+                                    <TextBlock Text="{Binding IdRodzajPakietuNavigation.Pakiet}" Width="80" />
+                                    <TextBlock Text="{Binding Dostepnosc}" Width="100" />
+                                    <TextBlock Text="{Binding Kwota, StringFormat=C}" Width="60" />
+                                    <!-- Dodaj inne pola według potrzeb -->
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </Grid>
             </TabItem>
 
@@ -79,16 +126,23 @@
             <TabItem Header="Dodatki">
                 <Grid Margin="10">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="37*"/>
+                        <ColumnDefinition Width="166*"/>
+                        <ColumnDefinition Width="305*"/>
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel Grid.Column="0" Margin="10">
+                    <StackPanel Grid.Column="0" Margin="10,10,10,10" Grid.ColumnSpan="2">
                         <TextBlock Text="Zarządzaj dodatkami" FontWeight="Bold" FontSize="18" Margin="0,0,0,10"/>
 
                         <TextBlock Text="Nazwa dodatku" Foreground="White" Margin="0,0,0,2"/>
                         <TextBox x:Name="txtNazwaDodatku" Margin="0,0,0,5"/>
-
+                        <TextBlock Text="Liczba Sztuk" Foreground="White" Margin="0,0,0,2"/>
+                        <TextBox x:Name="txtLiczbaSztukDodatku" Margin="0,0,0,5"/>
+                        <TextBlock Text="Dostępność" Foreground="White" Margin="0,0,0,2"/>
+                        <ComboBox x:Name="comboDostepnoscDodatku" FontFamily="Bahnschrift" Margin="0,0,0,10">
+                            <ComboBoxItem Content="Dostępne" />
+                            <ComboBoxItem Content="Niedostępne" />
+                        </ComboBox>
                         <TextBlock Text="Cena dodatku (PLN)" Foreground="White" Margin="0,0,0,2"/>
                         <TextBox x:Name="txtCenaDodatku" Margin="0,0,0,10"/>
 
@@ -99,7 +153,20 @@
                         </StackPanel>
                     </StackPanel>
 
-                    <ListBox x:Name="listaDodatkow" Grid.Column="1" Margin="10" DisplayMemberPath="Nazwa" SelectionChanged="ListaDodatkow_SelectionChanged"/>
+                    <ListBox x:Name="listaDodatkow" Grid.Column="2" Margin="10,10,10,10"  SelectionChanged="ListaDodatkow_SelectionChanged">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="5">
+                                    <TextBlock Text="{Binding IdDodatku}" Width="50" />
+                                    <TextBlock Text="{Binding Nazwa}" Width="130" />
+                                    <TextBlock Text="{Binding LiczbaSztuk}" Width="130" />
+                                    <TextBlock Text="{Binding Dostepnosc}" Width="80" />
+                                    <TextBlock Text="{Binding Kwota, StringFormat=C}" Width="60" />
+                                    <!-- Dodaj inne pola według potrzeb -->
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </Grid>
             </TabItem>
             <TabItem Header="Użytkownicy">
@@ -112,9 +179,10 @@
                     <StackPanel Grid.Column="0" Margin="10">
                         <TextBlock Text="Zarządzaj użytkownikami" FontWeight="Bold" FontSize="18" Margin="0,0,0,10"/>
 
-                        <TextBlock Text="Imię i nazwisko" Foreground="White"/>
+                        <TextBlock Text="Imię" Foreground="White"/>
                         <TextBox x:Name="txtImieNazwisko" Margin="0,0,0,5"/>
-
+                        <TextBlock Text="Nazwisko" Foreground="White"/>
+                        <TextBox x:Name="txtNazwisko" Margin="0,0,0,5"/>
                         <TextBlock Text="Login" Foreground="White"/>
                         <TextBox x:Name="txtLogin" Margin="0,0,0,5"/>
 
@@ -135,7 +203,22 @@
                     </StackPanel>
 
 
-                    <ListBox x:Name="listaUzytkownikow" Grid.Column="1" Margin="10" DisplayMemberPath="Login" SelectionChanged="ListaUzytkownikow_SelectionChanged"/>
+                    <ListBox x:Name="listaUzytkownikow" Grid.Column="1" Margin="10"  SelectionChanged="ListaUzytkownikow_SelectionChanged">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="5">
+                                    <TextBlock Text="{Binding IdUzytkownika}" Width="50" />
+                                    <TextBlock Text="{Binding Imie}" Width="50" />
+                                    <TextBlock Text="{Binding Nazwisko}" Width="70" />
+                                    <TextBlock Text="{Binding Login}" Width="70" />
+                                    <TextBlock Text="{Binding Haslo}" Width="70" />
+                                    <TextBlock Text="{Binding IdRodzajKontaNavigation.Rodzaj}" Width="60" />
+                                    <TextBlock Text="{Binding Utworzony}" Width="150" />
+                                    <!-- Dodaj inne pola według potrzeb -->
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </Grid>
             </TabItem>
         </TabControl>

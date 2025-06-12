@@ -11,11 +11,12 @@ public partial class Ogloszenium
 
     public bool? Dostepnosc { get; set; }
 
-    public byte[] DataDodania { get; set; } = null!;
+    public DateTime DataDodania { get; set; } 
 
     public decimal? Kwota { get; set; }
 
     public virtual Pojazd? IdPojazduNavigation { get; set; }
 
     public virtual ICollection<Rezerwacje> Rezerwacjes { get; set; } = new List<Rezerwacje>();
+
 }

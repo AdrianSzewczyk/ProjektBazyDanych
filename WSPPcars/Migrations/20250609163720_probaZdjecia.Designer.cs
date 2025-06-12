@@ -12,8 +12,8 @@ using WSPPCars.Models;
 namespace WSPPCars.Migrations
 {
     [DbContext(typeof(DbWsppcarsContext))]
-    [Migration("20250516141915_trzecia")]
-    partial class trzecia
+    [Migration("20250609163720_probaZdjecia")]
+    partial class probaZdjecia
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

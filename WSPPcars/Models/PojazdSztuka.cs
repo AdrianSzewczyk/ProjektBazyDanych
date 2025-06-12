@@ -23,6 +23,8 @@ public partial class PojazdSztuka
 
     public DateOnly? Rocznik { get; set; }
 
+    public String? Zdjecie {  get; set; }
+
     public virtual TypPojazdu? IdTypPojazduNavigation { get; set; }
 
     public virtual ICollection<Pojazd> Pojazds { get; set; } = new List<Pojazd>();

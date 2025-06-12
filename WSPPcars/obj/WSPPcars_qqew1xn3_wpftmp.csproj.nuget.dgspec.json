@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Adikson\\Desktop\\ProjektBazy\\ProjektBazyDanych\\WSPPcars\\WSPPCars.csproj": {}
+    "C:\\Users\\Adikson\\Desktop\\ProjektBazy\\ProjektBazyDanych\\WSPPcars\\WSPPcars.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Adikson\\Desktop\\ProjektBazy\\ProjektBazyDanych\\WSPPcars\\WSPPCars.csproj": {
+    "C:\\Users\\Adikson\\Desktop\\ProjektBazy\\ProjektBazyDanych\\WSPPcars\\WSPPcars.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Adikson\\Desktop\\ProjektBazy\\ProjektBazyDanych\\WSPPcars\\WSPPCars.csproj",
-        "projectName": "WSPPCars",
-        "projectPath": "C:\\Users\\Adikson\\Desktop\\ProjektBazy\\ProjektBazyDanych\\WSPPcars\\WSPPCars.csproj",
+        "projectUniqueName": "C:\\Users\\Adikson\\Desktop\\ProjektBazy\\ProjektBazyDanych\\WSPPcars\\WSPPcars.csproj",
+        "projectName": "WSPPcars",
+        "projectPath": "C:\\Users\\Adikson\\Desktop\\ProjektBazy\\ProjektBazyDanych\\WSPPcars\\WSPPcars.csproj",
         "packagesPath": "C:\\Users\\Adikson\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Adikson\\Desktop\\ProjektBazy\\ProjektBazyDanych\\WSPPcars\\obj\\",
         "projectStyle": "PackageReference",

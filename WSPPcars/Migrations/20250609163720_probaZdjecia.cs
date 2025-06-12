@@ -5,7 +5,7 @@
 namespace WSPPCars.Migrations
 {
     /// <inheritdoc />
-    public partial class czwarta : Migration
+    public partial class probaZdjecia : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
