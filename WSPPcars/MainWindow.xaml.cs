@@ -29,16 +29,7 @@ namespace WSPPCars
    
     public partial class MainWindow : Window
     {
-        public void WyswietlenieDodatkow()
-        {   listBoxDodatki.Items.Clear();   
-            using var db = new DbWsppcarsContext();
-
-            var dodatki = db.Dodatkis.ToList();
-            foreach (var d in dodatki)
-            {
-                listBoxDodatki.Items.Add(d);
-            }
-        }
+       
         public void WyswietlenieListyOgloszen()
         {
             listboxOgloszenia.Items.Clear();
@@ -73,8 +64,9 @@ namespace WSPPCars
             //btnLogowanie.Visibility = Visibility.Visible;
             WyswietlenieListyOgloszen();
             btnAdminPanel.Visibility = Visibility.Collapsed;
-            WyswietlenieDodatkow();
+            wyswietlenieModeli();
             wyswietlenieMarek();
+            wyswietlenieRocznikow();
         }
 
         private Uzytkownicy aktualnyUzytkownik;
@@ -198,7 +190,7 @@ namespace WSPPCars
             adm.ShowDialog();
             this.Show();
             WyswietlenieListyOgloszen();
-            WyswietlenieDodatkow();
+            
 
         }
 
@@ -211,8 +203,7 @@ namespace WSPPCars
         {
             datePoczatek.SelectedDate = null;
             dateKoniec.SelectedDate = null;
-            listBoxDodatki.UnselectAll();
-            comboUbezpieczenie.SelectedIndex = -1;
+            
         }
 
         private void comboUbezpieczenie_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -230,12 +221,42 @@ namespace WSPPCars
                 comboMarka.ItemsSource = ogloszenia;
             }
         }
+        private void wyswietlenieModeli()
+        {
+            using (var context = new DbWsppcarsContext())
+            {
+                var ogloszenia = context.Ogloszenia.Include(o => o.IdPojazduNavigation)
+                    .ThenInclude(o => o.IdSztukiNavigation)
+                    .Where(o => o.Dostepnosc == true)
+                    .Select(o => o.IdPojazduNavigation.IdSztukiNavigation.Model).Distinct().ToList();
+                comboModel.ItemsSource = ogloszenia;
+            }
+
+        }
+        private void wyswietlenieRocznikow()
+        {
+            using (var context = new DbWsppcarsContext())
+            {
+                var ogloszenia = context.Ogloszenia.Include(o => o.IdPojazduNavigation)
+                    .ThenInclude(o => o.IdSztukiNavigation)
+                    .Where(o => o.Dostepnosc == true)
+                    .Select(o => o.IdPojazduNavigation.IdSztukiNavigation.Rocznik).Distinct().ToList();
+                comboRocznik.ItemsSource = ogloszenia;
+            }
+        }
 
         private void comboMarka_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             
         }
+        private void comboRocznik_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
 
-        
+        }
+        private void comboModel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
     }
 }

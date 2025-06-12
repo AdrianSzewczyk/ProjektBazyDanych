@@ -99,45 +99,54 @@
         </Border>
         <Border x:Name="borderFiltry" BorderBrush="#FFFF5D00" Background="#202020" BorderThickness="1" Margin="0,166,27,20" HorizontalAlignment="Right" Width="216" CornerRadius="10">
             <StackPanel Margin="10">
-                <TextBlock Text="Filtry" TextAlignment="Center" FontWeight="Bold" FontSize="18" Foreground="#FFFFFF" FontFamily="Bahnschrift" Margin="0,0,0,10"/>
+                <TextBlock Text="Filtry" TextAlignment="Center" FontWeight="Bold" FontSize="18" Foreground="#FFFFFF" FontFamily="Bahnschrift" Margin="0,0,0,5"/>
 
                 <!-- Wybór dat -->
                 <TextBlock Text="Od:" Foreground="White" FontFamily="Bahnschrift" Margin="0,5,0,2"/>
-                <DatePicker x:Name="datePoczatek" Height="26" Width="Auto" Margin="0,0,0,5"/>
+                <DatePicker x:Name="datePoczatek" Height="24" Width="Auto" Margin="0,0,0,5"/>
 
                 <TextBlock Text="Do:" Foreground="White" FontFamily="Bahnschrift" Margin="0,5,0,2"/>
-                <DatePicker x:Name="dateKoniec" Height="26" Width="Auto" Margin="0,0,0,10"/>
+                <DatePicker x:Name="dateKoniec" Height="24" Width="Auto" Margin="0,0,0,3"/>
 
                 <!-- Dodatki jako lista wielokrotnego wyboru -->
-                <TextBlock Text="Dodatki:" Foreground="White" FontFamily="Bahnschrift" Margin="0,10,0,2"/>
-                <ListBox x:Name="listBoxDodatki" SelectionMode="Multiple" Background="#202020" Foreground="White" FontFamily="Bahnschrift" BorderBrush="#404040" BorderThickness="1" Height="23">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Margin="5">
-                                
-                                <TextBlock Text="{Binding Nazwa}" Width="130" />
-                                
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-                <TextBlock Text="Marka:" Foreground="White" FontFamily="Bahnschrift" Margin="0,10,0,2"/>
+                
+                <TextBlock Text="Marka:" Foreground="White" FontFamily="Bahnschrift" Margin="0,2,0,2"/>
                 <ComboBox x:Name="comboMarka"
                 Background="#202020"
                 Foreground="Black"
                 FontFamily="Bahnschrift"
                 BorderBrush="#404040"
                 BorderThickness="1"
-                Height="23"
+                Height="20"
                 SelectionChanged="comboMarka_SelectionChanged"
+                />
+                <TextBlock Text="Model:" Foreground="White" FontFamily="Bahnschrift" Margin="0,5,0,2"/>
+                <ComboBox x:Name="comboModel"
+                Background="#202020"
+                Foreground="Black"
+                FontFamily="Bahnschrift"
+                BorderBrush="#404040"
+                BorderThickness="1"
+                Height="20"
+                SelectionChanged="comboModel_SelectionChanged"
+                />
+                <TextBlock Text="Rocznik:" Foreground="White" FontFamily="Bahnschrift" Margin="0,10,0,2"/>
+                <ComboBox x:Name="comboRocznik"
+                Background="#202020"
+                Foreground="Black"
+                FontFamily="Bahnschrift"
+                BorderBrush="#404040"
+                BorderThickness="1"
+                Height="20"
+                SelectionChanged="comboRocznik_SelectionChanged"
                 />
 
                 <!-- Ubezpieczenie -->
-                <TextBlock Text="Ubezpieczenie:" Foreground="White" FontFamily="Bahnschrift" Margin="0,10,0,2"/>
-                <ComboBox x:Name="comboUbezpieczenie" FontFamily="Bahnschrift" Margin="0,0,0,10" SelectionChanged="comboUbezpieczenie_SelectionChanged">
-                    <ComboBoxItem Content="Ekonomiczne" />
-                    <ComboBoxItem Content="Średnie" />
-                    <ComboBoxItem Content="Luksusowe" />
+                <TextBlock Text="Rodzaj:" Foreground="White" FontFamily="Bahnschrift" Margin="0,10,0,2"/>
+                <ComboBox x:Name="comboRodzajPojazdu" FontFamily="Bahnschrift" Margin="0,0,0,10" Height="20" SelectionChanged="comboUbezpieczenie_SelectionChanged">
+                    <ComboBoxItem Content="Spalinowe" />
+                    <ComboBoxItem Content="Hybrydowe" />
+                    <ComboBoxItem Content="Elektryczne" />
                 </ComboBox>
                 <Button x:Name="btnWyszukaj"
         Content="Wyszukaj"
