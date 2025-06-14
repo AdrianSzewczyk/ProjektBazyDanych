@@ -25,12 +25,10 @@
                        HorizontalAlignment="Center"
                        Margin="0,0,0,15"/>
 
-            <StackPanel Grid.Row="1"
-                        VerticalAlignment="Top"
-                        HorizontalAlignment="Stretch"
+            <StackPanel
                         MaxWidth="600"
-                        Margin="0"
-                        Width="Auto">
+                        Margin="0,44,0,0"
+                        Width="Auto" Grid.RowSpan="2">
 
                 <!-- Wybór dodatków -->
                 <TextBlock Text="Wybierz dodatki:" Foreground="White" FontWeight="Bold" Margin="0,0,0,5"/>
@@ -69,25 +67,17 @@
                            Foreground="LightGray"
                            FontWeight="Bold"
                            Margin="0,0,0,10"/>
-
-                <!-- Przycisk szukaj -->
                 <Button x:Name="btnSzukaj"
-                        Content="Szukaj"
+                        Content="Dalej"
                         Height="35"
                         FontWeight="Bold"
                         Foreground="Black"
                         Click="btnSzukaj_Click"
-                        Margin="0,0,0,15"
-                        HorizontalAlignment="Stretch"/>
+                        />
+
+                <!-- Przycisk szukaj -->
 
                 <!-- Lista modeli aut -->
-                <TextBlock Text="Dostępne modele aut:"
-                           Foreground="White"
-                           FontWeight="Bold"
-                           Margin="0,0,0,5"/>
-                <ListBox x:Name="listModeleAut"
-                         Height="150"
-                         MouseDoubleClick="listModeleAut_MouseDoubleClick"/>
             </StackPanel>
         </Grid>
     </ScrollViewer>

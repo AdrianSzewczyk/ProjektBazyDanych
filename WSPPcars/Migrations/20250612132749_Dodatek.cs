@@ -17,14 +17,19 @@ namespace WSPPCars.Migrations
                 type: "nvarchar(max)",
                 nullable: true);
 
-            migrationBuilder.AlterColumn<DateTime>(
+            // Usuń istniejącą kolumnę rowversion
+            migrationBuilder.DropColumn(
+                name: "data_dodania",
+                table: "Ogloszenia");
+
+            // Dodaj nową kolumnę jako datetime2
+            migrationBuilder.AddColumn<DateTime>(
                 name: "data_dodania",
                 table: "Ogloszenia",
                 type: "datetime2",
                 nullable: false,
-                oldClrType: typeof(byte[]),
-                oldType: "rowversion",
-                oldRowVersion: true);
+                defaultValueSql: "GETDATE()"); // albo defaultValue: new DateTime(...)
+
         }
 
         /// <inheritdoc />
@@ -34,14 +39,18 @@ namespace WSPPCars.Migrations
                 name: "Zdjecie",
                 table: "Pojazd_Sztuka");
 
-            migrationBuilder.AlterColumn<byte[]>(
+            // Usuń kolumnę datetime2
+            migrationBuilder.DropColumn(
+                name: "data_dodania",
+                table: "Ogloszenia");
+
+            // Przywróć rowversion
+            migrationBuilder.AddColumn<byte[]>(
                 name: "data_dodania",
                 table: "Ogloszenia",
                 type: "rowversion",
                 rowVersion: true,
-                nullable: false,
-                oldClrType: typeof(DateTime),
-                oldType: "datetime2");
+                nullable: false);
         }
     }
 }

@@ -246,11 +246,10 @@ namespace WSPPCars.Migrations
                         .HasColumnType("smallmoney")
                         .HasColumnName("kwota_ubezpieczenia");
 
-                    b.Property<byte[]>("Utworzona")
+                    b.Property<DateTime?>("Utworzona")
                         .IsConcurrencyToken()
-                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion")
+                        .HasColumnType("datetime2")
                         .HasColumnName("utworzona");
 
                     b.HasKey("IdRezerwacji")

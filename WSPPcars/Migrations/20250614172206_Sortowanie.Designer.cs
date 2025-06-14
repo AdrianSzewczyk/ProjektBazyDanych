@@ -12,8 +12,8 @@ using WSPPCars.Models;
 namespace WSPPCars.Migrations
 {
     [DbContext(typeof(DbWsppcarsContext))]
-    [Migration("20250609163720_probaZdjecia")]
-    partial class probaZdjecia
+    [Migration("20250614172206_Sortowanie")]
+    partial class Sortowanie
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -94,11 +94,8 @@ namespace WSPPCars.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdOgloszenia"));
 
-                    b.Property<byte[]>("DataDodania")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion")
+                    b.Property<DateTime>("DataDodania")
+                        .HasColumnType("datetime2")
                         .HasColumnName("data_dodania");
 
                     b.Property<bool?>("Dostepnosc")
@@ -188,6 +185,9 @@ namespace WSPPCars.Migrations
                         .HasColumnType("date")
                         .HasColumnName("rocznik");
 
+                    b.Property<string>("Zdjecie")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("IdPojazdSztuka")
                         .HasName("PK__Pojazd_S__8E13BC71D8D6972E");
 
@@ -249,11 +249,10 @@ namespace WSPPCars.Migrations
                         .HasColumnType("smallmoney")
                         .HasColumnName("kwota_ubezpieczenia");
 
-                    b.Property<byte[]>("Utworzona")
+                    b.Property<DateTime?>("Utworzona")
                         .IsConcurrencyToken()
-                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion")
+                        .HasColumnType("datetime2")
                         .HasColumnName("utworzona");
 
                     b.HasKey("IdRezerwacji")

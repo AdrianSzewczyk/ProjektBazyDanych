@@ -249,12 +249,21 @@ namespace WSPPCars
         }
         private bool skrzyniaBiegow()
         {
-            bool skrzynia = comboSkrzyniaBiegow.Text switch
+            bool skrzynia;
+
+            switch (comboSkrzyniaBiegow.Text)
             {
-                "Manualna" => false,
-                "Automatyczna" => true,
-                _ => throw new ArgumentException("Błędna Skrzynia Biegów")
-            }; return skrzynia;
+                case "Manualna":
+                    skrzynia = false;
+                    break;
+                case "Automatyczna":
+                    skrzynia = true;
+                    break;
+                default:
+                    throw new ArgumentException("Błędna Skrzynia Biegów");
+            }
+
+            return skrzynia;
         }
         private void WyswietlAuta()
         {
@@ -330,7 +339,7 @@ namespace WSPPCars
                         txtZdjecie.Text = auto.IdSztukiNavigation.Zdjecie;
                         dpRocznik.Text = auto.IdSztukiNavigation.Rocznik.ToString();
                         comboRodzajPojazdu.Text = auto.IdSztukiNavigation.IdTypPojazduNavigation.Typ;
-                        comboSkrzyniaBiegow.Text = skrzyniaBiegow()==true?"Automatyczna":"Manualna";
+                        comboSkrzyniaBiegow.Text = auto.IdSztukiNavigation.AutomatycznaSkrzynia==true?"Automatyczna":"Manualna";
                         txtSztuki.Text = auto.LiczbaSztuk.ToString();
                     }
 

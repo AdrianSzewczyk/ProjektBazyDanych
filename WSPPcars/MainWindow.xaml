@@ -84,7 +84,7 @@
                             <Image Source="{Binding IdPojazduNavigation.IdSztukiNavigation.Zdjecie}" Width="160" Height="110" Margin="0"/>
                             <StackPanel Margin="5">
                                 <TextBlock Text="{Binding IdPojazduNavigation.IdSztukiNavigation.Marka}" FontWeight="Bold" FontSize="18" Foreground="#FFFF5D00" FontFamily="Bahnschrift"/>
-                                <TextBlock Text="{Binding IdPojazduNavigation.IdSztukiNavigation.Marka}" FontWeight="Bold" FontSize="14" Foreground="White"/>
+                                <TextBlock Text="{Binding IdPojazduNavigation.IdSztukiNavigation.Model}" FontWeight="Bold" FontSize="14" Foreground="White"/>
                                 <TextBlock Text="{Binding Kwota, StringFormat=Cena: {0} PLN}"  FontSize="14" Foreground="White"/>
                                 <TextBlock Text="{Binding IdPojazduNavigation.IdSztukiNavigation.LiczbaDrzwi, StringFormat=Ilość drzwi: {0}}"  FontSize="14" Foreground="White"/>
                                 <TextBlock Text="{Binding IdPojazduNavigation.IdSztukiNavigation.PojemnoscSilnika, StringFormat=Pojemność silnika: {0}}"  FontSize="14" Foreground="White"/>

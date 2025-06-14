@@ -3,13 +3,31 @@ using System.Net.Mail;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using WSPPCars.Models;
 
 namespace WSPPCars
 {
     public partial class Rezerwacja : Window
     {
+        private Ogloszenium carAd;
+        private Ubezpieczenium ubezpieczenie;
+        private Uzytkownicy aktualnyUzytkownik;
+        private DateTime? dataWypozyczenia;
+        private DateTime? dataZwrotu;
+        private List<Dodatki> dodatki;
         public Rezerwacja()
         {
+            InitializeComponent();
+        }
+
+        public Rezerwacja(Ogloszenium carAd, Ubezpieczenium u, Uzytkownicy aktualnyUzytkownik, DateTime? dataWypozyczenia, DateTime? dataZwrotu, List<Dodatki> d)
+        {
+            this.dataZwrotu = dataZwrotu;
+            this.dataWypozyczenia = dataWypozyczenia;
+            this.aktualnyUzytkownik = aktualnyUzytkownik;
+            this.carAd = carAd;
+            this.ubezpieczenie = u;
+            this.dodatki = d;
             InitializeComponent();
         }
 
@@ -71,6 +89,55 @@ namespace WSPPCars
                 MessageBox.Show("Nie możesz przejść do płatności bez wymaganych zgód.", "Zgody wymagane", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
+            decimal? sumaDodatki = 0;
+            //REZERWACJA DODANIE DO BAZY
+            foreach(var d in dodatki)
+            {
+                sumaDodatki += (d.Kwota);
+            }
+
+            DateTime d1 = dataZwrotu.Value.Date;
+            DateTime d2 = dataWypozyczenia.Value.Date;
+            int IloscDni = Math.Abs((d1 - d2).Days);
+
+
+            using (var context = new DbWsppcarsContext())
+            {
+
+                    var rezerwacja = new Rezerwacje
+                    {
+                        IdOgloszenia = carAd.IdOgloszenia,
+                        DostepnoscPojazdu = true,//???
+                        Utworzona = DateTime.Now,
+                        IdUbezpieczenia = ubezpieczenie.IdUbezpieczenia,
+                        IdStanRezerwacji = 2,//nieoplacona
+                        IdUzytkownika = aktualnyUzytkownik.IdUzytkownika,
+                        KwotaUbezpieczenia = ubezpieczenie.Kwota,
+                        KwotaOgloszenia = carAd.Kwota,
+                        DataRozpoczeciaRezerwacji = dataWypozyczenia,
+                        DataZakonczeniaRezerwacji = dataZwrotu,
+                        KwotaDodatku = sumaDodatki,
+                        KwotaRezerwacji = ((carAd.Kwota * IloscDni) + ubezpieczenie.Kwota + sumaDodatki)
+
+                    };
+
+                    context.Rezerwacjes.Add(rezerwacja);
+                    context.SaveChanges();
+
+                foreach(var d in dodatki) {
+                    var rezerwacjaDodatki = new DodatkiRezerwacje
+                    {
+                        IdRezerwacji = rezerwacja.IdRezerwacji,
+                        IdDodatku = d.IdDodatku
+                    };
+                    context.DodatkiRezerwacjes.Add(rezerwacjaDodatki);
+                    context.SaveChanges();
+                }
+
+
+            }
+
+            //Koniec eksperymentow
 
             string podsumowanie = $"Imię: {txtImie.Text}\nNazwisko: {txtNazwisko.Text}\nEmail: {txtEmail.Text}";
             MessageBox.Show("Przechodzisz do płatności...\n\n" + podsumowanie, "Płatność", MessageBoxButton.OK, MessageBoxImage.Information);

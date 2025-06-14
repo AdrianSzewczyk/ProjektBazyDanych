@@ -24,9 +24,16 @@
                           SelectionMode="Single">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Numer zamówienia" Width="200" DisplayMemberBinding="{Binding NumerZamowienia}" />
-                            <GridViewColumn Header="Data zamówienia" Width="200" DisplayMemberBinding="{Binding DataZamowienia}" />
-                            <GridViewColumn Header="Status" Width="200" DisplayMemberBinding="{Binding Status}" />
+                            <GridViewColumn Header="Nr rezerwacji" DisplayMemberBinding="{Binding IdRezerwacji}" />
+                            <GridViewColumn Header="Samochód" DisplayMemberBinding="{Binding Samochod}" />
+                            <GridViewColumn Header="Stan" DisplayMemberBinding="{Binding IdStanRezerwacji}" />
+                            <GridViewColumn Header="Początek" DisplayMemberBinding="{Binding DataRozpoczeciaRezerwacji}" />
+                            <GridViewColumn Header="Koniec" DisplayMemberBinding="{Binding DataZakonczeniaRezerwacji}" />
+                            <GridViewColumn Header="Ubezpieczenie" DisplayMemberBinding="{Binding Ubezpieczenie}" />
+                            <GridViewColumn Header="Cena ubezpieczenia" DisplayMemberBinding="{Binding KwotaUbezpieczenia}" />
+                            <GridViewColumn Header="Dodatek" DisplayMemberBinding="{Binding KwotaDodatku}" />
+                            <GridViewColumn Header="Ogłoszenie" DisplayMemberBinding="{Binding KwotaOgloszenia}" />
+                            <GridViewColumn Header="Razem" DisplayMemberBinding="{Binding KwotaRezerwacji}" />
                         </GridView>
                     </ListView.View>
                 </ListView>

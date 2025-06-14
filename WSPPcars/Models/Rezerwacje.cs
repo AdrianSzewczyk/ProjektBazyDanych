@@ -19,7 +19,7 @@ public partial class Rezerwacje
 
     public DateTime? DataZakonczeniaRezerwacji { get; set; }
 
-    public byte[] Utworzona { get; set; } = null!;
+    public DateTime? Utworzona { get; set; }
 
     public decimal? KwotaUbezpieczenia { get; set; }
 

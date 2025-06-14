@@ -20,6 +20,7 @@ namespace WSPPCars
     /// </summary>
     public partial class OknoSzczegoly : Window
     {
+        private Ogloszenium carAd;
         public OknoSzczegoly()
         {
             InitializeComponent();
@@ -28,6 +29,7 @@ namespace WSPPCars
         {
             InitializeComponent();
             DataContext = carAd;
+            this.carAd = carAd;
         }
 
         private void btnWynajmij_Click(object sender, RoutedEventArgs e)
@@ -35,7 +37,7 @@ namespace WSPPCars
             MainWindow mw = (MainWindow)Application.Current.MainWindow;
             if (mw.AktualnyUzytkownik.Login != "Gosc")
             {
-                wynajemSamochodu wynajem = new wynajemSamochodu();
+                wynajemSamochodu wynajem = new wynajemSamochodu(carAd, mw.AktualnyUzytkownik);
                 wynajem.Owner = this;
                 wynajem.WindowStartupLocation = WindowStartupLocation.Manual;
                 wynajem.Width = this.Width;
@@ -44,7 +46,7 @@ namespace WSPPCars
                 wynajem.Top = this.Top;
                 this.Hide();
                 wynajem.ShowDialog();
-                this.Show();
+                this.Close();
             }
             else
             {

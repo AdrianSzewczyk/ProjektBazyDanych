@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,10 +19,26 @@ namespace WSPPCars
 
     public partial class wynajemSzczegoly : Window
     {
+        private Ogloszenium carAd;
+        private Uzytkownicy aktualnyUzytkownik;
+        private DateTime? dataWypozyczenia;
+        private DateTime? dataZwrotu;
         public wynajemSzczegoly()
         {
             InitializeComponent();
             WyswietlDodatki();
+            WyswietlUbezpieczenia();
+        }
+
+        public wynajemSzczegoly(Ogloszenium carAd, Uzytkownicy aktualnyUzytkownik, DateTime? dataWypozyczenia, DateTime? dataZwrotu)
+        {
+            this.aktualnyUzytkownik = aktualnyUzytkownik;
+            this.carAd = carAd;
+            InitializeComponent();
+            WyswietlDodatki();
+            WyswietlUbezpieczenia();
+            this.dataWypozyczenia = dataWypozyczenia;
+            this.dataZwrotu = dataZwrotu;
         }
         private void WyswietlDodatki()
         {
@@ -36,29 +53,25 @@ namespace WSPPCars
             }
         }
 
-        private void btnSzukaj_Click(object sender, RoutedEventArgs e)
+        private void WyswietlUbezpieczenia()
         {
-
-
-            List<string> dostepneModele = new List<string>()
-    {
-        "Toyota Corolla",
-        "Volkswagen Golf",
-        "Ford Focus",
-        "BMW 3 Series",
-        "Audi A4"
-    };
-
-            listModeleAut.Items.Clear();
-            foreach (var model in dostepneModele)
+            comboUbezpieczenie.Items.Clear();
+            using (var context = new DbWsppcarsContext())
             {
-                listModeleAut.Items.Add(model);
+                var ubezpieczenia = context.Ubezpieczenia.Include(o => o.IdRodzajPakietuNavigation).ToList();
+                foreach (var u in ubezpieczenia)
+                {
+                    comboUbezpieczenie.Items.Add(u);
+                }
+
             }
         }
 
-        private void listModeleAut_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void btnSzukaj_Click(object sender, RoutedEventArgs e)
         {
-            Rezerwacja rez = new Rezerwacja();
+            Ubezpieczenium u = (Ubezpieczenium)comboUbezpieczenie.SelectedItem;
+            List<Dodatki> d = listDodatki.SelectedItems.Cast<Dodatki>().ToList();
+            Rezerwacja rez = new Rezerwacja(carAd,u, aktualnyUzytkownik, dataWypozyczenia, dataZwrotu, d);
             rez.Owner = this;
             rez.WindowStartupLocation = WindowStartupLocation.Manual;
             rez.Width = this.Width;
@@ -67,7 +80,12 @@ namespace WSPPCars
             rez.Top = this.Top;
             this.Hide();
             rez.ShowDialog();
-            this.Show();
+            this.Close();
+        }
+
+        private void listModeleAut_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            
         }
     }
 }

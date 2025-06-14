@@ -17,14 +17,16 @@ namespace WSPPCars
 {
     public partial class MojeKonto : Window
     {
+        private Uzytkownicy aktualnyUzytkownik;
         public MojeKonto()
         {
             InitializeComponent();
         }
 
         public MojeKonto(Uzytkownicy u)
-        {
+        {  
             InitializeComponent();
+            aktualnyUzytkownik = u;
             lblImieNazwisko.Text = u.Imie + " " + u.Nazwisko;
             lblLogin.Text = u.Login;    
             lblDataRejestracji.Text = u.Utworzony.ToString("dd-MM-yyyy HH:mm"); 
@@ -68,7 +70,7 @@ namespace WSPPCars
 
         private void BtnZamowienia_Click(object sender, RoutedEventArgs e)
         {
-            MojeZamowienia oknoZamowienia = new MojeZamowienia();
+            MojeZamowienia oknoZamowienia = new MojeZamowienia(aktualnyUzytkownik);
             oknoZamowienia.Owner = this;
             oknoZamowienia.WindowStartupLocation = WindowStartupLocation.Manual;
             oknoZamowienia.Width = this.Width;

@@ -11,14 +11,24 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WSPPCars.Models;
 
 namespace WSPPCars
 {
     public partial class wynajemSamochodu : Window
     {
+        private Uzytkownicy aktualnyUzytkownik;
+        private Ogloszenium carAd;
         public wynajemSamochodu()
         {
             InitializeComponent();
+        }
+
+        public wynajemSamochodu(Ogloszenium carAd, Uzytkownicy aktualnyUzytkownik)
+        {
+            InitializeComponent();
+            this.carAd = carAd;
+            this.aktualnyUzytkownik = aktualnyUzytkownik;
         }
 
         private void BtnPrzejdz_Click(object sender, RoutedEventArgs e)
@@ -46,19 +56,19 @@ namespace WSPPCars
             lblKomunikat.Foreground = Brushes.LightGreen;
             lblKomunikat.Visibility = Visibility.Visible;
 
-            wynajemSzczegoly szczegoly = new wynajemSzczegoly
+            wynajemSzczegoly szczegoly = new wynajemSzczegoly(carAd, aktualnyUzytkownik, dataWypozyczenia, dataZwrotu)
             {
                 Owner = this,
                 WindowStartupLocation = WindowStartupLocation.Manual,
                 Width = this.Width,
                 Height = this.Height,
                 Left = this.Left,
-                Top = this.Top
+                Top = this.Top,
             };
 
             this.Hide();
             szczegoly.ShowDialog();
-            this.Show();
+            this.Close();
         }
     }
 }

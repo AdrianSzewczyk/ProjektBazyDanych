@@ -16,6 +16,7 @@ using System.Linq.Expressions;
 using System.Windows.Automation;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
+using System.Collections.Generic;
 
 
 
@@ -29,7 +30,14 @@ namespace WSPPCars
    
     public partial class MainWindow : Window
     {
-       
+
+        public bool CzyRezerwacjaMozliwa(DateTime? poczatekRezerwacji, DateTime? koniecRezerwacji,
+                                  DateTime? poczatekOkresu, DateTime? koniecOkresu)
+        {
+            bool pokrywaSie = poczatekRezerwacji < koniecOkresu && koniecRezerwacji > poczatekOkresu;
+            return !pokrywaSie;
+        }
+
         public void WyswietlenieListyOgloszen()
         {
             listboxOgloszenia.Items.Clear();
@@ -196,7 +204,37 @@ namespace WSPPCars
 
         private void btnWyszukaj_Click(object sender, RoutedEventArgs e)
         {
-            
+            listboxOgloszenia.Items.Clear();
+            using var db = new DbWsppcarsContext();
+
+            var ogloszeniaZBazy = db.Ogloszenia
+                .Include(o => o.IdPojazduNavigation)
+                .ThenInclude(ps => ps.IdSztukiNavigation)
+                .Where(o => o.Dostepnosc == true)
+                .ToList();
+
+            var rezerwacje = db.Rezerwacjes
+                .Include(r=>r.IdOgloszeniaNavigation)
+                .ToList();
+
+            List<Ogloszenium>? lista = new List<Ogloszenium>();
+
+            DateTime? dataPocz = datePoczatek.SelectedDate;
+            DateTime? dataKoniec = dateKoniec.SelectedDate;
+            foreach (var r in rezerwacje)
+            {
+                if (r.IdOgloszeniaNavigation != null &&
+                    !CzyRezerwacjaMozliwa(dataPocz, dataKoniec, r.DataRozpoczeciaRezerwacji, r.DataZakonczeniaRezerwacji))
+                {
+                    ogloszeniaZBazy.Remove(r.IdOgloszeniaNavigation);
+                }
+            }
+            //ogloszeniaZBazy = ogloszeniaZBazy.Where(element => !lista.Contains(element)).ToList();
+
+            foreach (var o in ogloszeniaZBazy)
+            {
+                listboxOgloszenia.Items.Add(o);
+            }
         }
 
         private void btnResetuj_Click(object sender, RoutedEventArgs e)

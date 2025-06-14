@@ -20,4 +20,9 @@ public partial class Ubezpieczenium
     public virtual RodzajPakietu? IdRodzajPakietuNavigation { get; set; }
 
     public virtual ICollection<Rezerwacje> Rezerwacjes { get; set; } = new List<Rezerwacje>();
-}
+
+    public override string ToString()
+    {
+        return $"{this.NazwaUbezpieczalni}: {this.Nazwa}: {this.Kwota}PLN ({this.IdRodzajPakietuNavigation.Pakiet})";
+    }
+    }
