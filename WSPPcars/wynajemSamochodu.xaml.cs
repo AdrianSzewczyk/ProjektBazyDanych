@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,13 @@ namespace WSPPCars
         public wynajemSamochodu()
         {
             InitializeComponent();
+        }
+
+        public bool CzyRezerwacjaMozliwa(DateTime? poczatekRezerwacji, DateTime? koniecRezerwacji,
+                                  DateTime? poczatekOkresu, DateTime? koniecOkresu)
+        {
+            bool pokrywaSie = poczatekRezerwacji < koniecOkresu && koniecRezerwacji > poczatekOkresu;
+            return !pokrywaSie;
         }
 
         public wynajemSamochodu(Ogloszenium carAd, Uzytkownicy aktualnyUzytkownik)
@@ -52,23 +60,71 @@ namespace WSPPCars
                 return;
             }
 
-            lblKomunikat.Content = "Dane są poprawne. Przechodzenie dalej...";
-            lblKomunikat.Foreground = Brushes.LightGreen;
-            lblKomunikat.Visibility = Visibility.Visible;
+            
 
-            wynajemSzczegoly szczegoly = new wynajemSzczegoly(carAd, aktualnyUzytkownik, dataWypozyczenia, dataZwrotu)
+            //#################
+
+            using var db = new DbWsppcarsContext();
+
+            
+            var dataPocz = dpDataWypozyczenia.SelectedDate;
+            var dataKoniec = dpDataZwrotu.SelectedDate;
+
+
+            // Pobranie ogłoszeń wraz z pojazdami i informacją o liczbie sztuk
+            var ogloszeniaZBazy = db.Ogloszenia
+                .Include(o => o.IdPojazduNavigation)
+                .ThenInclude(p => p.IdSztukiNavigation)
+                .Where(o => o.IdOgloszenia==carAd.IdOgloszenia)
+                .ToList();
+
+            // Pobranie wszystkich rezerwacji wraz z powiązanymi ogłoszeniami i pojazdami
+            var rezerwacje = db.Rezerwacjes
+                .Include(r => r.IdOgloszeniaNavigation)
+                .ThenInclude(o => o.IdPojazduNavigation)
+                .Where(r=>r.IdOgloszeniaNavigation.IdOgloszenia==carAd.IdOgloszenia)
+                .ToList();
+
+           
+
+            // Przefiltruj ogłoszenia
+            ogloszeniaZBazy = ogloszeniaZBazy.Where(ogloszenie =>
             {
-                Owner = this,
-                WindowStartupLocation = WindowStartupLocation.Manual,
-                Width = this.Width,
-                Height = this.Height,
-                Left = this.Left,
-                Top = this.Top,
-            };
+                // Zlicz ile rezerwacji koliduje z danym terminem dla tego ogłoszenia
+                var kolidujaceRezerwacje = rezerwacje.Where(r =>
+                    r.IdOgloszenia == ogloszenie.IdOgloszenia &&
+                    !CzyRezerwacjaMozliwa(dataPocz, dataKoniec, r.DataRozpoczeciaRezerwacji, r.DataZakonczeniaRezerwacji)
+                ).Count();
 
-            this.Hide();
-            szczegoly.ShowDialog();
-            this.Close();
+                // Pobierz ilość sztuk pojazdu
+                var iloscSztuk = ogloszenie.IdPojazduNavigation?.LiczbaSztuk ?? 0;
+
+                // Zostaw ogłoszenie tylko jeśli są jeszcze wolne sztuki
+                return kolidujaceRezerwacje < iloscSztuk;
+            }).ToList();
+
+            if (ogloszeniaZBazy.Count == 0)
+            {
+                MessageBox.Show("Pojazd nie jest dostępny w wybranym terminie.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+
+            else
+            {
+                wynajemSzczegoly szczegoly = new wynajemSzczegoly(carAd, aktualnyUzytkownik, dataWypozyczenia, dataZwrotu)
+                {
+                    Owner = this,
+                    WindowStartupLocation = WindowStartupLocation.Manual,
+                    Width = this.Width,
+                    Height = this.Height,
+                    Left = this.Left,
+                    Top = this.Top,
+                };
+                this.Hide();
+                szczegoly.ShowDialog();
+                this.Close();
+            }
+            //#################
+            
         }
     }
 }

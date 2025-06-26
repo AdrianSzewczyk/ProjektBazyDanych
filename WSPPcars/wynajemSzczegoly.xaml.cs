@@ -34,22 +34,86 @@ namespace WSPPCars
         {
             this.aktualnyUzytkownik = aktualnyUzytkownik;
             this.carAd = carAd;
+            this.dataWypozyczenia = dataWypozyczenia;
+            this.dataZwrotu = dataZwrotu;
             InitializeComponent();
             WyswietlDodatki();
             WyswietlUbezpieczenia();
-            this.dataWypozyczenia = dataWypozyczenia;
-            this.dataZwrotu = dataZwrotu;
+            
         }
+        /* private void WyswietlDodatki()
+         {
+             listDodatki.Items.Clear();
+             using (var context = new DbWsppcarsContext())
+             {
+                 var ogloszenia = context.Dodatkis.ToList();
+                 foreach (var o in ogloszenia) {
+                     listDodatki.Items.Add(o);
+                 }
+
+             }
+         }*/
+
+        public bool CzyRezerwacjaMozliwa(DateTime? poczatekRezerwacji, DateTime? koniecRezerwacji,
+                                  DateTime? poczatekOkresu, DateTime? koniecOkresu)
+        {
+            bool pokrywaSie = poczatekRezerwacji < koniecOkresu && koniecRezerwacji > poczatekOkresu;
+            return !pokrywaSie;
+        }
+
         private void WyswietlDodatki()
         {
             listDodatki.Items.Clear();
+
+            var dataPocz = dataWypozyczenia;
+            var dataKoniec = dataZwrotu;
+
+            if (dataPocz == null || dataKoniec == null)
+            {
+                MessageBox.Show("Wybierz daty wypożyczenia i zwrotu.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
             using (var context = new DbWsppcarsContext())
             {
-                var ogloszenia = context.Dodatkis.ToList();
-                foreach (var o in ogloszenia) {
-                    listDodatki.Items.Add(o);
+                // Pobierz wszystkie dodatki
+                var wszystkieDodatki = context.Dodatkis.ToList();
+
+                // Pobierz rezerwacje z przypisanymi dodatkami i datami
+                var rezerwacjeZDodatkami = context.DodatkiRezerwacjes
+                    .Include(dr => dr.IdRezerwacjiNavigation)
+                    .ToList();
+
+                var dostepneDodatki = new List<Dodatki>();
+
+                foreach (var dodatek in wszystkieDodatki)
+                {
+                    int liczbaSztuk = int.TryParse(dodatek.LiczbaSztuk, out int ilosc) ? ilosc : 0;
+
+                    // Zlicz zajętość tego dodatku w kolidujących rezerwacjach
+                    int zajeteSztuki = rezerwacjeZDodatkami
+                        .Where(dr =>
+                            dr.IdDodatku == dodatek.IdDodatku &&
+                            !CzyRezerwacjaMozliwa(
+                                dataPocz,
+                                dataKoniec,
+                                dr.IdRezerwacjiNavigation.DataRozpoczeciaRezerwacji,
+                                dr.IdRezerwacjiNavigation.DataZakonczeniaRezerwacji
+                            )
+                        )
+                        .Count();
+
+                    if (zajeteSztuki < liczbaSztuk)
+                    {
+                        dostepneDodatki.Add(dodatek);
+                    }
                 }
 
+                // Dodaj do widoku tylko dostępne dodatki
+                foreach (var d in dostepneDodatki)
+                {
+                    listDodatki.Items.Add(d);
+                }
             }
         }
 

@@ -207,30 +207,61 @@ namespace WSPPCars
             listboxOgloszenia.Items.Clear();
             using var db = new DbWsppcarsContext();
 
+            var dataPocz = datePoczatek.SelectedDate;
+            var dataKoniec = dateKoniec.SelectedDate;
+
+            // Pobranie ogłoszeń wraz z pojazdami i informacją o liczbie sztuk
             var ogloszeniaZBazy = db.Ogloszenia
                 .Include(o => o.IdPojazduNavigation)
-                .ThenInclude(ps => ps.IdSztukiNavigation)
+                .ThenInclude(p => p.IdSztukiNavigation)
                 .Where(o => o.Dostepnosc == true)
                 .ToList();
 
-            var rezerwacje = db.Rezerwacjes
-                .Include(r=>r.IdOgloszeniaNavigation)
-                .ToList();
-
-            List<Ogloszenium>? lista = new List<Ogloszenium>();
-
-            DateTime? dataPocz = datePoczatek.SelectedDate;
-            DateTime? dataKoniec = dateKoniec.SelectedDate;
-            foreach (var r in rezerwacje)
+            if (dataPocz == null && dataKoniec == null)
             {
-                if (r.IdOgloszeniaNavigation != null &&
-                    !CzyRezerwacjaMozliwa(dataPocz, dataKoniec, r.DataRozpoczeciaRezerwacji, r.DataZakonczeniaRezerwacji))
+                foreach (var o in ogloszeniaZBazy)
                 {
-                    ogloszeniaZBazy.Remove(r.IdOgloszeniaNavigation);
+                    listboxOgloszenia.Items.Add(o);
                 }
             }
-            //ogloszeniaZBazy = ogloszeniaZBazy.Where(element => !lista.Contains(element)).ToList();
 
+            else if (dataPocz != null && dataKoniec == null)
+            {
+                MessageBox.Show("Wybierz obie daty.");
+                return;
+            }
+
+            else if (dataPocz == null && dataKoniec != null)
+            {
+                MessageBox.Show("Wybierz obie daty.");
+                return;
+            }
+
+            
+
+            // Pobranie wszystkich rezerwacji wraz z powiązanymi ogłoszeniami i pojazdami
+            var rezerwacje = db.Rezerwacjes
+                .Include(r => r.IdOgloszeniaNavigation)
+                .ThenInclude(o => o.IdPojazduNavigation)
+                .ToList();
+
+            // Przefiltruj ogłoszenia
+            ogloszeniaZBazy = ogloszeniaZBazy.Where(ogloszenie =>
+            {
+                // Zlicz ile rezerwacji koliduje z danym terminem dla tego ogłoszenia
+                var kolidujaceRezerwacje = rezerwacje.Where(r =>
+                    r.IdOgloszenia == ogloszenie.IdOgloszenia &&
+                    !CzyRezerwacjaMozliwa(dataPocz, dataKoniec, r.DataRozpoczeciaRezerwacji, r.DataZakonczeniaRezerwacji)
+                ).Count();
+
+                // Pobierz ilość sztuk pojazdu
+                var iloscSztuk = ogloszenie.IdPojazduNavigation?.LiczbaSztuk ?? 0;
+
+                // Zostaw ogłoszenie tylko jeśli są jeszcze wolne sztuki
+                return kolidujaceRezerwacje < iloscSztuk;
+            }).ToList();
+
+            // Wyświetlenie dostępnych ogłoszeń
             foreach (var o in ogloszeniaZBazy)
             {
                 listboxOgloszenia.Items.Add(o);
