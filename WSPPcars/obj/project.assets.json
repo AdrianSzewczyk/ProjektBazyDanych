@@ -4723,23 +4723,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\i9\\.nuget\\packages\\": {},
+    "C:\\Users\\Adikson\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\i9\\Documents\\GitHub\\ProjektBazyDanychNowy\\WSPPcars\\WSPPCars.csproj",
+      "projectUniqueName": "C:\\Users\\Adikson\\Desktop\\ProjektBazy\\ProjektBazyDanych\\WSPPcars\\WSPPCars.csproj",
       "projectName": "WSPPCars",
-      "projectPath": "C:\\Users\\i9\\Documents\\GitHub\\ProjektBazyDanychNowy\\WSPPcars\\WSPPCars.csproj",
-      "packagesPath": "C:\\Users\\i9\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\i9\\Documents\\GitHub\\ProjektBazyDanychNowy\\WSPPcars\\obj\\",
+      "projectPath": "C:\\Users\\Adikson\\Desktop\\ProjektBazy\\ProjektBazyDanych\\WSPPcars\\WSPPCars.csproj",
+      "packagesPath": "C:\\Users\\Adikson\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Adikson\\Desktop\\ProjektBazy\\ProjektBazyDanych\\WSPPcars\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\i9\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Adikson\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],

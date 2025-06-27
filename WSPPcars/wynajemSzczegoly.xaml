@@ -35,7 +35,7 @@
                 <ListBox x:Name="listDodatki"
                          SelectionMode="Multiple"
                          Margin="0,0,0,10"
-                         Height="Auto">
+                         Height="Auto" SelectionChanged="listDodatki_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="5">
@@ -49,7 +49,7 @@
                 <TextBlock Text="Wybierz ubezpieczenie:" Foreground="White" FontWeight="Bold" Margin="0,5,0,0"/>
                 <ComboBox x:Name="comboUbezpieczenie"
                           Margin="0,0,0,15"
-                          SelectedIndex="0">
+                          SelectedIndex="0" SelectionChanged="comboUbezpieczenie_SelectionChanged">
                     <ComboBoxItem Content="Ekonomiczne" />
                     <ComboBoxItem Content="Średnie" />
                     <ComboBoxItem Content="Luksusowe" />
@@ -62,7 +62,7 @@
                           Margin="0,0,0,10"/>
 
                 <!-- Koszt -->
-                <TextBlock Text="Przewidywany koszt: 0 zł"
+                <TextBlock 
                            x:Name="txtKoszt"
                            Foreground="LightGray"
                            FontWeight="Bold"

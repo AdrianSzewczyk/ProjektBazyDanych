@@ -172,8 +172,6 @@ public partial class DbWsppcarsContext : DbContext
                 .HasColumnType("smallmoney")
                 .HasColumnName("kwota_ubezpieczenia");
             entity.Property(e => e.Utworzona)
-                .IsRowVersion()
-                .IsConcurrencyToken()
                 .HasColumnName("utworzona");
 
             entity.HasOne(d => d.IdOgloszeniaNavigation).WithMany(p => p.Rezerwacjes)

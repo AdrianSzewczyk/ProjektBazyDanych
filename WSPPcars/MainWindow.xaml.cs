@@ -56,11 +56,96 @@ namespace WSPPCars
                 listboxOgloszenia.Items.Add(o);
             }
         }
+        private void dbInit()
+        {
+            using(var db = new DbWsppcarsContext())
+            {
+                bool emptyDatabase =
+                    !db.Dodatkis.Any()&&
+                    !db.Ogloszenia.Any()&&
+                    !db.Pojazds.Any()&&
+                    !db.Ubezpieczenia.Any()&&
+                    !db.RodzajKonta.Any()&&
+                    !db.RodzajPakietus.Any() &&
+                    !db.TypPojazdus.Any();
+                if (emptyDatabase)
+                {
+                    //Uzupelniamy baze
+                    //Typ Pojazdu
+                    var typPoj = new List<TypPojazdu>
+                    {
+                        new TypPojazdu{IdTypuPojazdu=1,Typ="Spalinowy"},
+                        new TypPojazdu{IdTypuPojazdu=2,Typ="Hybrydowy"},
+                        new TypPojazdu{IdTypuPojazdu=3,Typ="Elektryczny"}
+                    };
+                    db.TypPojazdus.AddRange(typPoj);
+
+                    //Rodzaj Pakietu
+                    var rodzPak = new List<RodzajPakietu>
+                    {
+                        new RodzajPakietu{IdRodzajPakietu=1,Pakiet="Luksusowe" },
+                        new RodzajPakietu{IdRodzajPakietu=2,Pakiet="Średnie" },
+                        new RodzajPakietu{IdRodzajPakietu=3,Pakiet="Ekonomiczne" } 
+                    };
+                    db.RodzajPakietus.AddRange(rodzPak);
+
+                    //Rodzaj Konta
+                    var rodzKon = new List<RodzajKontum>
+                    {
+                        new RodzajKontum{IdRodzajuKonta=1,Rodzaj="Użytkownik"},
+                        new RodzajKontum{IdRodzajuKonta=2,Rodzaj="Admin"},
+                        new RodzajKontum{IdRodzajuKonta=3,Rodzaj="NieZalogowany"}
+                    };
+                    db.RodzajKonta.AddRange(rodzKon);
+
+                    //Dodatki
+                    var dod = new List<Dodatki>
+                    {
+                        new Dodatki{IdDodatku=1,Nazwa="Fotelik",LiczbaSztuk="3",Dostepnosc=true,Kwota=20},
+                        new Dodatki{IdDodatku=2,Nazwa="Bagażnik",LiczbaSztuk="10",Dostepnosc=true,Kwota=25},
+                        new Dodatki{IdDodatku=3,Nazwa="Pokrowce",LiczbaSztuk="12",Dostepnosc=true,Kwota=10}
+                    };
+                    db.Dodatkis.AddRange(dod);
+
+                    var ube = new List<Ubezpieczenium>
+                    {
+                        new Ubezpieczenium{IdUbezpieczenia=1,Nazwa="Prestige Shield",NazwaUbezpieczalni="Imperial Assurance",IdRodzajPakietu=1,Kwota=50,Dostepnosc=true },
+                        new Ubezpieczenium{IdUbezpieczenia=2,Nazwa="Diamond Care",NazwaUbezpieczalni="Pawlik Insurance",IdRodzajPakietu=2,Kwota=35,Dostepnosc=true }
+
+                    };
+                    db.Ubezpieczenia.AddRange(ube);
+
+                    var pojSt = new List<PojazdSztuka>
+                    {
+                        new PojazdSztuka{IdPojazdSztuka=1,Marka="Seat",Model="Ibiza",IdTypPojazdu=1,PojemnoscSilnika=1.4m,LiczbaDrzwi=5,LiczbaPasazerow=5,AutomatycznaSkrzynia=false,Rocznik=new DateOnly(2002,1,1),Zdjecie="https://cdn.proxyparts.com/vehicles/100385/8183964/large/01695e6a-5406-4792-9f26-40ff8d155188.jpg"},
+                        new PojazdSztuka{IdPojazdSztuka=2,Marka="Renault",Model="Clio",IdTypPojazdu=1,PojemnoscSilnika=1.2m,LiczbaDrzwi=3,LiczbaPasazerow=5,AutomatycznaSkrzynia=false,Rocznik=new DateOnly(2003,1,1),Zdjecie="https://thumbs.img-sprzedajemy.pl/1000x901c/01/20/b3/renault-clio-ii-2004-extreme-clio-lodz-316281772.jpg"},
+                        new PojazdSztuka{IdPojazdSztuka=3,Marka="Porche",Model="Carrera",IdTypPojazdu=1,PojemnoscSilnika=2.5m,LiczbaDrzwi=3,LiczbaPasazerow=2,AutomatycznaSkrzynia=true,Rocznik=new DateOnly(2022,1,1),Zdjecie="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSbDrz8MSIa859o4G2N6NyTsIuLoHJe48IUg&s"}
+                    };
+                    db.PojazdSztukas.AddRange(pojSt);
+                    var poj = new List<Pojazd>
+                    {
+                        new Pojazd{IdPojazdu=1,IdSztuki=1,LiczbaSztuk=10},
+                        new Pojazd{IdPojazdu=2,IdSztuki=2,LiczbaSztuk=15},
+                        new Pojazd{IdPojazdu=3,IdSztuki=3,LiczbaSztuk=1 }
+                    };
+                    db.Pojazds.AddRange(poj);
+                    var ogl = new List<Ogloszenium>
+                    {
+                        new Ogloszenium{IdOgloszenia=1,IdPojazdu=1,Dostepnosc=true,DataDodania=DateTime.Now,Kwota=250},
+                        new Ogloszenium{IdOgloszenia=2,IdPojazdu=2,Dostepnosc=true,DataDodania=DateTime.Now,Kwota=200},
+                        new Ogloszenium{IdOgloszenia=3,IdPojazdu=3,Dostepnosc=true,DataDodania=DateTime.Now,Kwota=500}
+                    };
+                    db.Ogloszenia.AddRange(ogl);
+                    db.SaveChanges();
+                } 
+            } 
+        }
         public MainWindow()
         {
             InitializeComponent();
-                //MainWindowViewModel ogloszenia = new MainWindowViewModel();
-                //DataContext = ogloszenia;
+            //MainWindowViewModel ogloszenia = new MainWindowViewModel();
+            //DataContext = ogloszenia;
+            dbInit();
             AktualnyUzytkownik = new Uzytkownicy
             {
                 Login = "Gosc",
@@ -210,58 +295,75 @@ namespace WSPPCars
             var dataPocz = datePoczatek.SelectedDate;
             var dataKoniec = dateKoniec.SelectedDate;
 
-            // Pobranie ogłoszeń wraz z pojazdami i informacją o liczbie sztuk
+            // Wczytaj ogłoszenia z pojazdami i danymi o sztukach
             var ogloszeniaZBazy = db.Ogloszenia
                 .Include(o => o.IdPojazduNavigation)
                 .ThenInclude(p => p.IdSztukiNavigation)
                 .Where(o => o.Dostepnosc == true)
                 .ToList();
 
-            if (dataPocz == null && dataKoniec == null)
+            // Filtrowanie po dostępności tylko jeśli obie daty są podane
+            if (dataPocz != null && dataKoniec != null)
             {
-                foreach (var o in ogloszeniaZBazy)
+                // Wczytaj rezerwacje
+                var rezerwacje = db.Rezerwacjes
+                    .Include(r => r.IdOgloszeniaNavigation)
+                    .ThenInclude(o => o.IdPojazduNavigation)
+                    .ToList();
+
+                // Filtrowanie dostępnych sztuk
+                ogloszeniaZBazy = ogloszeniaZBazy.Where(ogloszenie =>
                 {
-                    listboxOgloszenia.Items.Add(o);
+                    var kolidujace = rezerwacje.Where(r =>
+                        r.IdOgloszenia == ogloszenie.IdOgloszenia &&
+                        !CzyRezerwacjaMozliwa(dataPocz, dataKoniec, r.DataRozpoczeciaRezerwacji, r.DataZakonczeniaRezerwacji)
+                    ).Count();
+
+                    var iloscSztuk = ogloszenie.IdPojazduNavigation?.LiczbaSztuk ?? 0;
+
+                    return kolidujace < iloscSztuk;
+                }).ToList();
+            }
+            else if (dataPocz != null || dataKoniec != null)
+            {
+                MessageBox.Show("Wybierz obie daty lub żadnej.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Filtry dodatkowe: marka, model, typ, rocznik
+            if (comboMarka.SelectedItem != null)
+            {
+                ogloszeniaZBazy = ogloszeniaZBazy
+                    .Where(o => o.IdPojazduNavigation.IdSztukiNavigation.Marka == comboMarka.Text)
+                    .ToList();
+            }
+
+            if (comboModel.SelectedItem != null)
+            {
+                ogloszeniaZBazy = ogloszeniaZBazy
+                    .Where(o => o.IdPojazduNavigation.IdSztukiNavigation.Model == comboModel.Text)
+                    .ToList();
+            }
+
+            if (comboRodzajPojazdu.SelectedItem != null)
+            {
+                ogloszeniaZBazy = ogloszeniaZBazy
+                    .Where(o => o.IdPojazduNavigation.IdSztukiNavigation.IdTypPojazduNavigation.Typ == comboRodzajPojazdu.Text)
+                    .ToList();
+            }
+
+            if (comboRocznik.SelectedItem != null)
+            {
+                string selectedText = comboRocznik.SelectedItem.ToString();
+                if (DateOnly.TryParseExact(selectedText, "dd-MM-yyyy", out DateOnly wybranyRocznik))
+                {
+                    ogloszeniaZBazy = ogloszeniaZBazy
+                        .Where(o => o.IdPojazduNavigation.IdSztukiNavigation.Rocznik == wybranyRocznik)
+                        .ToList();
                 }
             }
 
-            else if (dataPocz != null && dataKoniec == null)
-            {
-                MessageBox.Show("Wybierz obie daty.");
-                return;
-            }
-
-            else if (dataPocz == null && dataKoniec != null)
-            {
-                MessageBox.Show("Wybierz obie daty.");
-                return;
-            }
-
-            
-
-            // Pobranie wszystkich rezerwacji wraz z powiązanymi ogłoszeniami i pojazdami
-            var rezerwacje = db.Rezerwacjes
-                .Include(r => r.IdOgloszeniaNavigation)
-                .ThenInclude(o => o.IdPojazduNavigation)
-                .ToList();
-
-            // Przefiltruj ogłoszenia
-            ogloszeniaZBazy = ogloszeniaZBazy.Where(ogloszenie =>
-            {
-                // Zlicz ile rezerwacji koliduje z danym terminem dla tego ogłoszenia
-                var kolidujaceRezerwacje = rezerwacje.Where(r =>
-                    r.IdOgloszenia == ogloszenie.IdOgloszenia &&
-                    !CzyRezerwacjaMozliwa(dataPocz, dataKoniec, r.DataRozpoczeciaRezerwacji, r.DataZakonczeniaRezerwacji)
-                ).Count();
-
-                // Pobierz ilość sztuk pojazdu
-                var iloscSztuk = ogloszenie.IdPojazduNavigation?.LiczbaSztuk ?? 0;
-
-                // Zostaw ogłoszenie tylko jeśli są jeszcze wolne sztuki
-                return kolidujaceRezerwacje < iloscSztuk;
-            }).ToList();
-
-            // Wyświetlenie dostępnych ogłoszeń
+            // Wyświetlenie ogłoszeń
             foreach (var o in ogloszeniaZBazy)
             {
                 listboxOgloszenia.Items.Add(o);
@@ -272,6 +374,11 @@ namespace WSPPCars
         {
             datePoczatek.SelectedDate = null;
             dateKoniec.SelectedDate = null;
+            comboMarka.SelectedItem = null;
+            comboModel.SelectedItem = null;
+            comboRocznik.SelectedItem = null;
+            comboRodzajPojazdu.SelectedItem = null;
+            WyswietlenieListyOgloszen();
             
         }
 

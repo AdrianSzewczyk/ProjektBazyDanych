@@ -25,9 +25,11 @@ namespace WSPPCars
         private DateTime? dataZwrotu;
         public wynajemSzczegoly()
         {
+            
             InitializeComponent();
             WyswietlDodatki();
             WyswietlUbezpieczenia();
+            
         }
 
         public wynajemSzczegoly(Ogloszenium carAd, Uzytkownicy aktualnyUzytkownik, DateTime? dataWypozyczenia, DateTime? dataZwrotu)
@@ -39,7 +41,8 @@ namespace WSPPCars
             InitializeComponent();
             WyswietlDodatki();
             WyswietlUbezpieczenia();
-            
+            txtKoszt.Text = $"Przewidywany koszt: {carAd.Kwota:N2} zł";
+
         }
         /* private void WyswietlDodatki()
          {
@@ -151,5 +154,57 @@ namespace WSPPCars
         {
             
         }
+
+        private void comboUbezpieczenie_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (carAd == null || comboUbezpieczenie.SelectedItem == null)
+                return;
+
+            var ubezpieczenie = comboUbezpieczenie.SelectedItem as Ubezpieczenium;
+            if (ubezpieczenie == null)
+                return;
+
+            decimal kwotaUbezpieczenia = ubezpieczenie.Kwota ?? 0m;
+            decimal kosztPodstawowy = carAd.Kwota ?? 0m;
+
+            // Uwzględnij także dodatki, jeśli chcesz:
+            decimal sumaDodatkow = 0m;
+            foreach (var item in listDodatki.SelectedItems)
+            {
+                if (item is Dodatki dodatek)
+                    sumaDodatkow += dodatek.Kwota ?? 0m;
+            }
+
+            txtKoszt.Text = $"Przewidywany koszt: {(kosztPodstawowy + kwotaUbezpieczenia + sumaDodatkow):N2} zł";
+        }
+
+
+
+        private void listDodatki_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (carAd == null)
+                return;
+
+            decimal sumaDodatkow = 0;
+
+            foreach (var item in listDodatki.SelectedItems)
+            {
+                var dodatek = item as Dodatki;
+                if (dodatek != null)
+                {
+                    sumaDodatkow += dodatek.Kwota ?? 0m;
+                }
+            }
+
+            // Możesz też dodać cenę ubezpieczenia, jeśli ma być częścią kosztu:
+            decimal kwotaUbezpieczenia = 0;
+            if (comboUbezpieczenie.SelectedItem is Ubezpieczenium ubezpieczenie)
+            {
+                kwotaUbezpieczenia = ubezpieczenie.Kwota ?? 0m;
+            }
+
+            txtKoszt.Text = $"Przewidywany koszt: {(carAd.Kwota + sumaDodatkow + kwotaUbezpieczenia):N2} zł";
+        }
+
     }
 }

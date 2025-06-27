@@ -35,19 +35,107 @@ namespace WSPPCars
             listaUbezpieczen.ItemsSource = Ubezpieczenia;
             listaDodatkow.ItemsSource = Dodatki;
             listaUzytkownikow.ItemsSource = Uzytkownicy;*/
+            WyswietlRezerwacje();
             WyswietlOgloszenia();
             WyswietlAuta();
             WyswietlUbezpieczenia();
             WyswietlDodatki();
             WyswietlUżytkownicy();
             WyswietlAutaSkrocone();
+            WyswietlDodatkiSkrocone();
+            WyswietlOgloszeniaSkrocone();
+            WyswietlUbezpieczeniaSkrocone();
+            WyswietlUżytkownicySkrocone();
 
 
         }
-        // ------------------- Ogłoszenia -------------------
+        // ------------------- Rezerwacje -------------------
+
+        private void WyswietlRezerwacje()
+        {
+            listaRezerwacji.Items.Clear();
+            var db = new DbWsppcarsContext();
+            var rezerwacjeZbazy = db.Rezerwacjes.ToList();
+            foreach ( var r in rezerwacjeZbazy)
+            {
+                listaRezerwacji.Items.Add(r);
+            }
+        }
+        private void WyswietlOgloszeniaSkrocone()
+        {
+            listaOgloszenSkrocona.Items.Clear();
+
+            var db = new DbWsppcarsContext();
+            var ogloszeniaZBazy = db.Ogloszenia
+            .Include(o => o.IdPojazduNavigation)
+            .ThenInclude(ps => ps.IdSztukiNavigation)
+
+            .ToList(); // <-- teraz dane są już w pamięci
 
 
-        
+            foreach (var o in ogloszeniaZBazy)
+            {
+                listaOgloszenSkrocona.Items.Add(o);
+            }
+
+        }
+        private void WyswietlDodatkiSkrocone()
+        {
+            listaDodatkowSkrocona.Items.Clear();
+
+            var db = new DbWsppcarsContext();
+            var ogloszeniaZBazy = db.Dodatkis
+            .ToList(); // <-- teraz dane są już w pamięci
+
+
+            foreach (var o in ogloszeniaZBazy)
+            {
+                listaDodatkowSkrocona.Items.Add(o);
+            }
+        }
+        private void WyswietlUbezpieczeniaSkrocone()
+        {
+            listaUbezpieczenSkrocona.Items.Clear();
+
+            var db = new DbWsppcarsContext();
+            var ogloszeniaZBazy = db.Ubezpieczenia
+            .Include(o => o.IdRodzajPakietuNavigation)
+            .ToList(); // <-- teraz dane są już w pamięci
+
+
+            foreach (var o in ogloszeniaZBazy)
+            {
+                listaUbezpieczenSkrocona.Items.Add(o);
+            }
+        }
+        private void WyswietlUżytkownicySkrocone()
+        {
+            listaUzytkownikowSkrocona.Items.Clear();
+
+
+            var db = new DbWsppcarsContext();
+            var ogloszeniaZBazy = db.Uzytkownicies
+            .Include(o => o.IdRodzajKontaNavigation)
+            .ToList(); // <-- teraz dane są już w pamięci
+
+
+            foreach (var o in ogloszeniaZBazy)
+            {
+
+                listaUzytkownikowSkrocona.Items.Add(o);
+
+            }
+
+        }
+        private void BtnDodajRezerwacje_Click(object sender, RoutedEventArgs e)
+        { }
+        private void BtnUsunRezerwacje_Click(object sender, RoutedEventArgs e)
+        { }
+        private void BtnEdytujRezerwacje_Click(object sender, RoutedEventArgs e)
+        { }
+        private void ListaRezerwacji_SelectionChanged(object sender, RoutedEventArgs e)
+        { }
+        //--------------------Ogłoszenia------------------------------
         private void WyswietlOgloszenia()
         {
             listaOgloszen.Items.Clear();
