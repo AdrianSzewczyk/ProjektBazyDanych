@@ -140,6 +140,13 @@ namespace WSPPCars
                     };
                     db.Ogloszenia.AddRange(ogl);
                     db.SaveChanges();
+                    var stan_rez = new List<StanRezerwacji>
+                    {
+                        new StanRezerwacji{Stan="Opłacone"},
+                        new StanRezerwacji{Stan="Nieopłacone"},
+                    };
+                    db.StanRezerwacjis.AddRange(stan_rez);
+                    db.SaveChanges();
                 } 
             } 
         }
