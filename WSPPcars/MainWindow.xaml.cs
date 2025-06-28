@@ -70,70 +70,73 @@ namespace WSPPCars
                     !db.TypPojazdus.Any();
                 if (emptyDatabase)
                 {
+                   
                     //Uzupelniamy baze
                     //Typ Pojazdu
                     var typPoj = new List<TypPojazdu>
                     {
-                        new TypPojazdu{IdTypuPojazdu=1,Typ="Spalinowy"},
-                        new TypPojazdu{IdTypuPojazdu=2,Typ="Hybrydowy"},
-                        new TypPojazdu{IdTypuPojazdu=3,Typ="Elektryczny"}
+                        new TypPojazdu{Typ="Spalinowy"},
+                        new TypPojazdu{Typ="Hybrydowy"},
+                        new TypPojazdu{Typ="Elektryczny"}
                     };
                     db.TypPojazdus.AddRange(typPoj);
-
+                    db.SaveChanges();
                     //Rodzaj Pakietu
                     var rodzPak = new List<RodzajPakietu>
                     {
-                        new RodzajPakietu{IdRodzajPakietu=1,Pakiet="Luksusowe" },
-                        new RodzajPakietu{IdRodzajPakietu=2,Pakiet="Średnie" },
-                        new RodzajPakietu{IdRodzajPakietu=3,Pakiet="Ekonomiczne" } 
+                        new RodzajPakietu{Pakiet="Luksusowe" },
+                        new RodzajPakietu{Pakiet="Średnie" },
+                        new RodzajPakietu{Pakiet="Ekonomiczne" } 
                     };
                     db.RodzajPakietus.AddRange(rodzPak);
-
+                    db.SaveChanges();
                     //Rodzaj Konta
                     var rodzKon = new List<RodzajKontum>
                     {
-                        new RodzajKontum{IdRodzajuKonta=1,Rodzaj="Użytkownik"},
-                        new RodzajKontum{IdRodzajuKonta=2,Rodzaj="Admin"},
-                        new RodzajKontum{IdRodzajuKonta=3,Rodzaj="NieZalogowany"}
+                        new RodzajKontum{Rodzaj="Użytkownik"},
+                        new RodzajKontum{Rodzaj="Admin"},
+                        new RodzajKontum{Rodzaj="NieZalogowany"}
                     };
                     db.RodzajKonta.AddRange(rodzKon);
-
+                    db.SaveChanges();
                     //Dodatki
                     var dod = new List<Dodatki>
                     {
-                        new Dodatki{IdDodatku=1,Nazwa="Fotelik",LiczbaSztuk="3",Dostepnosc=true,Kwota=20},
-                        new Dodatki{IdDodatku=2,Nazwa="Bagażnik",LiczbaSztuk="10",Dostepnosc=true,Kwota=25},
-                        new Dodatki{IdDodatku=3,Nazwa="Pokrowce",LiczbaSztuk="12",Dostepnosc=true,Kwota=10}
+                        new Dodatki{Nazwa="Fotelik",LiczbaSztuk="3",Dostepnosc=true,Kwota=20},
+                        new Dodatki{Nazwa="Bagażnik",LiczbaSztuk="10",Dostepnosc=true,Kwota=25},
+                        new Dodatki{Nazwa="Pokrowce",LiczbaSztuk="12",Dostepnosc=true,Kwota=10}
                     };
                     db.Dodatkis.AddRange(dod);
-
+                    db.SaveChanges();
                     var ube = new List<Ubezpieczenium>
                     {
-                        new Ubezpieczenium{IdUbezpieczenia=1,Nazwa="Prestige Shield",NazwaUbezpieczalni="Imperial Assurance",IdRodzajPakietu=1,Kwota=50,Dostepnosc=true },
-                        new Ubezpieczenium{IdUbezpieczenia=2,Nazwa="Diamond Care",NazwaUbezpieczalni="Pawlik Insurance",IdRodzajPakietu=2,Kwota=35,Dostepnosc=true }
+                        new Ubezpieczenium{Nazwa="Prestige Shield",NazwaUbezpieczalni="Imperial Assurance",IdRodzajPakietu=1,Kwota=50,Dostepnosc=true },
+                        new Ubezpieczenium{Nazwa="Diamond Care",NazwaUbezpieczalni="Pawlik Insurance",IdRodzajPakietu=2,Kwota=35,Dostepnosc=true }
 
                     };
                     db.Ubezpieczenia.AddRange(ube);
-
+                    db.SaveChanges();
                     var pojSt = new List<PojazdSztuka>
                     {
-                        new PojazdSztuka{IdPojazdSztuka=1,Marka="Seat",Model="Ibiza",IdTypPojazdu=1,PojemnoscSilnika=1.4m,LiczbaDrzwi=5,LiczbaPasazerow=5,AutomatycznaSkrzynia=false,Rocznik=new DateOnly(2002,1,1),Zdjecie="https://cdn.proxyparts.com/vehicles/100385/8183964/large/01695e6a-5406-4792-9f26-40ff8d155188.jpg"},
-                        new PojazdSztuka{IdPojazdSztuka=2,Marka="Renault",Model="Clio",IdTypPojazdu=1,PojemnoscSilnika=1.2m,LiczbaDrzwi=3,LiczbaPasazerow=5,AutomatycznaSkrzynia=false,Rocznik=new DateOnly(2003,1,1),Zdjecie="https://thumbs.img-sprzedajemy.pl/1000x901c/01/20/b3/renault-clio-ii-2004-extreme-clio-lodz-316281772.jpg"},
-                        new PojazdSztuka{IdPojazdSztuka=3,Marka="Porche",Model="Carrera",IdTypPojazdu=1,PojemnoscSilnika=2.5m,LiczbaDrzwi=3,LiczbaPasazerow=2,AutomatycznaSkrzynia=true,Rocznik=new DateOnly(2022,1,1),Zdjecie="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSbDrz8MSIa859o4G2N6NyTsIuLoHJe48IUg&s"}
+                        new PojazdSztuka{Marka="Seat",Model="Ibiza",IdTypPojazdu=1,PojemnoscSilnika=1.4m,LiczbaDrzwi=5,LiczbaPasazerow=5,AutomatycznaSkrzynia=false,Rocznik=new DateOnly(2002,1,1),Zdjecie="https://cdn.proxyparts.com/vehicles/100385/8183964/large/01695e6a-5406-4792-9f26-40ff8d155188.jpg"},
+                        new PojazdSztuka{Marka="Renault",Model="Clio",IdTypPojazdu=1,PojemnoscSilnika=1.2m,LiczbaDrzwi=3,LiczbaPasazerow=5,AutomatycznaSkrzynia=false,Rocznik=new DateOnly(2003,1,1),Zdjecie="https://thumbs.img-sprzedajemy.pl/1000x901c/01/20/b3/renault-clio-ii-2004-extreme-clio-lodz-316281772.jpg"},
+                        new PojazdSztuka{Marka="Porche",Model="Carrera",IdTypPojazdu=1,PojemnoscSilnika=2.5m,LiczbaDrzwi=3,LiczbaPasazerow=2,AutomatycznaSkrzynia=true,Rocznik=new DateOnly(2022,1,1),Zdjecie="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSbDrz8MSIa859o4G2N6NyTsIuLoHJe48IUg&s"}
                     };
                     db.PojazdSztukas.AddRange(pojSt);
+                    db.SaveChanges();
                     var poj = new List<Pojazd>
                     {
-                        new Pojazd{IdPojazdu=1,IdSztuki=1,LiczbaSztuk=10},
-                        new Pojazd{IdPojazdu=2,IdSztuki=2,LiczbaSztuk=15},
-                        new Pojazd{IdPojazdu=3,IdSztuki=3,LiczbaSztuk=1 }
+                        new Pojazd{IdSztuki=1,LiczbaSztuk=10},
+                        new Pojazd{IdSztuki=2,LiczbaSztuk=15},
+                        new Pojazd{IdSztuki=3,LiczbaSztuk=1 }
                     };
                     db.Pojazds.AddRange(poj);
+                    db.SaveChanges();
                     var ogl = new List<Ogloszenium>
                     {
-                        new Ogloszenium{IdOgloszenia=1,IdPojazdu=1,Dostepnosc=true,DataDodania=DateTime.Now,Kwota=250},
-                        new Ogloszenium{IdOgloszenia=2,IdPojazdu=2,Dostepnosc=true,DataDodania=DateTime.Now,Kwota=200},
-                        new Ogloszenium{IdOgloszenia=3,IdPojazdu=3,Dostepnosc=true,DataDodania=DateTime.Now,Kwota=500}
+                        new Ogloszenium{IdPojazdu=1,Dostepnosc=true,DataDodania=DateTime.Now,Kwota=250},
+                        new Ogloszenium{IdPojazdu=2,Dostepnosc=true,DataDodania=DateTime.Now,Kwota=200},
+                        new Ogloszenium{IdPojazdu=3,Dostepnosc=true,DataDodania=DateTime.Now,Kwota=500}
                     };
                     db.Ogloszenia.AddRange(ogl);
                     db.SaveChanges();
