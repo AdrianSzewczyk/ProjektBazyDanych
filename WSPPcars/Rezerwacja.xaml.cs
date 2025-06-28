@@ -138,6 +138,7 @@ namespace WSPPCars
                 }
 
                 kwota_do_zap = rezerwacja.KwotaRezerwacji;
+                kwota_do_zap.
             }
 
             //Koniec eksperymentow
@@ -174,7 +175,7 @@ namespace WSPPCars
                     PriceData = new SessionLineItemPriceDataOptions
                     {
                         Currency = "pln",
-                        UnitAmountDecimal = kwota_do_zap, // pln
+                        UnitAmountDecimal = kwota_do_zap*100, // pln
                         ProductData = new SessionLineItemPriceDataProductDataOptions
                         {
                             Name = "Rezerwacja",
