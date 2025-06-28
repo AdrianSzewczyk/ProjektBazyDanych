@@ -4,6 +4,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using WSPPCars.Models;
+using Stripe.Checkout;
+using Stripe;
+using System.Diagnostics;
 
 namespace WSPPCars
 {
@@ -82,7 +85,7 @@ namespace WSPPCars
             MessageBox.Show("Dane zostały poprawnie potwierdzone.", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
-        private void btnPlatnosc_Click(object sender, RoutedEventArgs e)
+        private async void btnPlatnosc_Click(object sender, RoutedEventArgs e)
         {
             if (chkRegulamin.IsChecked != true || chkRODO.IsChecked != true)
             {
@@ -100,7 +103,7 @@ namespace WSPPCars
             DateTime d2 = dataWypozyczenia.Value.Date;
             int IloscDni = Math.Abs((d1 - d2).Days);
 
-
+            Decimal? kwota_do_zap;
             using (var context = new DbWsppcarsContext())
             {
 
@@ -134,14 +137,14 @@ namespace WSPPCars
                     context.SaveChanges();
                 }
 
-
+                kwota_do_zap = rezerwacja.KwotaRezerwacji;
             }
 
             //Koniec eksperymentow
 
             string podsumowanie = $"Imię: {txtImie.Text}\nNazwisko: {txtNazwisko.Text}\nEmail: {txtEmail.Text}";
             MessageBox.Show("Przechodzisz do płatności...\n\n" + podsumowanie, "Płatność", MessageBoxButton.OK, MessageBoxImage.Information);
-
+            /*
             OknoPlatnosc pla = new OknoPlatnosc();
             pla.Owner = this;
             pla.WindowStartupLocation = WindowStartupLocation.Manual;
@@ -152,6 +155,53 @@ namespace WSPPCars
             this.Hide();
             pla.ShowDialog();
             this.Show();
+            */
+            //płatność
+            try
+            {
+                // Ustaw klucz API testowy (SECRET key, tylko w trybie sandbox!)
+                //tutaj klucz
+                StripeConfiguration.ApiKey = "";
+
+                // Tworzymy dane zamówienia
+                var options = new SessionCreateOptions
+                {
+                    PaymentMethodTypes = new List<string> { "card" },
+                    LineItems = new List<SessionLineItemOptions>
+            {
+                new SessionLineItemOptions
+                {
+                    PriceData = new SessionLineItemPriceDataOptions
+                    {
+                        Currency = "pln",
+                        UnitAmountDecimal = kwota_do_zap, // pln
+                        ProductData = new SessionLineItemPriceDataProductDataOptions
+                        {
+                            Name = "Rezerwacja",
+                        },
+                    },
+                    Quantity = 1,
+                }
+            },
+                    Mode = "payment",
+                    SuccessUrl = "https://wspp.com/success", // nie musi działać lokalnie
+                    CancelUrl = "https://wspp.com/cancel"
+                };
+
+                var service = new SessionService();
+                Session session = await service.CreateAsync(options);
+
+                // Otwórz przeglądarkę z formularzem Stripe Checkout
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = session.Url,
+                    UseShellExecute = true
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Błąd podczas tworzenia płatności: " + ex.Message);
+            }
         }
 
         private bool IsValidEmail(string email)
