@@ -71,7 +71,7 @@
                             </ListBox.ItemTemplate>
                         </ListBox>
                         <TextBlock Text="Dodatki" Foreground="White" Margin="0,0,0,2" Width="368" Height="18"/>
-                        <ListBox x:Name="listaDodatkowSkrocona" Grid.Column="1" Margin="10"  SelectionChanged="ListaAutSkrocona_SelectionChanged"   Background="White" Foreground="Black" Height="47" HorizontalAlignment="Stretch"  ScrollViewer.CanContentScroll="True"
+                        <ListBox x:Name="listaDodatkowSkrocona" SelectionMode="Extended" Grid.Column="1" Margin="10"  SelectionChanged="ListaAutSkrocona_SelectionChanged"   Background="White" Foreground="Black" Height="47" HorizontalAlignment="Stretch"  ScrollViewer.CanContentScroll="True"
          ScrollViewer.VerticalScrollBarVisibility="Auto">>
                             <ListBox.ItemTemplate>
                                 <DataTemplate>

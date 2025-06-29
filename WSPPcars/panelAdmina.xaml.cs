@@ -292,12 +292,16 @@ namespace WSPPCars
                             }
                         }
                         */
-                        listaDodatkowSkrocona.Items.Clear();
-                        foreach (var o in dodatki_zebrane)
-                        {
-                            listaDodatkowSkrocona.Items.Add(o);
+                        //listaDodatkowSkrocona.Items.Clear();
+                        listaDodatkowSkrocona.SelectedItems.Clear();
+                        foreach (var item in listaDodatkowSkrocona.Items) 
+                        { 
+                        if(item is Dodatki dod &&  dodatki_zebrane.Find(o => o.IdDodatku == dod.IdDodatku) != null) 
+                            {
+                                listaDodatkowSkrocona.SelectedItems.Add(item);
+                            }
                         }
-                        comboStanRezerwacji.Text = rezerw.IdStanRezerwacji == 1 ? "Opłacona" : "Nieopłacona";
+                            comboStanRezerwacji.Text = rezerw.IdStanRezerwacji == 1 ? "Opłacona" : "Nieopłacona";
                         datePoczatek.SelectedDate = rezerw.DataRozpoczeciaRezerwacji;
                         dateKoniec.SelectedDate = rezerw.DataZakonczeniaRezerwacji;
                     }
