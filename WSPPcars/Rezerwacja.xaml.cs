@@ -102,8 +102,9 @@ namespace WSPPCars
             DateTime d1 = dataZwrotu.Value.Date;
             DateTime d2 = dataWypozyczenia.Value.Date;
             int IloscDni = Math.Abs((d1 - d2).Days);
-
+            int? id;
             Decimal? kwota_do_zap;
+        
             using (var context = new DbWsppcarsContext())
             {
 
@@ -136,7 +137,7 @@ namespace WSPPCars
                     context.DodatkiRezerwacjes.Add(rezerwacjaDodatki);
                     context.SaveChanges();
                 }
-
+                id = rezerwacja.IdRezerwacji;
                 kwota_do_zap = rezerwacja.KwotaRezerwacji;
                 
             }
@@ -158,10 +159,11 @@ namespace WSPPCars
             this.Show();
             */
             //płatność
+            string? _sessionId;
             try
             {
                 // Ustaw klucz API testowy (SECRET key, tylko w trybie sandbox!)
-                //tutaj klucz
+                //tutaj klucz SECRET KEY
                 StripeConfiguration.ApiKey = "";
 
                 // Tworzymy dane zamówienia
@@ -191,18 +193,42 @@ namespace WSPPCars
 
                 var service = new SessionService();
                 Session session = await service.CreateAsync(options);
-
+                _sessionId = session.Id;
                 // Otwórz przeglądarkę z formularzem Stripe Checkout
                 Process.Start(new ProcessStartInfo
                 {
                     FileName = session.Url,
                     UseShellExecute = true
                 });
+                int timeoutSeconds = 180;
+                var service2 = new SessionService();
+                int waited = 0;
+                while (waited < timeoutSeconds)
+                {
+                    var session2 = await service2.GetAsync(_sessionId);
+                    if (session2.PaymentStatus == "paid")
+                    {
+                        using (var context = new DbWsppcarsContext())
+                        {
+                            var rezerwacja = context.Rezerwacjes.First(u=>u.IdRezerwacji == id);
+                            if(rezerwacja != null) 
+                            {
+                                rezerwacja.IdStanRezerwacji = 1;
+                                context.SaveChanges();
+                            }
+                        }
+                        break;
+                    }
+                    await Task.Delay(3000); // czekaj 3 sekundy
+                    waited += 3;
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Błąd podczas tworzenia płatności: " + ex.Message);
             }
+
+
         }
 
         private bool IsValidEmail(string email)
