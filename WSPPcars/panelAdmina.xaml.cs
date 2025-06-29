@@ -135,19 +135,53 @@ namespace WSPPCars
                 if (wybranaRezerwacje != null)
                 {
                     int stan;
+                    var ogl = listaOgloszenSkrocona.SelectedItem as Ogloszenium;
+                    var ubz = listaUbezpieczenSkrocona.SelectedItem as Ubezpieczenium;
+                    var uz = listaUzytkownikowSkrocona.SelectedItem as Uzytkownicy;
+                    decimal? kwota_dod = 0;
+                    decimal? kwota_ogl = 0;
+                    decimal? kwota_ube = 0;
+                    foreach (var dod in listaDodatkowSkrocona.SelectedItems) {
+                        var dodatek = dod as Dodatki;
+                        kwota_dod += dodatek.Kwota;
+                    }
+                    kwota_ogl = ogl.Kwota;
+                    kwota_ube = ubz.Kwota;
+                    int iloscDni = (dateKoniec.SelectedDate.Value - datePoczatek.SelectedDate.Value).Days;
+                    decimal? kwota_razem = ((kwota_ogl * iloscDni) + kwota_ube + kwota_dod);
                     if (comboStanRezerwacji.Text == "Opłacona") { stan = 1; } else { stan = 2; }
                         var rezerw = new Rezerwacje
                         {
-                            IdOgloszenia = wybranaRezerwacje.IdOgloszenia,
-                            IdUbezpieczenia = wybranaRezerwacje.IdUbezpieczenia,
-                            IdUzytkownika = wybranaRezerwacje.IdUzytkownika,
+                            IdOgloszenia = ogl.IdOgloszenia,
+                            IdUbezpieczenia = ubz.IdUbezpieczenia,
+                            IdUzytkownika = uz.IdUzytkownika,
                             IdStanRezerwacji = stan,
+                            DostepnoscPojazdu = true,
+                            KwotaDodatku = kwota_dod,
+                            KwotaOgloszenia = kwota_ogl,
+                            KwotaUbezpieczenia = kwota_ube,
+                            KwotaRezerwacji = kwota_razem,
                             DataRozpoczeciaRezerwacji = datePoczatek.SelectedDate,
                             DataZakonczeniaRezerwacji = dateKoniec.SelectedDate,
                             Utworzona = DateTime.Now,
                         };
 
                     context.Rezerwacjes.Add(rezerw);
+                    context.SaveChanges();
+                    foreach (var item in listaDodatkowSkrocona.SelectedItems)
+                    {
+                        var dodatek = item as Dodatki;
+                        if (dodatek != null)
+                        {
+                            var relacja = new DodatkiRezerwacje
+                            {
+                                IdRezerwacji = rezerw.IdRezerwacji,
+                                IdDodatku = dodatek.IdDodatku
+                            };
+
+                            context.DodatkiRezerwacjes.Add(relacja);
+                        }
+                    }
                     context.SaveChanges();
                 }
 
@@ -186,7 +220,11 @@ namespace WSPPCars
                     MessageBox.Show("Nie znaleziono rezerwacji w bazie.");
                     return;
                 }
+                var dodatkiRezerwacje = context.DodatkiRezerwacjes
+                .Where(dr => dr.IdRezerwacji == rezerw.IdRezerwacji)
+                .ToList();
 
+                context.DodatkiRezerwacjes.RemoveRange(dodatkiRezerwacje);
                 context.Rezerwacjes.Remove(rezerw);
                 context.SaveChanges();
             }
@@ -218,15 +256,52 @@ namespace WSPPCars
                 var ogl = listaOgloszenSkrocona.SelectedItem as Ogloszenium;
                 var ubz = listaUbezpieczenSkrocona.SelectedItem as Ubezpieczenium;
                 var uz = listaUzytkownikowSkrocona.SelectedItem as Uzytkownicy;
+                decimal? kwota_dod = 0;
+                decimal? kwota_ogl = 0;
+                decimal? kwota_ube = 0;
+                foreach (var dod in listaDodatkowSkrocona.SelectedItems)
+                {
+                    var dodatek = dod as Dodatki;
+                    kwota_dod += dodatek.Kwota;
+                }
+                kwota_ogl = ogl.Kwota;
+                kwota_ube = ubz.Kwota;
+                int iloscDni = (dateKoniec.SelectedDate.Value - datePoczatek.SelectedDate.Value).Days;
+                decimal? kwota_razem = ((kwota_ogl * iloscDni) + kwota_ube + kwota_dod);
                 rezerw.IdOgloszenia = ogl.IdOgloszenia;
                 rezerw.IdUbezpieczenia = ubz.IdUbezpieczenia;
                 rezerw.IdUzytkownika = uz.IdUzytkownika;
                 rezerw.IdStanRezerwacji = stan;
                 rezerw.DataRozpoczeciaRezerwacji = datePoczatek.SelectedDate;
                 rezerw.DataZakonczeniaRezerwacji = dateKoniec.SelectedDate;
+                rezerw.DostepnoscPojazdu = true;
+                rezerw.KwotaDodatku = kwota_dod;
+                rezerw.KwotaOgloszenia = kwota_ogl;
+                rezerw.KwotaUbezpieczenia = kwota_ube;
+                rezerw.KwotaRezerwacji = kwota_razem;
                 context.SaveChanges();
-            }
 
+                var stareDodatki = context.DodatkiRezerwacjes
+                .Where(dr => dr.IdRezerwacji == rezerw.IdRezerwacji)
+                .ToList();
+
+                context.DodatkiRezerwacjes.RemoveRange(stareDodatki);
+                foreach (var item in listaDodatkow.SelectedItems)
+                {
+                    var dodatek = item as Dodatki;
+                    if (dodatek != null)
+                    {
+                        var nowy = new DodatkiRezerwacje
+                        {
+                            IdRezerwacji = rezerw.IdRezerwacji,
+                            IdDodatku = dodatek.IdDodatku
+                        };
+                        context.DodatkiRezerwacjes.Add(nowy);
+                    }
+                }
+
+                context.SaveChanges();
+            }   
             WyswietlRezerwacje();
         }
         private void ListaRezerwacji_SelectionChanged(object sender, RoutedEventArgs e)
