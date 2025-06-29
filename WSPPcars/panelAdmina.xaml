@@ -102,24 +102,39 @@
                         </StackPanel>
                     </StackPanel>
 
-                    <ListBox x:Name="listaRezerwacji" Grid.Column="2" Margin="10,10,10,10"  SelectionChanged="ListaRezerwacji_SelectionChanged">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Margin="5">
-                                    <TextBlock Text="{Binding IdRezerwacji}" Width="50" />
-                                    <TextBlock Text="{Binding IdOgloszenia}" Width="130" />
-                                    <TextBlock Text="{Binding IdUbezpieczenia}" Width="130" />
-                                    <TextBlock Text="{Binding IdUzytkownika}" Width="80" />
-                                    <TextBlock Text="{Binding IdUbezpieczenia}" Width="130" />
-                                    <TextBlock Text="{Binding LiczbaDodatkow}" Width="80" />
-                                    <TextBlock Text="{Binding DataRozpoczeciaRezerwacji}" Width="80" />
-                                    <TextBlock Text="{Binding DataZakonczeniaRezerwacji}" Width="80" />
-                                    <TextBlock Text="{Binding KwotaRezerwacji, StringFormat=C}" Width="60" />
-                                    <!-- Dodaj inne pola według potrzeb -->
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
+                    <StackPanel Grid.Column="2" Margin="10">
+                        <!-- Nagłówki kolumn -->
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="IdRezerwacji" Width="50" FontWeight="Bold" Foreground="White"/>
+                            <TextBlock Text="IdOgloszenia" Width="130" FontWeight="Bold" Foreground="White" />
+                            <TextBlock Text="IdUbezpieczenia" Width="130" FontWeight="Bold" Foreground="White" />
+                            <TextBlock Text="IdUzytkownika" Width="80" FontWeight="Bold" Foreground="White"/>
+                            <TextBlock Text="IdUbezpieczenia" Width="130" FontWeight="Bold" Foreground="White"/>
+                            <TextBlock Text="LiczbaDodatkow" Width="80" FontWeight="Bold" Foreground="White"/>
+                            <TextBlock Text="DataRozp." Width="80" FontWeight="Bold" Foreground="White"/>
+                            <TextBlock Text="DataZak." Width="80" FontWeight="Bold" Foreground="White"/>
+                            <TextBlock Text="Kwota" Width="60" FontWeight="Bold" Foreground="White"/>
+                        </StackPanel>
+
+                        <!-- ListBox z danymi -->
+                        <ListBox x:Name="listaRezerwacji" SelectionChanged="ListaRezerwacji_SelectionChanged">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Margin="5">
+                                        <TextBlock Text="{Binding IdRezerwacji}" Width="50" />
+                                        <TextBlock Text="{Binding IdOgloszenia}" Width="130" />
+                                        <TextBlock Text="{Binding IdUbezpieczenia}" Width="130" />
+                                        <TextBlock Text="{Binding IdUzytkownika}" Width="80" />
+                                        <TextBlock Text="{Binding IdUbezpieczenia}" Width="130" />
+                                        <TextBlock Text="{Binding LiczbaDodatkow}" Width="80" />
+                                        <TextBlock Text="{Binding DataRozpoczeciaRezerwacji}" Width="80" />
+                                        <TextBlock Text="{Binding DataZakonczeniaRezerwacji}" Width="80" />
+                                        <TextBlock Text="{Binding KwotaRezerwacji, StringFormat=C}" Width="60" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
                 </Grid>
             </TabItem>
 
