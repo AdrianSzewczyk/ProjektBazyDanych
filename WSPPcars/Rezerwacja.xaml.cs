@@ -138,7 +138,7 @@ namespace WSPPCars
                 }
 
                 kwota_do_zap = rezerwacja.KwotaRezerwacji;
-                kwota_do_zap.
+                
             }
 
             //Koniec eksperymentow
