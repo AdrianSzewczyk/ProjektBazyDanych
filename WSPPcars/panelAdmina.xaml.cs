@@ -128,13 +128,183 @@ namespace WSPPCars
 
         }
         private void BtnDodajRezerwacje_Click(object sender, RoutedEventArgs e)
-        { }
+        {
+            using (var context = new DbWsppcarsContext())
+            {
+                var wybranaRezerwacje = listaRezerwacji.SelectedItem as Rezerwacje;
+                if (wybranaRezerwacje != null)
+                {
+                    int stan;
+                    if (comboStanRezerwacji.Text == "Opłacona") { stan = 1; } else { stan = 2; }
+                        var rezerw = new Rezerwacje
+                        {
+                            IdOgloszenia = wybranaRezerwacje.IdOgloszenia,
+                            IdUbezpieczenia = wybranaRezerwacje.IdUbezpieczenia,
+                            IdUzytkownika = wybranaRezerwacje.IdUzytkownika,
+                            IdStanRezerwacji = stan,
+                            DataRozpoczeciaRezerwacji = datePoczatek.SelectedDate,
+                            DataZakonczeniaRezerwacji = dateKoniec.SelectedDate,
+                            Utworzona = DateTime.Now,
+                        };
+
+                    context.Rezerwacjes.Add(rezerw);
+                    context.SaveChanges();
+                }
+
+            }
+
+
+            WyswietlRezerwacje();
+        }
         private void BtnUsunRezerwacje_Click(object sender, RoutedEventArgs e)
-        { }
+        {
+            var wybranaRezerwacje = listaRezerwacji.SelectedItem as Rezerwacje;
+
+            if (wybranaRezerwacje == null)
+            {
+                MessageBox.Show("Proszę wybrać rezerwacje do usunięcia.");
+                return;
+            }
+
+            var confirmResult = MessageBox.Show(
+                "Czy na pewno chcesz usunąć tą rezerwację?",
+                "Potwierdzenie usunięcia",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question
+            );
+
+            if (confirmResult != MessageBoxResult.Yes)
+                return;
+
+            using (var context = new DbWsppcarsContext())
+            {
+                var rezerw = context.Rezerwacjes
+                .FirstOrDefault(o => o.IdRezerwacji == wybranaRezerwacje.IdRezerwacji);
+
+                if (rezerw == null)
+                {
+                    MessageBox.Show("Nie znaleziono rezerwacji w bazie.");
+                    return;
+                }
+
+                context.Rezerwacjes.Remove(rezerw);
+                context.SaveChanges();
+            }
+
+
+            WyswietlRezerwacje();
+        }
         private void BtnEdytujRezerwacje_Click(object sender, RoutedEventArgs e)
-        { }
+        {
+            var wybranaRezerwacje = listaRezerwacji.SelectedItem as Rezerwacje;
+
+            if (wybranaRezerwacje == null)
+            {
+                MessageBox.Show("Proszę wybrać rezerwację do edycji.");
+                return;
+            }
+            using (var context = new DbWsppcarsContext())
+            {
+                var rezerw = context.Rezerwacjes
+                .FirstOrDefault(o => o.IdRezerwacji == wybranaRezerwacje.IdRezerwacji);
+
+                if (rezerw == null)
+                {
+                    MessageBox.Show("Nie znaleziono ogłoszenia w bazie.");
+                    return;
+                }
+                int stan;
+                if (comboStanRezerwacji.Text == "Opłacona") { stan = 1; } else { stan = 2; }
+                var ogl = listaOgloszenSkrocona.SelectedItem as Ogloszenium;
+                var ubz = listaUbezpieczenSkrocona.SelectedItem as Ubezpieczenium;
+                var uz = listaUzytkownikowSkrocona.SelectedItem as Uzytkownicy;
+                rezerw.IdOgloszenia = ogl.IdOgloszenia;
+                rezerw.IdUbezpieczenia = ubz.IdUbezpieczenia;
+                rezerw.IdUzytkownika = uz.IdUzytkownika;
+                rezerw.IdStanRezerwacji = stan;
+                rezerw.DataRozpoczeciaRezerwacji = datePoczatek.SelectedDate;
+                rezerw.DataZakonczeniaRezerwacji = dateKoniec.SelectedDate;
+                context.SaveChanges();
+            }
+
+            WyswietlRezerwacje();
+        }
         private void ListaRezerwacji_SelectionChanged(object sender, RoutedEventArgs e)
-        { }
+        {
+            var wybranaRezerwacje = listaRezerwacji.SelectedItem as Rezerwacje;
+
+            if (wybranaRezerwacje != null)
+            {
+                using (var context = new DbWsppcarsContext())
+                {
+                 var rezerw = context.Rezerwacjes
+                .FirstOrDefault(o => o.IdRezerwacji == wybranaRezerwacje.IdRezerwacji);
+
+                    if (rezerw != null)
+                    {
+                        context.Entry(rezerw)
+                            .Collection(r => r.DodatkiRezerwacjes)
+                            .Query()
+                            .Include(dr => dr.IdDodatkuNavigation)
+                            .Load();
+
+                        var dodatki_zebrane = rezerw.DodatkiRezerwacjes
+                            .Select(dr => dr.IdDodatkuNavigation)
+                            .Where(d => d != null)
+                            .ToList();
+
+                        foreach (var item in listaOgloszenSkrocona.Items)
+                        {
+                            if (item is Ogloszenium ogloszenie && ogloszenie.IdOgloszenia == rezerw.IdOgloszenia)
+                            {
+                                listaOgloszenSkrocona.SelectedItem = item;
+                                listaOgloszenSkrocona.ScrollIntoView(item);
+                                break;
+                            }
+                        }
+                        foreach (var item in listaUbezpieczenSkrocona.Items)
+                        {
+                            if (item is Ubezpieczenium ubez && ubez.IdUbezpieczenia == rezerw.IdUbezpieczenia)
+                            {
+                                listaUbezpieczenSkrocona.SelectedItem = item;
+                                listaUbezpieczenSkrocona.ScrollIntoView(item);
+                                break;
+                            }
+                        }
+                        foreach (var item in listaUzytkownikowSkrocona.Items)
+                        {
+                            if (item is Uzytkownicy uzy && uzy.IdUzytkownika == rezerw.IdUzytkownika)
+                            {
+                                listaUzytkownikowSkrocona.SelectedItem = item;
+                                listaUzytkownikowSkrocona.ScrollIntoView(item);
+                                break;
+                            }
+                        }
+
+                        /*
+                        foreach (var item in listaDodatkowSkrocona.Items)
+                        {
+                            if (item is Dodatki dod && dod.IdDodatku == rezerw.IdRezerwacji)
+                            {
+                                listaDodatkowSkrocona.SelectedItem = item;
+                                listaDodatkowSkrocona.ScrollIntoView(item);
+                                break;
+                            }
+                        }
+                        */
+                        listaDodatkowSkrocona.Items.Clear();
+                        foreach (var o in dodatki_zebrane)
+                        {
+                            listaDodatkowSkrocona.Items.Add(o);
+                        }
+                        comboStanRezerwacji.Text = rezerw.IdStanRezerwacji == 1 ? "Opłacona" : "Nieopłacona";
+                        datePoczatek.SelectedDate = rezerw.DataRozpoczeciaRezerwacji;
+                        dateKoniec.SelectedDate = rezerw.DataZakonczeniaRezerwacji;
+                    }
+                }
+
+            }
+        }
         //--------------------Ogłoszenia------------------------------
         private void WyswietlOgloszenia()
         {
